@@ -1,0 +1,36 @@
+<!--Dropdown button for home page -->
+<div class="header-dropdown container">
+  <div class="dropdown ml-auto">
+    <button
+      class="btn btn-dark btn-sm dropdown-toggle"
+      type="button"
+      id="dropdownMenuButton"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      Sort
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <form class="btn-form" action="/" method="GET">
+        <input type="text" class="form-control" name="state" value="asc" hidden>
+        <input type="submit" class="dropdown-item btn-secondary btn-sm" value="State &#x2191"></input>
+      </form>
+
+      <form class="btn-form" action="/" method="GET">
+        <input type="text" class="form-control" name="state" value="dsc" hidden>
+        <input type="submit" class="dropdown-item btn-secondary btn-sm" value="State &#x2193"></input>
+      </form>
+
+      <form class="btn-form" action="/" method="GET">
+        <input type="text" class="form-control" name="shape" value="asc" hidden>
+        <input type="submit" class="dropdown-item btn-secondary btn-sm" value="Shape &#x2191"></input>
+      </form>
+
+      <form class="btn-form" action="/" method="GET">
+        <input type="text" class="form-control" name="shape" value="dsc" hidden>
+        <input type="submit" class="dropdown-item btn-secondary btn-sm" value="Shape &#x2193"></input>
+      </form>
+    </div>
+  </div>
+</div>

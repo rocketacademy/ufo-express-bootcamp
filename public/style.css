@@ -1,0 +1,179 @@
+body {
+  /* background-color: midnightblue; */
+  background-color: rgb(33, 33, 51);
+  color: rgb(216, 238, 238);
+}
+
+.sight-table {
+  color: lightblue;
+}
+
+.nav-color {
+  background-color: rgb(33, 33, 51);
+  color: lightblue;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+a:hover {
+  /* background-color: rgb(55, 169, 189); */
+  color: aliceblue;
+  font-weight: 500;
+  font-size: 2em;
+  text-decoration: none;
+  border-radius: 0.5rem;
+}
+
+.header-dropdown {
+  position: relative;
+  display: flex;
+  z-index: 1;
+  padding: 0px;
+  justify-content: flex-end;
+  padding-right: 45px;
+}
+
+.dropdown-menu,
+.dropdown-item {
+  background-color: rgb(216, 211, 211);
+  border-radius: 0.52em;
+}
+
+.dropdown-item:hover {
+  background-color: rgb(40, 40, 41);
+  color: bisque;
+  /* font-weight: 500; */
+  font-size: 1.2em;
+  text-decoration: none;
+  border-radius: 0.5rem;
+}
+
+.sight-thead {
+  background-color: rgb(6, 55, 83);
+  color: lightcyan;
+}
+
+/* Customizing the table color of bootstrap */
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  /* background-color: lightblue;
+  color: darkblue; */
+  background-color: rgb(76, 143, 182);
+  color: aliceblue;
+}
+
+.table-striped > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > th {
+  /* background-color: midnightblue; 
+   color: lightblue;*/
+  background-color: rgb(34, 122, 174);
+  color: aliceblue;
+}
+/*Customizing the table hover color*/
+.table-hover tbody tr:hover,
+.table-hover tbody tr:hover td,
+.table-hover tbody tr:hover th {
+  background-color: rgb(25, 163, 187);
+  color: rgb(3, 3, 41);
+  font-weight: 500;
+}
+
+.btn-form {
+  margin-bottom: 1.5px;
+}
+
+.delete-btn {
+  background-color: rgb(46, 71, 87);
+  color: aliceblue;
+  font-size: 0.74rem;
+  line-height: 1;
+  margin: 0px;
+}
+
+.view-btn {
+  background-color: rgb(119, 153, 175);
+  color: aliceblue;
+  font-size: 0.74rem;
+  line-height: 1;
+  margin: 0px;
+}
+
+.edit-btn {
+  background-color: rgb(75, 101, 117);
+  color: aliceblue;
+  font-size: 0.74rem;
+  line-height: 1;
+  margin: 0px;
+}
+
+/*Alternate row coloring of a bootstrap grid*/
+.grid-table .grid-table-row:nth-of-type(odd) {
+  background-color: rgb(34, 122, 174);
+  color: aliceblue;
+}
+.grid-table .grid-table-row:nth-of-type(even) {
+  background-color: rgb(76, 143, 182);
+  color: aliceblue;
+}
+/*Hovering over a grid row*/
+.grid-table .grid-table-row:hover {
+  background-color: rgb(55, 169, 189);
+  color: rgb(3, 3, 41);
+  font-weight: 500;
+}
+
+/*This is to adjust the cell width to the content*/
+/* .table td.fit,
+.table th.fit {
+  white-space: nowrap;
+  width: 1%;
+  height: 10px;
+} */
+
+/* table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+td,
+th {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+} */
+
+/* For wrapping the contents in the table cell */
+.wrap-col {
+  width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* 
+.btn-col {
+  min-width: fit-content;
+} */
+/* 
+.custom-scrollbar {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  overflow: scroll;
+}
+
+.table-wrapper-scroll-y {
+  display: block;
+} */
+
+/* 
+.vertical-scrollable > .tbl-row {
+  position: absolute;
+  top: 120px;
+  bottom: 100px;
+  left: 180px;
+  width: 50%;
+  overflow-y: scroll;
+} */
