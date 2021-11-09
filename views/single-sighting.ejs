@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+
+      .container {
+        overflow: auto;
+        padding-bottom: 20px;
+      }
+
+      @media (min-width: 768px) {
+        
+
+        
+      }
+
+    </style>
+    <title>Sighting incident</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">UFO Sightings</a>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav nav">
+          <li class="nav-item">
+            <!-- TODO: CHANGE TO LINK ANOTHER PAGE!!-->
+            <a class="nav-link" href="/shapes">Shapes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/sighting">Entry form</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+      <div>
+    </nav>
+
+     <div class="header">
+      <h3>UFO incident report</h3>
+    </div>
+
+    <div class="container" >
+       <img class="img-responsive d-none d-md-block" width="100%" src="/images.jpeg" style="padding-bottom: 30px">
+      <% Object.keys(eachSighting).forEach((inputField) => { %>
+        <% if (inputField === 'date_time') { %>
+       <div class="row">  
+          <div class="col-md-2" id="category" >Date/ time:</div>
+      <div class="col-md-10" id="response"> <%= eachSighting[inputField] %></div>
+        </div>
+        <br>
+        <% } else if (inputField === 'date_submitted') { %>
+       <div class="row">  
+          <div class="col-md-2" id="category" >Submission date:</div>
+      <div class="col-md-10" id="response"> <%= eachSighting[inputField] %></div>
+        </div>
+        <br>
+         <% } else { %>
+       <div class="row" >  
+      <div class="col-md-2" id="category"> <%= inputField %>:</div>
+      <div class="col-md-10" id="response"> <%= eachSighting[inputField] %></div>
+      </div>
+      <br>
+      <% } %>
+      <% }); %>
+    
+      <br>
+      
+        <div class="col text-right">
+      <a href="/sighting/<%= index %>/edit" class="btn btn-md btn-secondary" id="edit-button">Edit</a>
+        </div>
+  
+    </div>
+
+      
+    
+    
+    
+
+    <!-- Optional JavaScript -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+  </html>

@@ -1,0 +1,9 @@
+body {
+  padding-top: 56px;
+}
+
+.header {
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: rgb(19, 140, 205);
+}

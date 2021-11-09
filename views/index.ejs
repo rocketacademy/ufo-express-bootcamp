@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles.css" />
+
+    <style>
+    html {
+      width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+body {
+  
+  display: table;
+  z-index: 0;
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  color: white;
+  background-color: white;
+  background-image: url("download.jpeg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: left top;
+  background-size: 100% 100%;
+}
+
+#center-content {
+  padding-top: 100px;
+  display: table-cell;
+  text-align: center;
+  vertical-align: top;
+}
+
+#cover {
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#sighting-content {
+  overflow: auto;
+  scrollbar-base-color: white;
+  
+  position: absolute;
+  bottom: 20px;
+  left: 15px;
+  height: 250px;
+width:92%;
+  color: white;
+  background-color: rgba(128, 128, 128, 0.5);
+  padding: 10px 20px;
+
+
+}
+
+@media (min-width: 768px) {
+  #sighting-content {
+    left: 35px;
+    height: 400px;
+  }
+}
+
+@media (min-width: 1024px) {
+  #sighting-content {
+    left: 42px;
+  }
+}
+
+.table {
+  color: white;
+}
+
+#delete-button {
+  text-align: center;
+}
+
+#delete-heading {
+  text-align: center;
+}
+
+#sort-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#sort-options {
+width: 20%;
+align-self: center;
+padding: 5px;
+margin-bottom: 5px;
+background-color: transparent;
+color: lightgray;
+}
+
+#sort-button {
+width: 15%;
+align-self: center;
+border-radius: 50px;
+}
+
+#visits {
+  font-size: xx-small;
+  color: rgba(255, 255, 255, 0.5);
+}
+</style>
+
+    <title>Welcome Page</title>
+  </head>
+  <body>
+    <div id="cover"></div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">UFO Sightings</a>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav nav">
+          <li class="nav-item">
+            <!-- TODO: CHANGE TO LINK ANOTHER PAGE!!-->
+            <a class="nav-link" href="/shapes">Shapes </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/sighting">Entry form</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+      <div>
+    </nav>
+
+    <div id="center-content">
+      <h1>Welcome All</h1>
+      <p class="lead">This is where every UFO sighting can be found<br></p>
+
+        
+      
+       <form id="sort-section">
+         
+         <select name="sighting" id="sort-options">
+           <option value="shape">
+             shape
+           </option>
+           <option value = "city">
+            city
+           </option>
+           <option value = "state">
+            state
+           </option>
+            <option value="date_time">
+             Date/ Time
+           </option>
+         </select>
+         <button class="btn btn-outline-secondary btn-sm" input type="submit" id="sort-button">Sort</button>
+        </form>
+    <p id="visits">visits : <%= visits %></p>
+
+      </div>
+          
+    
+    </div>
+    <div class="container-fluid" id="sighting-content">
+      
+     <h4>List of Sightings</h4>
+      
+        <div class="table-responsive">
+          <table class="table">
+          
+          <tr><th>Date/ Time</th>
+            <th class="d-none d-sm-table-cell">Shape</th>
+            <th class="d-none d-sm-table-cell">City</th>
+            <th>State</th>
+            <th id="delete-heading">Delete</th>
+          </tr>
+          <tr>
+            <% for (let i = 0; i < sightings.length; i += 1) { %> 
+            <td><a href="/sighting/<%= i %>" style="color: lightgray"><%= sightings[i].date_time %></a></td>
+            <td class="d-none d-sm-table-cell"><%= sightings[i].shape %></td>
+            <td class="d-none d-sm-table-cell"><%= sightings[i].city %></td>
+            <td><%= sightings[i].state %></td>
+            <td><form id="delete-button" action="/sighting/<%= i %>/delete?_method=DELETE" method="POST">
+          <button class="btn btn-sm btn-secondary" type="submit"><i class="fa fa-trash-alt"></i></button>
+        </form></td>
+        </tr>
+              <% } %>
+          </tr>
+        </table>
+        </div>
+
+      </div>
+    
+
+    <!-- Optional JavaScript -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+  </html>
