@@ -1,3 +1,33 @@
 #home-desc {
   color: blue;
 }
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#navbar {
+  background-color: grey;
+  height: 5%;
+}
+
+.input-form-- {
+  flex-direction: column;
+  display:flex;
+}
+.input-form-label {
+  font-size: 2rem;
+}
+.input-form-submit {
+  font-size: 2rem;
+  display: flex;
+  align-self: center;
+}
+.input-form-input {
+  text-align: right;
+  font-size: 2rem;
+}
+

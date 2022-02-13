@@ -5,12 +5,14 @@ import e from "express";
  * @param {e.Express} app
  */
 const attachRoutes = (app) => {
+  const newSightingConsumerRoute = "/sighting";
+  // input form
   app.get("/sighting", (req, res) => {
     console.log("Route GET /sighting");
-    res.sendStatus(501);
+    return res.render("sighting-form", { postRoute: newSightingConsumerRoute });
   });
 
-  app.post("/sighting", (req, res) => {
+  app.post(newSightingConsumerRoute, (req, res) => {
     console.log("Route POST /sighting");
     res.sendStatus(501);
   });
