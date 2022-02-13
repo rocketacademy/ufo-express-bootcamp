@@ -1,5 +1,5 @@
 import e from "express";
-
+import {addSighting} from "../dataOperations/index.js";
 /**
  *
  * @param {e.Express} app
@@ -14,7 +14,25 @@ const attachRoutes = (app) => {
 
   app.post(newSightingConsumerRoute, (req, res) => {
     console.log("Route POST /sighting");
-    res.sendStatus(501);
+
+    const { body } = req;
+    const {text,
+date_time,
+city,
+state,
+duration,
+summary} = body;
+
+const sighting = {text,
+date_time,
+city,
+state,
+duration,
+summary}
+
+    addSighting(sighting);
+
+    res.json(body);
   });
 
   app.get("/sighting:index", (req, res) => {
