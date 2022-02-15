@@ -1,0 +1,22 @@
+<html>
+  <%- include('partials-template/head'); %>
+  <body>
+    <%- include('partials-template/body'); %>
+
+    <div><%= index %></div>
+
+    
+    <% if(isNew){ %>
+      <div>NEW</div>
+    <% } %>
+
+    <% Object.entries(sighting).forEach(
+      ([key,value]) => { 
+    %>  
+    <div> <%= key %></div>
+    <div> <%= value %></div>
+
+    <%}) %>
+  </body>
+</html>
+

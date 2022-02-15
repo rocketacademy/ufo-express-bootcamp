@@ -8,7 +8,6 @@
   align-items: center;
 }
 
-
 #navbar {
   background-color: grey;
   height: 5%;
@@ -16,7 +15,7 @@
 
 .input-form-- {
   flex-direction: column;
-  display:flex;
+  display: flex;
 }
 .input-form-label {
   font-size: 2rem;
@@ -30,4 +29,3 @@
   text-align: right;
   font-size: 2rem;
 }
-
