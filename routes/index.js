@@ -139,7 +139,8 @@ const attachRoutes = (app) => {
 
   app.get("/", (req, res) => {
     console.log("Route GET /");
-    res.sendStatus(501);
+
+    res.render("home");
   });
 
   app.get("/sighting/:index/edit", (req, res) => {

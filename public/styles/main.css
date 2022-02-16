@@ -1,5 +1,5 @@
 #home-desc {
-  color: blue;
+  color: #645b5b;
 }
 
 .content {
@@ -8,9 +8,30 @@
   align-items: center;
 }
 
-#navbar {
+#home {
+  display: flex;
   background-color: grey;
-  height: 5%;
+  height: fit-content;
+  flex-direction: column;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  color: white;
+}
+
+#home.background-- {
+  background: -webkit-linear-gradient(360deg, #645b5b 10%, #a79090 360%);
+  background: -moz-linear-gradient(360deg, #645b5b 10%, #a79090 360%);
+  background: linear-gradient(360deg, #645b5b 10%, #a79090 360%);
+}
+
+#home-line-1 {
+  display: flex;
+}
+#home-line-2 {
+  display: flex;
 }
 
 .input-form-- {
