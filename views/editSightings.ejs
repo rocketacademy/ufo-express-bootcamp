@@ -55,19 +55,32 @@
       </ul>
     </div>
   </nav>
+
   <body>
-    <h1>UFO Sighting Details</h1>
-    <p>
-      DateTime: <%= sightings.date_time %>
-      <br />
-      City: <%= sightings.city %>
-      <br />
-      State: <%= sightings.state %>
-      <br />
-      Shape: <%= sightings.shape %>
-      <br />
-      Description: <%= sightings.text %>
-    </p>
-    <a href="/sighting">Back to Index Page</a>
+    <form action="/sighting/:index/edit?_method=PUT" method="POST">
+      <label for="date_time">Date & Time :<%= sightings.date_time %></label
+      ><br />
+      <input type="text" id="date_time" name="date_time" size="50" /><br />
+      <label for="city">City:<%= sightings.city %></label><br />
+      <input type="text" id="city" name="city" size="50" /><br />
+      <label for="state">State:<%= sightings.state %></label><br />
+      <input type="text" id="state" name="state" size="50" /><br />
+      <label for="shape">Shape:<%= sightings.shape %></label><br />
+      <input type="text" id="shape" name="shape" size="50" /><br />
+      <label for="duration">Duration:</label><br />
+      <input type="text" id="duration" name="duration" size="50" /><br />
+      <label for="description"
+        >Please describe your encounter here in detail:</label
+      ><br />
+      <textarea
+        type="textarea"
+        id="description"
+        name="description"
+        rows="5"
+        col="100"
+      ></textarea>
+    </form>
+    <br />
+    <input type="submit" value="Submit" class="submit-btn" />
   </body>
 </html>
