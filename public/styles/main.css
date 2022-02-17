@@ -240,3 +240,19 @@ a.fill-div {
 .sighting-add-form-wrap {
   margin-top: 30px;
 }
+
+.sighting-one-fav-add {
+  border: none;
+}
+
+.sighting-one-fav-add-input {
+  border: none;
+  background-color: white;
+  height: 60px;
+  width: 60px;
+}
+
+.sighting-one-fav-add-input:hover {
+  border: 1px solid orange;
+  border-radius: 50%;
+}

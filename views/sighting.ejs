@@ -21,6 +21,17 @@
       <div class="sighting-one-edit-a">
         <a href=<%= editRoute %>>EDIT</a> 
       </div>
+
+
+
+      <form action=<%= routeToAddFav %> method="POST">
+          <input type="hidden" id="index" name="index" value=<%= index %>>
+          <div class=" sighting-one-fav-add">
+            <input class=" sighting-one-fav-add-input" type="submit" value="💕">
+          </div>
+      </form> 
+    </div>
+      
     </div>
   </body>
 </html>

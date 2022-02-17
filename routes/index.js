@@ -1,6 +1,5 @@
 import e from "express";
 import { readFile, writeFile } from "fs";
-
 const dataPath = "data.json";
 
 const readPath = dataPath;
@@ -21,6 +20,8 @@ const attachRoutes = (app) => {
   const routeToViewOne = `/sighting-one`;
   const routeToViewAll = `/sighting-all`;
 
+  const routeToAddFav = `/sighting-fav-add`;
+
   const renderViewSightingOne = (req, res) => {
     const { params } = req;
     const { index, isNew } = params;
@@ -35,6 +36,7 @@ const attachRoutes = (app) => {
         index,
         sighting: json.sightings[index],
         editRoute: `${routeEditSightingSuffix}/${index}`,
+        routeToAddFav,
       });
       return;
     });
@@ -167,6 +169,33 @@ const attachRoutes = (app) => {
       });
     });
   });
+
+  app.post(
+    routeToAddFav,
+    (req, res, next) => {
+      const { params, query, body } = req;
+      console.log("routeToAddFav");
+      console.log(params);
+      console.log(query);
+      console.log(body);
+
+      const { index } = body;
+      console.log("req.cookies");
+      console.log(req.cookies);
+      const currentFavString = !!req.cookies.favourites || "";
+      const currentFav =
+        currentFavString == "" ? [] : JSON.parse(currentFavString);
+
+      const newFav = [...currentFav, Number(index)];
+
+      console.log("newFav");
+      console.log(newFav);
+      res.cookie("favorites", JSON.stringify(newFav));
+      req.params.index = index;
+      next();
+    },
+    renderViewSightingOne
+  );
 
   app.get("/shapes", (req, res) => {
     console.log("Route GET /");
