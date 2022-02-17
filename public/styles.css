@@ -1,0 +1,23 @@
+#content {
+  font-size: 90%;
+}
+
+body {
+  background-image: url("../images/test.jpeg");
+  background-repeat: none;
+  background-size: cover;
+}
+
+.list-holder {
+  opacity: 0.85;
+}
+.navbar,
+.container-fluid,
+.navbar-brand {
+  background-color: whitesmoke;
+  color: white;
+}
+
+.emoji {
+  font-size: 100px;
+}
