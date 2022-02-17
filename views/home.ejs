@@ -1,9 +1,30 @@
 <html>
-        <%- include('partials-template/head'); %>
-
+  <%- include('partials-template/head'); %>
   <body>
-        <%- include('partials-template/body'); %>
+    <%- include('partials-template/body'); %>
+    <div id="home-desc" class="text-center">Welcome Home</div>
+    <div class="btn-group-vertical home-button-nav-group" role="group" aria-label="Basic outlined example">
+      <button type="button" class="btn btn-outline-primary home-button-nav">
+        <a href= <%= routeToViewAll %>><div class="home-button-nav-desc">
 
-    <div id="home-desc" class="text-center">Welcome Home.</div>
+        <div class="home-button-nav-desc">
+        All
+        </div>
+
+        </a>
+
+      </button>
+      <button type="button" class="btn btn-outline-primary home-button-nav">
+             <div class="home-button-nav-desc">
+
+              Favs
+            </div>
+      </button>
+      <button type="button" class="btn btn-outline-primary home-button-nav">
+          <div class="home-button-nav-desc">
+            Shapes Listing
+          </div>
+      </button>
+    </div>
   </body>
 </html>

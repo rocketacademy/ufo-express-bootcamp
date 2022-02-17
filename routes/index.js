@@ -18,11 +18,15 @@ const attachRoutes = (app) => {
   const routeEditSightingForm = `${routeEditSightingSuffix}/:index`;
   const routeSightingConsumerEdit = "/sighting-edit";
 
+  const routeToViewOne = `/sighting-one`;
+  const routeToViewAll = `/sighting-all`;
+
   const renderViewSightingOne = (req, res) => {
     const { params } = req;
     const { index, isNew } = params;
     readFile(readPath, (err, content) => {
       if (err) {
+        res.sendStatus(500);
         throw err;
       }
       const json = JSON.parse(content);
@@ -102,9 +106,6 @@ const attachRoutes = (app) => {
       index: targetIndex,
     } = body;
 
-    console.log("body");
-    console.log(body);
-
     readFile(readPath, (err, content) => {
       if (err) {
         throw err;
@@ -136,25 +137,35 @@ const attachRoutes = (app) => {
       });
     });
   });
-
+  // Home
   app.get("/", (req, res) => {
     console.log("Route GET /");
-
-    res.render("home");
+    res.render("home", { routeToViewAll });
   });
 
-  app.get("/sighting/:index/edit", (req, res) => {
-    console.log("Route GET /");
-    res.sendStatus(501);
-  });
+  // Sighting: One
+  app.get(
+    `${routeToViewOne}/:index`,
+    (req, res, next) => {
+      console.log("Route GET / routeToViewOne");
+      next();
+    },
+    renderViewSightingOne
+  );
 
-  app.put("/sighting/:index/edit", (req, res) => {
-    console.log("Route PUT /");
-    res.sendStatus(501);
-  });
-  app.delete("/sighting/:index/edit", (req, res) => {
-    console.log("Route DELETE /");
-    res.sendStatus(501);
+  app.get(routeToViewAll, (req, res) => {
+    console.log("Route GET /" + routeToViewAll);
+
+    readFile(readPath, (err, content) => {
+      if (err) {
+        throw err;
+      }
+      const json = JSON.parse(content);
+      return res.render("all", {
+        sightings: json.sightings,
+        routeToViewOne,
+      });
+    });
   });
 
   app.get("/shapes", (req, res) => {
