@@ -5,42 +5,45 @@
     <%- include('partials-template/body'); %>
     <!-- START FROM HERE -->
 
-    <div>Sighting #: <%= index %></div>
+    <div class="edit-desc">EDIT # <%= index %></div>
 
     <div class="sighting-form-edit ">
       <form class="input-edit--" action=<%= postRoute %> method="POST">
-        <label class="input-edit-label" for="text">Description: </label>
+        <label class="input-edit-label sighting-edit-form-label" for="text">Description: </label>
         <br>
-        <input class="input-edit-input" type="text" id="text" name="text" placeholder=<%= sighting.text %>>
-        <br>
-
-        <label class="input-edit-label" for="date_time">Time:</label>
-        <br>
-        <input class="input-edit-input" type="text" id="date_time" name="date_time" placeholder=<%= sighting.date_time %>>
+        <input class="input-edit-input sighting-edit-form-input" type="text" id="text" name="text" placeholder=<%= sighting.text %>>
         <br>
 
-        <label class="input-edit-label" for="city">City: </label>
+        <label class="input-edit-label sighting-edit-form-label" for="date_time">Time:</label>
         <br>
-        <input class="input-edit-input" type="text" id="city" name="city" placeholder=<%= sighting.city %>>
-        <br>
-
-        <label class="input-edit-label" for="state">State: </label>
-        <br>
-        <input class="input-edit-input" type="text" id="state" name="state" placeholder=<%= sighting.state %>>
+        <input class="input-edit-input sighting-edit-form-input" type="text" id="date_time" name="date_time" placeholder=<%= sighting.date_time %>>
         <br>
 
-        <label class="input-edit-label" for="duration">Duration: </label>
+        <label class="input-edit-label sighting-edit-form-label" for="city">City: </label>
         <br>
-        <input class="input-edit-input" type="text" id="duration" name="duration" placeholder=<%= sighting.duration %>>
+        <input class="input-edit-input sighting-edit-form-input" type="text" id="city" name="city" placeholder=<%= sighting.city %>>
         <br>
 
-        <label class="input-edit-label" for="summary">Summary: </label>
+        <label class="input-edit-label sighting-edit-form-label" for="state">State: </label>
         <br>
-        <input class="input-edit-input" type="text" id="summary" name="summary" placeholder=<%= sighting.summary %>>
+        <input class="input-edit-input sighting-edit-form-input" type="text" id="state" name="state" placeholder=<%= sighting.state %>>
+        <br>
+
+        <label class="input-edit-label sighting-edit-form-label" for="duration">Duration: </label>
+        <br>
+        <input class="input-edit-input sighting-edit-form-input" type="text" id="duration" name="duration" placeholder=<%= sighting.duration %>>
+        <br>
+
+        <label class="input-edit-label sighting-edit-form-label" for="summary">Summary: </label>
+        <br>
+        <input class="input-edit-input sighting-edit-form-input" type="text" id="summary" name="summary" placeholder=<%= sighting.summary %>>
         <br>
 
           <input type="hidden" id="index" name="index" value=<%= index %>>
-        <input class="input-edit-submit" type="submit" value="Submit">
+
+          <div class="input-edit-submit-wrap">
+            <input class="input-edit-submit" type="submit" value="Submit">
+          </div>
       </form> 
     </div>
   </body>

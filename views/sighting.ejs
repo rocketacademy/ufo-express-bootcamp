@@ -3,22 +3,25 @@
   <body>
     <%- include('partials-template/body'); %>
 
-    <div><%= index %></div>
+    <div class="card sighting-one-full-card">
+      <div class="row justify-content-center"> #<%= index %></div>
 
+      <% if(isNew){ %>
+        <div>NEW</div>
+      <% } %>
 
-    <% if(isNew){ %>
-      <div>NEW</div>
-    <% } %>
-
-    <% Object.entries(sighting).forEach(
-      ([key,value]) => { 
-    %>  
-    <div> <%= key %></div>
-    <div> <%= value %></div>
-    <%}) %>
-
-
-   <a href=<%= editRoute %>>EDIT</a> 
+      <div class="sighting-one-full-card-info-group">
+        <% Object.entries(sighting).forEach(([key,value]) => { %>  
+          <div class="row">
+            <div class="col sighting-one-full-card-info-key"> <%= key %></div>
+            <div class="col sighting-one-full-card-info-value"> <%= value %></div>
+          </div>
+        <%}) %>
+      </div>
+      <div class="sighting-one-edit-a">
+        <a href=<%= editRoute %>>EDIT</a> 
+      </div>
+    </div>
   </body>
 </html>
 

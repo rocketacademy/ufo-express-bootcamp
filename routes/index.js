@@ -140,7 +140,7 @@ const attachRoutes = (app) => {
   // Home
   app.get("/", (req, res) => {
     console.log("Route GET /");
-    res.render("home", { routeToViewAll });
+    res.render("home", { routeToViewAll, routeNewSightingForm });
   });
 
   // Sighting: One

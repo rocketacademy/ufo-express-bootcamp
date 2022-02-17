@@ -8,16 +8,26 @@ body {
   height: 100vh;
   background-size: 100% 100%;
 }
-a,
-u {
-  text-decoration: none !important;
+
+:root {
+  --main-font-color: #0b173c;
+  --anti-main-font-color: #3c200b;
 }
 
 a,
+u,
 a:visited,
 a:hover,
 a:active {
-  color: inherit;
+  color: inherit !important;
+  text-decoration: none !important; /* no underline */
+}
+
+a.fill-div {
+  display: block;
+  height: 100% !important;
+  width: 100% !important;
+  text-decoration: none;
 }
 
 /* DISPLAY HEADER */
@@ -62,20 +72,31 @@ a:active {
   padding: 5px;
   border-radius: 5px;
 }
+.add-desc {
+  margin-top: 10px;
+  display: flex;
+  text-shadow: 0 0 40px orange;
+  color: orange;
+  font-size: 6rem;
+  width: 10%;
+  height: auto;
+  text-align: center;
+  justify-content: center;
+}
 
 .home-button-nav-group {
   margin-top: 30%;
   display: flex;
   flex-direction: column;
   width: 60%;
-  border-top: 1px solid #0b173c !important;
+  border-top: 1px solid var(--main-font-color) !important;
 }
 .home-button-nav {
   display: flex;
   justify-content: center;
   height: fit-content;
   width: fit-content;
-  border: 2px solid #0b173c !important;
+  border: 2px solid var(--main-font-color) !important;
   background-color: white !important;
 }
 .home-button-nav-desc {
@@ -102,6 +123,16 @@ a:active {
   padding: 5px;
   border-radius: 5px;
 }
+
+.edit-desc {
+  margin-top: 5%;
+  display: flex;
+  color: #645b5b;
+  font-size: 3rem;
+  background-color: white;
+  padding: 5px;
+  border-radius: 5px;
+}
 .sighting-all {
   margin-top: 10%;
   height: 40px;
@@ -110,8 +141,44 @@ a:active {
 }
 
 .sighting-all-li {
-  border: 2px solid #0b173c !important;
+  border: 2px solid var(--main-font-color) !important;
 }
+
+/* sighting-one */
+
+.sighting-one-full-card {
+  margin-top: 10%;
+  padding: 15px;
+  font-size: 2rem;
+  border-radius: 50%;
+  width: 60vw;
+  min-width: 40vw;
+  height: auto;
+}
+
+.sighting-one-full-card-index {
+}
+
+.sighting-one-full-card-info-key {
+  text-align: left;
+  color: var(--anti-main-font-color);
+}
+.sighting-one-full-card-info-value {
+  text-align: right;
+  color: var(--main-font-color);
+}
+.sighting-value {
+  color: orange;
+  text-align: right;
+}
+.sighting-one-full-card-info-group {
+  margin-top: 15px;
+}
+
+.sighting-one-edit-a {
+  color: orange;
+}
+
 /*  */
 .input-form-- {
   flex-direction: column;
@@ -121,9 +188,13 @@ a:active {
   font-size: 2rem;
 }
 .input-form-submit {
+  margin-top: 15px;
   font-size: 2rem;
   display: flex;
   align-self: center;
+  color: orange;
+  background-color: white;
+  padding: 0px 4px;
 }
 .input-form-input {
   text-align: right;
@@ -133,4 +204,39 @@ a:active {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.sighting-edit-form-label {
+  margin-top: 5px;
+  font-size: 1.2rem;
+  color: white;
+  background-color: var(--anti-main-font-color);
+  padding: 0px 10px;
+}
+
+.sighting-edit-form-input {
+  margin-top: 3px;
+}
+
+.input-edit-submit-wrap {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.input-edit-submit {
+  display: flex;
+  margin-top: 5px;
+  background-color: white;
+  color: orange;
+}
+
+.sighting-add-form-label {
+  color: white;
+  background-color: orange;
+  width: fit-content;
+  padding: 0px 10px;
+}
+.sighting-add-form-wrap {
+  margin-top: 30px;
 }

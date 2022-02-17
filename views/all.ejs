@@ -13,7 +13,7 @@
 
  <% sightings.forEach((sighting,index) => { %>
 
-  <a href="<%= routeToViewOne %>/<%= index %>" class="list-group-item list-group-item-action sighting-all-li"> sighting:<%= sighting.text %> </a>
+  <a href="<%= routeToViewOne %>/<%= index %>" class="list-group-item list-group-item-action sighting-all-li"> <div class="sighting-key">Description:</div> <div class="sighting-value"><%= sighting.text %></div> </a>
   
  <% }); %> 
 
