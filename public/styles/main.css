@@ -6,7 +6,7 @@ body {
   background: url(../images/background-gogh.jpg);
   background-repeat: no-repeat;
   height: 100vh;
-  background-size: 100% 100%;
+  background-size: cover;
 }
 
 :root {
@@ -106,6 +106,12 @@ a.fill-div {
   color: #081a3e;
   height: fit-content;
   text-decoration: none; /* no underline */
+}
+.home-button-nav-desc-margin-add-sighting-wrap {
+  margin-top: 20px;
+}
+.home-button-nav-desc-margin-add-sighting {
+  color: orange;
 }
 
 .button-desc-group {
