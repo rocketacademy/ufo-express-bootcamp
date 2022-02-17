@@ -55,29 +55,4 @@
       </ul>
     </div>
   </nav>
-  <body>
-    <h1>UFO Sighting Details</h1>
-    <p>
-      DateTime: <%= sightings.date_time %>
-      <br />
-      City: <%= sightings.city %>
-      <br />
-      State: <%= sightings.state %>
-      <br />
-      Shape: <%= sightings.shape %>
-      <br />
-      Description: <%= sightings.text %>
-      <br />
-      Summary: <%= sightings.summary %>
-    </p>
-    <div class="d-flex flex-row">
-      <a href="'/sighting/<%= index %>/edit">
-        <input type="button" value="Edit Sighting" />
-      </a>
-      <form action="/sighting/<%= index %>?_method=DELETE" method="POST">
-        <input type="submit" value="Delete" />
-      </form>
-    </div>
-    <a href="/sighting">Back to Index Page</a>
-  </body>
 </html>

@@ -1,6 +1,8 @@
 import express from 'express';
 import methodOverride from 'method-override';
-import { read, add, write } from './jsonFileStorage.js';
+import {
+  read, add, edit, write,
+} from './jsonFileStorage.js';
 
 const app = express();
 
@@ -10,6 +12,17 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
+
+const renderIndex = (request, response) => {
+  console.log('request to load list of sightings came in');
+  read('data.json', (err, data) => {
+    if (err) {
+      console.log('Read error', err);
+    }
+    const { sightings } = data;
+    response.render('index', { sightings });
+  });
+};
 
 // render the form
 const renderForm = (request, response) => {
@@ -28,15 +41,15 @@ const renderAddNewSighting = (request, response) => {
     console.log('new sighting added successfully');
   });
 
-  // read('data.json', (err, data) => {
-  //   if (err) {
-  //     console.log('read error');
-  //   }
+  read('data.json', (err, data) => {
+    if (err) {
+      console.log('read error');
+    }
 
-  //   const index = data.sightings.length - 1;
+    const index = data.sightings.length;
 
-  //   response.redirect(`/sighting/${index}`);
-  // });
+    response.redirect(`/sighting/${index}`);
+  });
 };
 
 const renderIndividualSighting = (request, response) => {
@@ -53,27 +66,67 @@ const renderIndividualSighting = (request, response) => {
   });
 };
 
-const handlePutIncomingForm = (request, response) => {
-  console.log('request to came in');
-
-  const sightingIndex = request.params.index;
-
+// render form to edit a single sighting
+const renderEditSighting = (request, response) => {
+  const { index } = request.params;
   read('data.json', (err, data) => {
     if (err) {
-      console.log('read error!');
+      console.log('Read error: ', err);
     }
-    data.sightings[sightingIndex] = request.body;
-    console.log(request.body);
+    // get the sighting data from content
+    const sightings = data.sightings[index];
+    // add index value to sighting
+    sightings.index = index;
+    // add index obj for ejs template to reference
+    response.render('edit', { sightings, index });
+  });
+};
 
+// add edited data to DB
+const putEditSighting = (request, response) => {
+  const { index } = request.params;
+
+  edit(
+    'data.json',
+    (err, data) => {
+      const { sightings } = data;
+      if (err) {
+        console.log('Edit error: ', err);
+      }
+      // replace content at index with new form data
+      if (!err) {
+        sightings[index] = request.body;
+      }
+    },
+    // add callback function for write function
+    (err) => {
+      if (!err) { response.redirect(`/sighting/${index}`); }
+    },
+  );
+};
+
+const renderDeleteSighting = (request, response) => {
+  const { index } = request.params;
+  response.render('delete', { index });
+};
+const deleteSighting = (request, response) => {
+  console.log('request to delete sighting came in');
+  // Remove element from DB at given index
+  const { index } = request.params;
+  read('data.json', (err, data) => {
+    data.sightings.splice(index, 1);
     write('data.json', data, (err) => {
-      response.render('editSightings', { sightings: data.sightings[sightingIndex] });
+      response.status(200).redirect('/');
     });
   });
 };
 
+app.get('/', renderIndex);
 app.get('/sighting', renderForm);
 app.post('/sighting', renderAddNewSighting);
 app.get('/sighting/:index', renderIndividualSighting);
-app.get('/sighting/:index/edit', handlePutIncomingForm);
-
+app.get('/sighting/:index/edit', renderEditSighting);
+app.put('/sighting/:index/edit', putEditSighting);
+app.get('/sighting/:index', renderDeleteSighting);
+app.delete('/sighting/:index', deleteSighting);
 app.listen(3004);

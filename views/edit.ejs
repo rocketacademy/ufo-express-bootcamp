@@ -7,7 +7,7 @@
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
 
-    <link rel="stylesheet" href="./styles.css" type="text/css" />
+    <link rel="stylesheet" href="/styles.css" type="text/css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
@@ -57,18 +57,48 @@
   </nav>
 
   <body>
-    <form action="/sighting/:index/edit?_method=PUT" method="POST">
-      <label for="date_time">Date & Time :<%= sightings.date_time %></label
-      ><br />
-      <input type="text" id="date_time" name="date_time" size="50" /><br />
-      <label for="city">City:<%= sightings.city %></label><br />
-      <input type="text" id="city" name="city" size="50" /><br />
-      <label for="state">State:<%= sightings.state %></label><br />
-      <input type="text" id="state" name="state" size="50" /><br />
-      <label for="shape">Shape:<%= sightings.shape %></label><br />
-      <input type="text" id="shape" name="shape" size="50" /><br />
+    <form action="/sighting/<%= index %>/edit?_method=PUT" method="POST">
+      <label for="date_time">Date & Time :</label><br />
+      <input
+        type="text"
+        id="date_time"
+        name="date_time"
+        size="50"
+        value="<%= sightings.date_time %>"
+      /><br />
+      <label for="city">City:</label><br />
+      <input
+        type="text"
+        id="city"
+        name="city"
+        size="50"
+        value="
+        <%=sightings.city%>"
+      /><br />
+      <label for="state">State:</label><br />
+      <input
+        type="text"
+        id="state"
+        name="state"
+        size="50"
+        value="<%= sightings.state %>"
+      /><br />
+      <label for="shape">Shape:</label><br />
+      <input
+        type="text"
+        id="shape"
+        name="shape"
+        size="50"
+        value="<%= sightings.shape %>"
+      /><br />
       <label for="duration">Duration:</label><br />
-      <input type="text" id="duration" name="duration" size="50" /><br />
+      <input
+        type="text"
+        id="duration"
+        name="duration"
+        size="50"
+        value="<%= sightings.duration %>"
+      /><br />
       <label for="description"
         >Please describe your encounter here in detail:</label
       ><br />
@@ -77,10 +107,11 @@
         id="description"
         name="description"
         rows="5"
-        col="100"
+        cols="50"
+        value="<%= sightings.description %>"
       ></textarea>
+      <br />
+      <input type="submit" value="Update Sighting" class="submit-btn" />
     </form>
-    <br />
-    <input type="submit" value="Submit" class="submit-btn" />
   </body>
 </html>
