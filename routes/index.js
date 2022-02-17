@@ -21,6 +21,9 @@ const attachRoutes = (app) => {
   const routeToViewAll = `/sighting-all`;
 
   const routeToAddFav = `/sighting-fav-add`;
+  const routeToAllFavs = `/sighting-fav-all`;
+
+  const routeToShapeListing = `/sighting-shape-listing`;
 
   const renderViewSightingOne = (req, res) => {
     const { params } = req;
@@ -142,7 +145,19 @@ const attachRoutes = (app) => {
   // Home
   app.get("/", (req, res) => {
     console.log("Route GET /");
-    res.render("home", { routeToViewAll, routeNewSightingForm });
+    res.render("home", {
+      routeToViewAll,
+      routeNewSightingForm,
+      routeToAllFavs,
+      routeToShapeListing,
+    });
+  });
+
+  app.get(routeToAllFavs, (req, res) => {
+    res.sendStatus(501);
+  });
+  app.get(routeToShapeListing, (req, res) => {
+    res.sendStatus(501);
   });
 
   // Sighting: One
