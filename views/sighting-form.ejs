@@ -1,0 +1,46 @@
+
+<html>
+  <%- include('partials-template/head'); %>
+  <body>
+    <%- include('partials-template/body'); %>
+    <!-- START FROM HERE -->
+
+    <div class="add-desc">+</div>
+
+    <div class="content sighting-add-form-wrap">
+      <form class="input-form--" action=<%= postRoute %> method="POST">
+        <label class="input-form-label sighting-add-form-label" for="text">Description: </label>
+        <br>
+        <input class="input-form-input" type="text" id="text" name="text" value="Input Description Here!">
+        <br>
+        <label class="input-form-label sighting-add-form-label" for="date_time">Time:</label>
+        <br>
+        <input class="input-form-input" type="text" id="date_time" name="date_time" value="Input Time Here!">
+        <br>
+        <label class="input-form-label sighting-add-form-label" for="city">City: </label>
+        <br>
+        <input class="input-form-input" type="text" id="city" name="city" value="Input City Here!">
+        <br>
+        <label class="input-form-label sighting-add-form-label" for="state">State: </label>
+        <br>
+        <input class="input-form-input" type="text" id="state" name="state" value="Input State Here!">
+        <br>
+        <label class="input-form-label sighting-add-form-label" for="duration">Duration: </label>
+        <br>
+        <input class="input-form-input" type="text" id="duration" name="duration" value="Input Duration Here!">
+        <br>
+        <label class="input-form-label sighting-add-form-label" for="summary">Summary: </label>
+        <br>
+        <input class="input-form-input" type="text" id="summary" name="summary" value="Input Summary Here!">
+        <br>
+          <div class="input-edit-submit-wrap">
+            <input class="input-form-submit" type="submit" value="Submit">
+          </div>
+      </form> 
+    </div>
+  </body>
+</html>
+
+
+
+

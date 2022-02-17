@@ -1,0 +1,29 @@
+
+
+<!-- Copy this for typical format -->
+<html>
+  <%- include('partials-template/head'); %>
+  <body>
+    <%- include('partials-template/body'); %>
+    <!-- START YOUR CUSTOM CODE FROM HERE -->
+    <div class=" sighting-all-desc"> ALL </div>
+    <div class="container sighting-all">
+
+        <div class="list-group sighting-all-ul">
+
+ <% sightings.forEach((sighting,index) => { %>
+
+  <a href="<%= routeToViewOne %>/<%= index %>" class="list-group-item list-group-item-action sighting-all-li"> <div class="sighting-key">Description:</div> <div class="sighting-value"><%= sighting.text %></div> </a>
+  
+ <% }); %> 
+
+</div>
+
+
+
+      
+    </div>
+  </body>
+</html>
+
+
