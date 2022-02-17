@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
+      integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/styles.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav class="navbar py-0 navbar-expand-lg navbar-light small">
+      <div class="container-fluid">
+        <a class="navbar-brand text-dark fw-bolder fs-5" href="/">Home</a>
+        <button
+          class="navbar-toggler bg-light rounded my-2"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active text-dark fs-6"
+                aria-current="page"
+                href="/sighting"
+                >Submit Sighting</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active text-dark fs-6"
+                aria-current="page"
+                href="/shapes"
+                >By Shapes</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active text-dark fs-6"
+                aria-current="page"
+                href="#"
+                >By Cities</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container ">
+      <div class="row text-center my-2">
+         
+         <h2 class="text-light mt-2">Edit Sighting</h2>
+      </div>
+ <div class="row text-start justify-content-center bg-dark list-holder mx-1  mx-sm-5">
+        
+          <div class="mb-2 col-md-10 form">
+          <form
+            action="/sighting/<%=index%>/edit?_method=PUT"
+            class="small text-light fw-bolder"
+            method="POST"
+          >
+            <div>
+              <label for="text" class="form-label">TEXT*</label>
+              <textarea id="text" name="text" class="form-control" required>
+<%=sightings.text%></textarea
+              >
+            </div>
+            <div>
+              <label for="date_UTC" class="form-label">DATE TIME (PST)*</label>
+              <input
+                type="datetime-local"
+                id="date_UTC"
+                value="<%=sightings.date_UTC%>"
+                name="date_UTC"
+                class="form-control"
+                max="<%=new Date().toLocaleString('sv-SE', { timeZone: 'America/Los_Angeles' }).replace(' ', 'T')%>"
+                required
+              />
+            </div>
+            <div>
+            <label for="city" class="form-label">CITY*</label>
+           <input list="cities" name="city" autocomplete="off" onfocus="this.value=''" onchange="this.blur();" class="form-control" placeholder="<%=sightings.city%>" required/>
+              <datalist id="cities">
+                <% cities.forEach(city=>{%>
+                  
+                  <option value="<%=city%>"></option>
+                <%})%>
+              </datalist>
+          </div>
+      
+            <div>
+              <label for="state" class="form-label">STATE</label>
+              <input
+                type="text"
+                id="state"
+                name="state"
+                value="<%=sightings.state%>"
+                class="form-control"
+              />
+            </div>
+                 <div>
+            <label for="shape" class="form-label">SHAPE*</label>
+           <input list="shapes" name="shape" autocomplete="off" onfocus="this.value=''" onchange="this.blur();"class="form-control" placeholder="<%=sightings.shape%>" required/>
+              <datalist id="shapes">
+                <% shapes.forEach(shape=>{%>
+                  
+                  <option value="<%=shape%>"></option>
+                <%})%>
+              </datalist>
+          </div>
+            <div>
+              <label for="duration" class="form-label"
+                >DURATION (minutes)</label
+              >
+              <input
+                type="number"
+                min="0"
+                id="duration"
+                value="<%=sightings.duration%>"
+                name="duration"
+                class="form-control"
+              />
+            </div>
+            <div>
+              <label for="summary" class="form-label">SUMMARY</label>
+              <textarea
+                id="summary"
+                name="summary"
+                
+                class="form-control"
+              ><%=sightings.summary%></textarea>
+            </div>
+            
+
+            <div>Recorded:</div>
+            <div><%=sightings.recorded%></div>
+
+            <%if(sightings.edited){%>
+            <div>Edited:</div>
+            <div><%=sightings.edited%></div>
+            <%}%>
+   <div class="div">
+            <h6 class="fst-italic mt-1">* denotes a required field</h6>
+          </div>
+            
+            <div class="my-3">
+            <input type="submit" class="form-control bg-primary border-primary text-light"/>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- <script>
+      let dateControl = document.querySelector('input[type="datetime-local"]');
+      dateControl.max = new Date()
+        .toISOString()
+        .split("T")[0]
+        .concat("T00:00:00");
+
+      console.log(dateControl.max); -->
+    </script>
+  </body>
+</html>

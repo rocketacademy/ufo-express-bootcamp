@@ -1,0 +1,13 @@
+#content {
+  font-size: 90%;
+}
+
+body {
+  background-image: url("../images/test.jpeg");
+
+  background-size: cover;
+}
+
+.list-holder {
+  opacity: 0.85;
+}
