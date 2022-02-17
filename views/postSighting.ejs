@@ -1,0 +1,21 @@
+<%- include('header', {title: `Create new sightings`}); -%>
+  <body>
+    <form action="/sightings" method="POST">
+      <label for="city">City:</label><br />
+      <input type="text" id="city" name="city" /><br />
+      <label for="state">State:</label><br />
+      <input type="text" id="state" name="state" /><br />
+      <label for="shape">Shape:</label><br />
+      <select id="shape" name="shape">
+        <option value="Fireball">Fireball</option>
+        <option value="Sphere">Sphere</option>
+      </select><br />
+      <label for="text">Observed:</label><br />
+      <textarea name="text" rows="10" cols="30"></textarea><br />
+      <label for="summary">Summary:</label><br />
+      <textarea name="summary" rows="10" cols="30"></textarea><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
