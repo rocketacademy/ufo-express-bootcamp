@@ -83,3 +83,48 @@ router.get("/sighting/:index", (req, res) => {
    res.render("viewSighting", sight)
   });
 })
+
+router.get("/shapes", (req,res) => {
+  read("data.json", (err, data) => { 
+  
+  let shapeArray = data.sightings.map(x => x.shape);
+  //console.log(shapeArray);
+
+  let uniqueShapeArray = [...new Set(shapeArray)];
+  //console.log(uniqueShapeArray);
+  
+  let newData = {};
+  newData["shapes"] = uniqueShapeArray;
+
+  res.render("viewListOfShapes",newData);
+  });
+});
+
+router.get("/shapes/:shape", (req,res) => {
+  read("data.json", (err, data) => { 
+    // Obtain data to inject into EJS template
+    let sightingData = data.sightings;
+ 
+   // assign an index to the sighting data that represents their ORIGINAL position
+    sightingData = sightingData.map((sighting, index) => ({
+      ...sighting,
+      index,
+    }));
+
+  let sightingsFound = sightingData.filter((sight) => {
+      return req.params.shape.toLowerCase() === sight.shape.toLowerCase();
+    });
+    if (sightingsFound.length === 0) {
+      res.status(404).send("Sorry, we cannot find that!");
+      // stop further execution in this callback
+      return;
+    }
+  //console.log(sightingsFound);
+  
+  let newData = {};
+  newData["sightings"] = sightingsFound;
+  //console.log(newData);
+
+  res.render("viewListByShapes",newData);
+  });
+});

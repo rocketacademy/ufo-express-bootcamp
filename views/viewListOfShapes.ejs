@@ -1,0 +1,13 @@
+<%- include('header', {title: `Shapes`}); -%>
+  <body>
+    
+    <% shapes.forEach((value) => { %>
+    
+    <a href="/shapes/<%= value %>">Shapes: <%= value %></a>
+    
+    <br />
+    
+    <% }); %>
+    
+  </body>
+</html>

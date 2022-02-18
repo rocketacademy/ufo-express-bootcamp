@@ -24,12 +24,21 @@ text=Text values
 &summary=Summary value test
 ###
 
-DELETE http://localhost:3004/sighting/2
+DELETE http://localhost:3004/sighting/3
 ###
 
 GET http://localhost:3004/sighting/1
 ###
 
 GET http://localhost:3004/sighting/1/edit
+###
+
+GET http://localhost:3004/shapes
+###
+
+GET http://localhost:3004/shapes/fireball
+###
+
+GET http://localhost:3004/shapes/sphere
 ###
 

@@ -1,0 +1,13 @@
+<%- include('header', {title: `Shapes`}); -%>
+  <body>
+    
+    <% sightings.forEach((element, index) => { %>
+    
+    <a href="/sighting/<%= element.index %>">Sighting <%= element.index %></a>
+    
+    <br />
+    
+    <% }); %>
+    
+  </body>
+</html>
