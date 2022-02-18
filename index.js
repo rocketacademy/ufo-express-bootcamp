@@ -1,16 +1,41 @@
 import express from 'express';
 import methodOverride from 'method-override';
+import moment from 'moment';
+import crypto from 'crypto';
+import cookieParser from 'cookie-parser';
 import { read, add, write } from './jsonFileStorage.js';
 
 const app = express();
 
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
-
-// Override POST requests with query param ?_method=PUT to be PUT requests
 app.use(methodOverride('_method'));
+app.use(cookieParser());
+
+const countVisits = (req, res, next) => {
+  let visits = 0;
+
+  if (!req.cookies['user-id']
+    || (moment().diff(req.cookies['last-visit'], 'days') > 1)) {
+    res.cookie('user-id', crypto.randomUUID());
+    res.cookie('last-visit', moment().format('YYYY-MM-DD HH:mm:ss'));
+
+    if (req.cookies.visits) {
+      visits = Number(req.cookies.visits);
+    }
+    visits += 1;
+
+    res.cookie('visits', visits);
+  }
+
+  next();
+};
+
+app.use(countVisits);
 
 app.set('view engine', 'ejs');
+
+moment().format();
 
 const getSightingShapes = (req, res) => {
   read('data.json', (err, data) => {
@@ -39,8 +64,17 @@ const createSummary = (text) => {
   return description;
 };
 
+// eslint-disable-next-line max-len
+const isSightingDataValid = (data) => moment(data.date_time).isValid() && moment(data.date_time).isSameOrBefore(moment());
+
 const createSighting = (req, res) => {
+  if (!isSightingDataValid(req.body)) {
+    res.status(404).send('Input is invalid!');
+    return;
+  }
+
   req.body.summary = createSummary(req.body.text);
+  req.body.created_time = moment().format('YYYY-MM-DD HH:mm:ss');
 
   add('data.json', 'sightings', req.body, (err, dataNew) => {
     if (err) {
@@ -103,6 +137,11 @@ const editSighting = (req, res) => {
     return;
   }
 
+  if (!isSightingDataValid(req.body)) {
+    res.status(404).send('Input is invalid!');
+    return;
+  }
+
   read('data.json', (err, data) => {
     if (err) {
       res.status(500).send('DB read error.');
@@ -110,6 +149,8 @@ const editSighting = (req, res) => {
     }
 
     req.body.summary = createSummary(req.body.text);
+    req.body.created_time = data.sightings[index].created_time;
+    req.body.updated_time = moment().format('YYYY-MM-DD HH:mm:ss');
     data.sightings[index] = req.body;
 
     write('data.json', data, (writeErr) => {
@@ -139,6 +180,8 @@ const getSightingByIndex = (req, res) => {
     }
 
     const sighting = data.sightings[index];
+    sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
+    sighting.created_time = moment(sighting.created_time).fromNow();
 
     if (sighting) {
       res.render('sighting', { sighting });
