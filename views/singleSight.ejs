@@ -1,83 +1,32 @@
-<html>
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-
-    <link rel="stylesheet" href="/styles.css" type="text/css" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
-      crossorigin="anonymous"
-    />
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
-      crossorigin="anonymous"
-    ></script>
-
-    <title>UFO Sightings App</title>
-  </head>
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">UFO Sightings</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarNav"
-      aria-controls="navbarNav"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#"
-            >Home<span class="sr-only">(current)</span></a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">By Category</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <body>
-    <h1>UFO Sighting Details</h1>
-    <p>
-      DateTime: <%= sightings.date_time %>
-      <br />
-      City: <%= sightings.city %>
-      <br />
-      State: <%= sightings.state %>
-      <br />
-      Shape: <%= sightings.shape %>
-      <br />
-      Description: <%= sightings.text %>
-      <br />
-      Summary: <%= sightings.summary %>
-    </p>
-    <div class="d-flex flex-row">
-      <a href="'/sighting/<%= index %>/edit">
-        <input type="button" value="Edit Sighting" />
-      </a>
-      <form action="/sighting/<%= index %>?_method=DELETE" method="POST">
-        <input type="submit" value="Delete" />
-      </form>
-    </div>
-    <a href="/sighting">Back to Index Page</a>
-  </body>
-</html>
+<%- include('header'); -%>
+<body class="bg-info">
+  <div class="container ml-1">
+  <br />
+  <h1>UFO Sighting Details</h1>
+  <br />
+  <p>
+    <strong>DateTime:</strong> <%= sightings.date_time %>
+    <br />
+    <strong>City:</strong> <%= sightings.city %>
+    <br />
+    <strong>State:</strong> <%= sightings.state %>
+    <br />
+    <strong>Shape:</strong> <%= sightings.shape %>
+    <br />
+    <strong>Description:</strong> <%= sightings.text %>
+    <br />
+    <strong>Summary:</strong> <%= sightings.summary %>
+  </p>
+  <div class="d-flex flex-row">
+    <a href="<%= index %>/edit">
+      <input type="button" value="Edit Sighting" class="mr-1"/>
+    </a>
+    <form action="/sighting/<%= index %>?_method=DELETE" method="POST">
+      <input type="submit" value="Delete" />
+    </form>
+  </div>
+  <a class="text-dark"
+href="/">Back to Home Page</a>
+</body>
+</div>
+<%- include('footer'); -%>

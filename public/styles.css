@@ -1,3 +1,11 @@
 h1 {
   color: red;
 }
+
+body {
+  background-color: #2bdb6b;
+}
+
+a:link {
+  color: black;
+}

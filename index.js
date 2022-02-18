@@ -121,6 +121,21 @@ const deleteSighting = (request, response) => {
   });
 };
 
+const renderListOfShapes = (request, response) => {
+  read('data.json', (err, data) => {
+    if (err) {
+      console.log('Read error:', err);
+    }
+    const shapesList = [];
+    data.sightings.forEach((sighting) => {
+      shapesList.push(sighting.shape);
+    });
+    const filteredShapeList = [...new Set(shapesList)];
+    console.log(filteredShapeList);
+    response.render('shapes', { filteredShapeList });
+  });
+};
+
 app.get('/', renderIndex);
 app.get('/sighting', renderForm);
 app.post('/sighting', renderAddNewSighting);
@@ -129,4 +144,5 @@ app.get('/sighting/:index/edit', renderEditSighting);
 app.put('/sighting/:index/edit', putEditSighting);
 app.get('/sighting/:index', renderDeleteSighting);
 app.delete('/sighting/:index', deleteSighting);
+app.get('/shapes', renderListOfShapes);
 app.listen(3004);
