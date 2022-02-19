@@ -1,9 +1,9 @@
 h1 {
-  color: red;
+  color: #03045e;
 }
 
-body {
-  background-color: #2bdb6b;
+.bg-color {
+  background-color: #00b4d8;
 }
 
 a:link {
