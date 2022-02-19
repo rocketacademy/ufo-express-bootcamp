@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sighting Form</title>
+  </head>
+  <body>
+    <form action="/sighting" method="POST">
+      <label for="description">Text: </label><br />
+      <textarea id="description" name="text"></textarea><br />
+      <label for="date_time">Datetime: </label><br />
+      <input type="datetime-local" id="date_time" name="date_time" /><br />
+      <label for="city">City: </label><br />
+      <input type="text" id="city" name="city" /><br />
+      <label for="state">State: </label><br />
+      <input type="text" id="state" name="state" /><br />
+      <label for="shape">Shape: </label><br />
+      <input type="text" id="shape" name="shape" /><br />
+      <label for="duration">Duration: </label><br />
+      <input type="number" id="duration" name="duration" min="0" />
+      <label for="duration">minutes</label><br />
+      <label for="summary">Summary: </label><br />
+      <input type="text" id="summary" name="summary" /><br /><br />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>
