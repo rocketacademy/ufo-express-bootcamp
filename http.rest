@@ -9,7 +9,7 @@ Content-Type: application/x-www-form-urlencoded
 
 city=City value
 &state=TestState value
-&shape=Shape value
+&shape=Fireball
 &text=Text value
 &summary=Summary value
 ###
@@ -20,7 +20,7 @@ Content-Type: application/x-www-form-urlencoded
 text=Text values
 &city=City value test
 &state=TestState value test
-&shape=Shape value test
+&shape=Fireball
 &summary=Summary value test
 ###
 

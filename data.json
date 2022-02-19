@@ -29,9 +29,16 @@
       "city": "",
       "state": "",
       "date_time": "02/01/2022",
-      "shape": "",
+      "shape": "Sphere",
       "text": "",
       "summary": ""
+    },
+    {
+      "city": "City value",
+      "state": "TestState value",
+      "shape": "Fireball",
+      "text": "Text value",
+      "summary": "Summary value"
     }
   ]
 }
