@@ -44,7 +44,7 @@ router.delete('/sighting/:index',(req,res) => {
   read('data.json', (err, data) => {
     data['sightings'].splice(index, 1);
     write('data.json', data, (err) => {
-      res.send('The data has been deleted successfully!');
+      res.render('viewList',data);
     });
   });
 });
@@ -63,9 +63,9 @@ router.post("/sighting", (req, res) => {
     const jsonContentObj = JSON.parse(jsonContentStr);
     
     // Acknowledge data saved.
-    res.send('Your data has been saved successfully!');
-    //let index = jsonContentObj.sightings.length;
-    //res.redirect(`/sightings/${index-1}`)
+    //res.send('Your data has been saved successfully!');
+    let index = jsonContentObj.sightings.length;
+    res.redirect(`/sighting/${index-1}`)
   })
 })
 

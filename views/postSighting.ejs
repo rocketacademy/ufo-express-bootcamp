@@ -1,12 +1,13 @@
 <%- include('header', {title: `Create new sightings`}); -%>
-  <body>
-    <form action="/sightings" method="POST">
+  
+    <form action="/sighting" method="POST">
       <label for="city">City:</label><br />
       <input type="text" id="city" name="city" /><br />
       <label for="state">State:</label><br />
       <input type="text" id="state" name="state" /><br />
       <label for="shape">Shape:</label><br />
       <select id="shape" name="shape">
+        <option value="" selected="selected" hidden="hidden">Choose here</option>
         <option value="Fireball">Fireball</option>
         <option value="Sphere">Sphere</option>
       </select><br />
