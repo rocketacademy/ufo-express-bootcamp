@@ -136,6 +136,27 @@ const renderListOfShapes = (request, response) => {
   });
 };
 
+const renderSightingByShape = (request, response) => {
+  console.log('request for selected shape came in ');
+  const { shapes } = request.params;
+  console.log(shapes);
+
+  read('data.json', (err, data) => {
+    if (err) {
+      console.log('read error', err);
+    }
+    console.log(data.sightings);
+
+    // eslint-disable-next-line max-len
+    const selectedShapeSightings = data.sightings.filter((sighting) => (sighting.shape.toLowerCase()) === shapes);
+
+    if (selectedShapeSightings.length > 0) {
+      response.render('sightingsByShape', { selectedShapeSightings, shapes });
+    }
+    else response.status(404).send('Sorry, we cannot find that!');
+  });
+};
+
 app.get('/', renderIndex);
 app.get('/sighting', renderForm);
 app.post('/sighting', renderAddNewSighting);
@@ -145,4 +166,5 @@ app.put('/sighting/:index/edit', putEditSighting);
 app.get('/sighting/:index', renderDeleteSighting);
 app.delete('/sighting/:index', deleteSighting);
 app.get('/shapes', renderListOfShapes);
+app.get('/shapes/:shapes', renderSightingByShape);
 app.listen(3004);

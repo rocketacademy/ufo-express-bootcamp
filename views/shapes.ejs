@@ -5,7 +5,7 @@
     <h1>List of Sightings Shapes</h1>
     <br />
     <% for( let i = 0; i < filteredShapeList.length; i++ ) { %>
-    <a href="/shapes/<%= filteredShapeList[i] %>"
+    <a href="/shapes/<%= filteredShapeList[i].toLowerCase() %>"
       ><p><%= i +1%>: <%= filteredShapeList[i] %></p></a
     >
     <% } %>

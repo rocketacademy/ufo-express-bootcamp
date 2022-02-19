@@ -1,60 +1,73 @@
 <%- include('header'); -%>
 
-<body>
-  <form action="/sighting/<%= index %>/edit?_method=PUT" method="POST">
-    <label for="date_time">Date & Time :</label><br />
-    <input
-      type="text"
-      id="date_time"
-      name="date_time"
-      size="50"
-      value="<%= sightings.date_time %>"
-    /><br />
-    <label for="city">City:</label><br />
-    <input
-      type="text"
-      id="city"
-      name="city"
-      size="50"
-      value="<%=sightings.city%>"
-    /><br />
-    <label for="state">State:</label><br />
-    <input
-      type="text"
-      id="state"
-      name="state"
-      size="50"
-      value="<%= sightings.state %>"
-    /><br />
-    <label for="shape">Shape:</label><br />
-    <input
-      type="text"
-      id="shape"
-      name="shape"
-      size="50"
-      value="<%= sightings.shape %>"
-    /><br />
-    <label for="duration">Duration:</label><br />
-    <input
-      type="text"
-      id="duration"
-      name="duration"
-      size="50"
-      value="<%= sightings.duration %>"
-    /><br />
-    <label for="description"
-      >Please describe your encounter here in detail:</label
-    ><br />
-    <textarea
-      type="textarea"
-      id="description"
-      name="description"
-      rows="5"
-      cols="50"
-      value="<%= sightings.description %>"
-    ></textarea>
+<body class="bg-info">
+  <div class="container ml-1">
     <br />
-    <input type="submit" value="Update Sighting" class="submit-btn" />
-  </form>
+    <h1>Edit Your Sighting</h1>
+
+    <form action="/sighting/<%= index %>/edit?_method=PUT" method="POST">
+      <label for="date_time">Date & Time :</label><br />
+      <input
+        type="text"
+        id="date_time"
+        name="date_time"
+        size="50"
+        class="form-control"
+        value="<%= sightings.date_time %>"
+      /><br />
+      <label for="city">City:</label><br />
+      <input
+        type="text"
+        id="city"
+        name="city"
+        size="50"
+        class="form-control"
+        value="<%=sightings.city%>"
+      /><br />
+      <label for="state">State:</label><br />
+      <input
+        type="text"
+        id="state"
+        name="state"
+        size="50"
+        class="form-control"
+        value="<%= sightings.state %>"
+      /><br />
+      <label for="shape">Shape:</label><br />
+      <input
+        type="text"
+        id="shape"
+        name="shape"
+        size="50"
+        class="form-control"
+        value="<%= sightings.shape %>"
+      /><br />
+      <label for="duration">Duration:</label><br />
+      <input
+        type="text"
+        id="duration"
+        name="duration"
+        size="55"
+        class="form-control"
+        value="<%= sightings.duration %>"
+      /><br />
+      <label for="itext">Statement:</label><br />
+      <textarea
+        type="text"
+        id="itext"
+        name="text"
+        rows="4"
+        cols="40"
+        class="form-control"
+        required
+      >
+<%= sightings.text %>
+      </textarea>
+      <br />
+      <br />
+
+      <input type="submit" value="Update Sighting" class="submit-btn" />
+    </form>
+  </div>
   <%- include('footer'); -%>
 </body>

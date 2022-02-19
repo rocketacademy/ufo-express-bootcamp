@@ -1,0 +1,15 @@
+<%- include('header'); -%>
+<body class="bg-info"></body>
+<div class="container ml-1">
+<h1>List of <%= shapes %> Sightings</h1><br />
+<% for( let i = 0; i < selectedShapeSightings.length; i++ ) { %>
+<a 
+class="text-dark"
+href="/sighting/<%= i %>"
+>Sighting <%= i + 1 %> </a >
+<br />
+<% } %>
+</a>
+<br />
+
+<%- include('footer'); -%>
