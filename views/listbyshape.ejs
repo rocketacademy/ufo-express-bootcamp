@@ -1,0 +1,15 @@
+<%- include('header', {title: 'List of Sightings by Shape'}); -%> <%-
+include('navbar'); -%>
+<div class="container-lg text-center">
+  <h2>List of <%= shapeSightings.shape %> sightings</h2>
+  <ul class="list-group">
+    <% for(let i = 0; i < shapeSightings.index.length; i += 1) { %>
+    <li class="list-group-item">
+      <a href="/sighting/<%= shapeSightings.index[i] %>"
+        >Sighting <%= parseInt(shapeSightings.index[i]) + 1 %></a
+      >
+    </li>
+    <% } %>
+  </ul>
+</div>
+<%- include('footer'); -%>

@@ -1,20 +1,7 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
-      crossorigin="anonymous"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>UFO Sighting <%= sightingInfo.index %></title>
-  </head>
-  <body>
-    <h1>UFO Sighting <%= sightingInfo.index %></h1>
+<%- include('header', {title: `View Sighting`}); -%> <%- include('navbar');
+-%>
+<div class="container-lg text-center">
+    <h2>UFO Sighting <%= parseInt(sightingInfo.index) + 1 %></h2>
     <p><h3>Text:</h3> <%= sightingInfo.text %></p>
     <p><h3>Date and Time:</h3> <%= sightingInfo.date_time %></p>
     <p><h3>City:</h3> <%= sightingInfo.city %></p>
@@ -22,6 +9,5 @@
     <p><h3>Shape:</h3> <%= sightingInfo.shape %></p>
     <p><h3>Duration:</h3> <%= sightingInfo.duration %></p>
     <p><h3>Summary:</h3> <%= sightingInfo.summary %></p>
-    <a href="/">Back to home page</a>
-  </body>
-</html>
+  </div>
+<%- include('footer'); -%> 

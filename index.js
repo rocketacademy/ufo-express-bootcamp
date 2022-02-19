@@ -63,6 +63,8 @@ app.get('/sighting/:index/edit', (request, response) => {
   });
 });
 
+// PUT function to edit sighting
+
 app.put('/sighting/:index', (request, response) => {
   console.log('received request to edit sighting index');
   console.log(request.params.index);
@@ -74,6 +76,62 @@ app.put('/sighting/:index', (request, response) => {
       console.log('edit successful');
       response.render('sightingedited');
     });
+  });
+});
+
+// DELETE function to delete sighting
+
+app.delete('/sighting/:index', (request, response) => {
+  console.log('received request to delete sighting index');
+  console.log(request.params.index);
+  const { index } = request.params;
+  read('data.json', (err, data) => {
+    // replace the data in the object at the given index
+    data.sightings.splice(index, 1);
+    write('data.json', data, (err) => {
+      console.log('delete successful');
+      response.render('sightingdeleted');
+    });
+  });
+});
+
+// GET page that renders a list of sighting shapes
+
+app.get('/shapes', (request, response) => {
+  console.log('request sent to GET page with list of sighting shapes');
+  read('data.json', (err, data) => {
+    const sightingObj = data.sightings;
+    const shapeTally = {};
+    for (let i = 0; i < sightingObj.length; i += 1) {
+      const currentShape = sightingObj[i].shape;
+      if (currentShape in shapeTally) {
+        shapeTally[currentShape] += 1;
+      } else {
+        shapeTally[currentShape] = 1;
+      }
+    }
+    console.log(shapeTally);
+    response.render('sightingshapes', { shapeTally });
+  });
+});
+
+// GET page that renders a list of sightings by shape
+
+app.get('/shapes/:shape', (request, response) => {
+  console.log('request sent to GET list of sightings with shape:');
+  console.log(request.params.shape);
+  const { shape } = request.params;
+  read('data.json', (err, data) => {
+    const sightingObj = data.sightings;
+    const shapeSightings = {};
+    shapeSightings.index = [];
+    for (let i = 0; i < sightingObj.length; i += 1) {
+      if (sightingObj[i].shape.toLowerCase() === shape) {
+        shapeSightings.shape = shape;
+        shapeSightings.index.push(i);
+      }
+    }
+    response.render('listbyshape', { shapeSightings });
   });
 });
 

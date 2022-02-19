@@ -1,21 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
-      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
-      crossorigin="anonymous"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>Create UFO Sighting</title>
-  </head>
+<%- include('header', {title: `Create UFO Sighting`}); -%> <%- include('navbar');
+-%>
 
   <body>
-    <h1>Create New UFO Sighting</h1>
+    <div class="container-lg text-center">
+    <h2>Create New UFO Sighting</h2>
     <form action="/sighting" method="POST">
       <label for="text">Account of sighting</label><br />
       <input type="text" id="text" name="text" /><br />
@@ -33,5 +21,6 @@
       <input type="text" id="summary" name="summary" /><br />
       <input type="submit" value="Submit" />
     </form>
+  </div>
   </body>
 </html>
