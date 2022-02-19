@@ -1,14 +1,20 @@
 <%- include('header', {title: `Sightings`}); -%>
   
     <form action="/sighting/<%= index %>?_method=DELETE" method="POST">
+      <div>
       <p>Text:<%= text %></p>
       <p>City:<%= city %></p>
       <p>State:<%= state %></p>
       <p>Shape:<%= shape %></p>
       <p>Summary:<%= summary %></p>
-      <input type="submit" value="Delete" />
+      
+      <a href="/sighting/<%= index %>/edit"><input type="button" value="Edit" class="btn" /></a>
+
+      <input class="btn" type="submit" value="Delete" />
+      </div>
     </form>
+    
     <br />
-    <a href="/sighting/<%= index %>/edit"><button>Edit</button></a>
+    
   </body>
 </html>

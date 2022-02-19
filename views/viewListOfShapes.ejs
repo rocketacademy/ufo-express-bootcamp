@@ -1,6 +1,6 @@
 <%- include('header', {title: `Shapes`}); -%>
   
-    
+    <div>
     <% shapes.forEach((value) => { %>
     
     <a href="/shapes/<%= value %>">Shapes: <%= value %></a>
@@ -8,6 +8,6 @@
     <br />
     
     <% }); %>
-    
+    </div>
   </body>
 </html>

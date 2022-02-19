@@ -1,6 +1,7 @@
 <%- include('header', {title: `Create new sightings`}); -%>
   
     <form action="/sighting" method="POST">
+      <div>
       <label for="city">City:</label><br />
       <input type="text" id="city" name="city" /><br />
       <label for="state">State:</label><br />
@@ -16,7 +17,8 @@
       <label for="summary">Summary:</label><br />
       <textarea name="summary" rows="10" cols="30"></textarea><br />
 
-      <input type="submit" value="Submit" />
+      <input class="btn" type="submit" value="Submit" />
+      </div>
     </form>
   </body>
 </html>

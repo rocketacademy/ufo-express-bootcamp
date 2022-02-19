@@ -1,6 +1,6 @@
 <%- include('header', {title: `Shapes`}); -%>
   
-    
+    <div>
     <% sightings.forEach((element, index) => { %>
     
     <a href="/sighting/<%= element.index %>">Sighting <%= element.index %></a>
@@ -8,6 +8,6 @@
     <br />
     
     <% }); %>
-    
+    </div>
   </body>
 </html>
