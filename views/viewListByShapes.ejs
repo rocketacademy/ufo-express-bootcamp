@@ -1,13 +1,11 @@
 <%- include('header', {title: `Shapes`}); -%>
-  
-    <div>
     <% sightings.forEach((element, index) => { %>
-    
-    <a href="/sighting/<%= element.index %>">Sighting <%= element.index %></a>
-    
-    <br />
-    
+    <form action="/sighting/<%= element.index %>?_method=DELETE" method="POST">
+    <a class="mr-6" href="/sighting/<%= element.index %>">Sighting <%= element.index %></a>
+    <input class="btn" type="submit" value="Delete" />
+    <br/>
+    </form>
     <% }); %>
-    </div>
+    
   </body>
 </html>

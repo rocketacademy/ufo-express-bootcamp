@@ -2,20 +2,25 @@
   
     <form action="/sighting/<%= sight.index %>?_method=PUT" method="POST">
       <div>
-    <label for="city">City:</label><br />
-      <input type="text" id="city" name="city" value="<%= sight.city %>"/><br />
-      <label for="state">State:</label><br />
-      <input type="text" id="state" name="state" value="<%= sight.state %>"/><br />
-      <label for="shape">Shape:</label><br />
-      <select id="shape" name="shape" >
+    <label class="label" for="city">City:</label>
+      <input class="input" type="text" id="city" name="city" value="<%= sight.city %>"/><br />
+      <label class="label" for="state">State:</label>
+      <input class="input" type="text" id="state" name="state" value="<%= sight.state %>"/><br />
+      <label class="label" for="shape">Shape:</label>
+      <div class="relative">
+      <select class="input" id="shape" name="shape" >
         <option value="" selected="selected" hidden="hidden">Choose here</option>
         <option value="Fireball">Fireball</option>
         <option value="Sphere">Sphere</option>
-      </select><br />
-      <label for="text">Observed:</label><br />
-      <textarea name="text" rows="10" cols="30"><%= sight.text %></textarea><br />
-      <label for="summary">Summary:</label><br />
-      <textarea name="summary" rows="10" cols="30"><%= sight.summary %></textarea><br />
+      </select>
+      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+          <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+        </div>
+      </div><br />
+      <label class="label" for="text">Observed:</label>
+      <textarea class="input" name="text" rows="5" cols="30"><%= sight.text %></textarea><br />
+      <label class="label" for="summary">Summary:</label>
+      <textarea class="input" name="summary" rows="5" cols="30"><%= sight.summary %></textarea><br />
       <input class="btn" type="submit" value="Submit" />
       </div>
     </form>

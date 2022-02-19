@@ -1,13 +1,18 @@
 <%- include('header', {title: `Sightings`}); -%>
   
     <form action="/sighting/<%= index %>?_method=DELETE" method="POST">
-      <div>
-      <p>Text:<%= text %></p>
-      <p>City:<%= city %></p>
-      <p>State:<%= state %></p>
-      <p>Shape:<%= shape %></p>
-      <p>Summary:<%= summary %></p>
-      
+      <div class="view">
+      <p class="label">City:</p>
+      <p class="field-values"><%= city %></p>
+      <p class="label">State:</p>
+      <p class="field-values"><%= state %></p>
+      <p class="label">Shape:</p>
+      <p class="field-values"><%= shape %></p>
+      <p class="label">Observed:</p>
+      <p class="field-values"><%= text %></p>
+      <p class="label">Summary:</p>
+      <p class="field-values"><%= summary %></p>
+      <br>
       <a href="/sighting/<%= index %>/edit"><input type="button" value="Edit" class="btn" /></a>
 
       <input class="btn" type="submit" value="Delete" />

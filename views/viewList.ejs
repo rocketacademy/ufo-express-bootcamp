@@ -1,7 +1,7 @@
 <%- include('header', {title: `Home`}); -%>
 <% sightings.forEach((element, index) => { %>
     <form action="/sighting/<%= index %>?_method=DELETE" method="POST">
-    <a href="/sighting/<%= index %>">Sighting <%= index %></a>
+    <a class="mr-6" href="/sighting/<%= index %>">Sighting <%= index %></a>
     <input class="btn" type="submit" value="Delete" />
     <br />
     </form>

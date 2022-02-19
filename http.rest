@@ -7,10 +7,10 @@ GET http://localhost:3004/sighting
 POST http://localhost:3004/sighting
 Content-Type: application/x-www-form-urlencoded
 
-text=Text value
-&city=City value
+city=City value
 &state=TestState value
 &shape=Shape value
+&text=Text value
 &summary=Summary value
 ###
 
