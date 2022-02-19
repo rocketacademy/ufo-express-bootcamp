@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('header'); -%>
   <body>
+    <%- include('navigation', { page: 'edit' }); -%>
     <form action="/sighting/<%= sighting.index %>?_method=PUT" method="POST">
       <label for="text">DESCRIPTION:</label><br />
       <input

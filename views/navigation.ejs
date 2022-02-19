@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">UFO</a>
+    <a class="navbar-brand" href="#">UFO Sightings</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -14,9 +14,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="/sighting">Sighting</a>
-        <a class="nav-link" href="/shapes">Shapes</a>
+        <a
+          class="nav-link<%= ((page === 'new') || (page === 'shapes')) ? '' : ' active' %>"
+          <%= ((page === 'new') || (page === 'shapes')) ? '' : 'aria-current="page"' %>
+          href="/"
+          >Home</a
+        >
+        <a
+          class="nav-link<%= (page === 'new') ? ' active' : '' %>"
+          <%= (page === 'new') ? 'aria-current="page"' : '' %>
+          href="/sighting"
+          >New Sighting</a
+        >
+        <a
+          class="nav-link<%= (page === 'shapes') ? ' active' : '' %>"
+          <%= (page === 'shapes') ? 'aria-current="page"' : '' %>
+          href="/shapes"
+          >Shapes</a
+        >
       </div>
     </div>
   </div>

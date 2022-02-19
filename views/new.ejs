@@ -1,17 +1,22 @@
-<%- include('header') -%>
-<form action="/sighting" method="POST">
-  <label for="text">DESCRIPTION:</label><br />
-  <input type="text" id="text" name="text" /><br />
-  <label for="date_time">DATE/TIME:</label><br />
-  <input type="text" id="date_time" name="date_time" /><br />
-  <label for="city">CITY:</label><br />
-  <input type="text" id="city" name="city" /><br />
-  <label for="state">STATE:</label><br />
-  <input type="text" id="state" name="state" /><br />
-  <label for="shape">SHAPE:</label><br />
-  <input type="text" id="shape" name="shape" /><br />
-  <label for="duration">DURATION:</label><br />
-  <input type="text" id="duration" name="duration" /><br />
-  <input type="submit" value="Submit" />
-</form>
-<%- include('footer') -%>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('header'); -%>
+  <body>
+    <%- include('navigation', { page: 'new' }); -%>
+    <form action="/sighting" method="POST">
+      <label for="text">DESCRIPTION:</label><br />
+      <input type="text" id="text" name="text" /><br />
+      <label for="date_time">DATE/TIME:</label><br />
+      <input type="text" id="date_time" name="date_time" /><br />
+      <label for="city">CITY:</label><br />
+      <input type="text" id="city" name="city" /><br />
+      <label for="state">STATE:</label><br />
+      <input type="text" id="state" name="state" /><br />
+      <label for="shape">SHAPE:</label><br />
+      <input type="text" id="shape" name="shape" /><br />
+      <label for="duration">DURATION:</label><br />
+      <input type="text" id="duration" name="duration" /><br />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
+</html>

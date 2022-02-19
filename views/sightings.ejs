@@ -1,20 +1,30 @@
-<%- include('header') -%>
-<h1>Sightings</h1>
-<h2>Sighting List</h2>
-<p>Date | Shape | City</p>
-<ul>
-  <% sightings.forEach((sighting) => { %>
-  <li>
-    <a href="/sighting/<%= sighting.index %>"
-      ><%= sighting.date_time %>, <%= sighting.shape %>, <%= sighting.city %>,
-      <%= sighting.state %></a
-    >
-    <% if(source === 'root') { %>
-    <form action="/sighting/<%= sighting.index %>?_method=DELETE" method="POST">
-      <input type="submit" value="Delete" />
-    </form>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('header'); -%>
+  <body>
+    <%- include('navigation', { page: 'sightings' }); -%> <% if(source ===
+    'root') { %>
+    <img src="images/ufo-logo.jpg" width="400" height="400" alt="" />
     <% } %>
-  </li>
-  <% }); %>
-</ul>
-<%- include('footer') -%>
+    <h2>Sighting List</h2>
+    <p>Date | Shape | City</p>
+    <ul>
+      <% sightings.forEach((sighting) => { %>
+      <li>
+        <a href="/sighting/<%= sighting.index %>"
+          ><%= sighting.date_time %>, <%= sighting.shape %>, <%= sighting.city
+          %>, <%= sighting.state %></a
+        >
+        <% if(source === 'root') { %>
+        <form
+          action="/sighting/<%= sighting.index %>?_method=DELETE"
+          method="POST"
+        >
+          <input type="submit" value="Delete" />
+        </form>
+        <% } %>
+      </li>
+      <% }); %>
+    </ul>
+  </body>
+</html>

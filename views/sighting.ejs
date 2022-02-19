@@ -1,12 +1,17 @@
-<%- include('header') -%>
-<h1>Sighting</h1>
-<ul>
-  <li><%= sighting.text %></li>
-  <li><%= sighting.date_time %></li>
-  <li><%= sighting.city %>, <%= sighting.state %></li>
-  <li><%= sighting.shape %></li>
-  <li><%= sighting.duration %></li>
-  <li><%= sighting.summary %></li>
-  <li><%= sighting.created_time %></li>
-</ul>
-<%- include('footer') -%>
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('header'); -%>
+  <body>
+    <%- include('navigation', { page: 'sighting' }); -%>
+    <h1>Sighting</h1>
+    <ul>
+      <li><%= sighting.text %></li>
+      <li><%= sighting.date_time %></li>
+      <li><%= sighting.city %>, <%= sighting.state %></li>
+      <li><%= sighting.shape %></li>
+      <li><%= sighting.duration %></li>
+      <li><%= sighting.summary %></li>
+      <li><%= sighting.created_time %></li>
+    </ul>
+  </body>
+</html>
