@@ -8,6 +8,7 @@ app.set('view engine', 'ejs');
 // Configure Express to parse request body data into request.body
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
+app.use(express.static('public'))
 
 const PORT = 3004;
 
@@ -22,19 +23,30 @@ app.get('/sighting', (req, res) => {
   })
 })
 
-app.post('/sighting', (req, res) => {
-  add('data.json', 'sightings', req.body, (err) => {
-    if (err) {
-      response.status(500).send('DB write error.');
-      return;
-    }
-    // Acknowledge recipe saved.
-    res.send('Saved sighting!');
-  });
-})
+// app.post('/sighting', (req, res) => {
+//   add('data.json', 'sightings', req.body, (err) => {
+//     if (err) {
+//       res.status(500).send('DB write error.');
+//       return;
+//     }
+//     // Acknowledge recipe saved.
+//     res.send('Saved sighting!');
+//   });
+// })
 
 app.get('/sighting/:index', (req, res) => {
+  read('data.json', (err, jsonContentObj) => {
+    if (err) {
+      res.status(500).send('DB write error.');
+    }
 
+    const {sightings} = jsonContentObj;
+    const {index} = req.params;
+    const singleSighting = sightings[index]
+    const ejsObject = {singleSighting, index};
+    console.log(ejsObject)
+    res.render('viewSighting', ejsObject)
+  })
 })
 
 app.get('/', (req,res) => {

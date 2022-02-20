@@ -1,0 +1,6 @@
+body {
+  /* background-color: green; */
+  background: url(./images/topography.svg),
+    linear-gradient(90deg, #8dcf78, #8a63f7);
+  /* margin: 50px; */
+}
