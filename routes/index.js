@@ -1,6 +1,9 @@
 import express from "express";
 import {add, read, write} from "../jsonFileStorage.js";
 import methodOverride from "method-override";
+import dayjs from "dayjs";
+import relativeTime from 'dayjs/plugin/relativeTime.js';
+import LocalizedFormat from 'dayjs/plugin/localizedFormat.js'
 
 export const router = express.Router();
 
@@ -10,6 +13,7 @@ router.use(express.urlencoded({ extended: false }));
 router.use(methodOverride("_method"));
 
 router.get("/", (req, res) => {
+  
   read("data.json", (err, data) => {  
   res.render("viewList",data);
   });
@@ -28,10 +32,13 @@ router.get("/sighting/:index/edit", (req,res) => {
 })
 
 router.put("/sighting/:index", (req,res) => {
+  let newData = req.body;
+  newData['created_on'] = Date();
+  
    const { index } = req.params;
    read('data.json', (err, data) => {
      // Replace the data in the object at the given index
-     data['sightings'][index] = req.body;
+     data['sightings'][index] = newData;
      write('data.json', data, (err) => {
        res.redirect(`/sighting/${index}`)
      });
@@ -54,12 +61,17 @@ router.get("/sighting", (req, res) => {
 });
 
 router.post("/sighting", (req, res) => {
-  add('data.json', 'sightings', req.body, (err,jsonContentStr) => {
+  let newData = req.body;
+  newData['created_on'] = Date();
+  console.log(newData);
+
+
+  add('data.json', 'sightings', newData, (err,jsonContentStr) => {
     if (err) {
       res.status(500).send('DB write error.');
       return;
     }
-    console.log(req.body);
+    
     const jsonContentObj = JSON.parse(jsonContentStr);
     
     // Acknowledge data saved.
@@ -70,16 +82,26 @@ router.post("/sighting", (req, res) => {
 })
 
 router.get("/sighting/:index", (req, res) => {
+
   read("data.json", (err, data) => {
     const { index } = req.params;
     const sight = data.sightings[index];
-    
-    //console.log(sight)
+
     if (!sight) {
       res.status(404).send("Sorry, we cannot find that!");
       return;
     }
+    //dayjs to format created date
+    dayjs.extend(LocalizedFormat)
+    let createdDateTime = dayjs(sight['created_on']).format('L LT')
+    //dayjs to get created history
+    dayjs.extend(relativeTime);
+    let createdAgo = dayjs(sight['created_on']).from(Date()); //a year ago
+
     sight.index = index;
+    sight["created_ago"] = createdAgo
+    sight["created_datetime"] = createdDateTime
+    //console.log(sight)
    res.render("viewSighting", sight)
   });
 })
