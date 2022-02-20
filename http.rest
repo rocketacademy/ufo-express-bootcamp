@@ -16,7 +16,7 @@ city=City value
 &summary=Summary value
 ###
 
-PUT http://localhost:3004/sighting/6
+PUT http://localhost:3004/sighting/2
 Content-Type: application/x-www-form-urlencoded
 
 text=Text values
