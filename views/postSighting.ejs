@@ -2,33 +2,52 @@
   
     <form action="/sighting" method="POST">
       <div>
-      <label class="label" for="city">City:</label>
-      <input class="input" type="text" id="city" name="city" /><br />
-      <label class="label" for="state">State:</label>
-      <input class="input" type="text" id="state" name="state" /><br />
-      <label class="label" for="date_time">Date:</label>
+      <label class="label" for="city">City*:</label>
+      <input class="input" type="text" id="city" name="city" placeholder="Enter city" required/><br />
+      <label class="label" for="state">State*:</label>
+      <input class="input" type="text" id="state" name="state" placeholder="Enter state" required/><br />
+      
+      
+      <label class="label" for="date">Date*:</label>
       <div class="relative">
       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
       <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
       </div>
-      <input id="date_time" name="date_time" datepicker type="text" class="input pl-10 p-2.5" placeholder="Select date">
+      <input id="date" name="date" datepicker type="text" class="input pl-10 p-2.5 mb-5" placeholder="MM/DD/YYYY" required>
       </div>
-      <label class="label" for="shape">Shape:</label>
+      
+      
+      <label class="label" for="time">Time*:</label>
+      <div class="flex justify-left">
+      <div class="timepicker relative form-floating mb-5 w-full">
+      <input type="text"
+      id="time"
+      name="time"
+      class="input"
+      placeholder="HH:MM AM/PM" 
+      required/>
+      </div>
+      </div>
+      
+
+      <label class="label" for="shape">Shape*:</label>
       <div class="relative">
-      <select class="input" id="shape" name="shape">
-        <option value="" selected="selected" hidden="hidden">Choose here</option>
+      <select class="input" id="shape" name="shape" required>
+        <option value="" disabled selected hidden>Select an option</option>
         <option value="Fireball">Fireball</option>
         <option value="Sphere">Sphere</option>
+        <option value="Fireball">Shape-shifting</option>
+        <option value="Sphere">Flying saucer</option>
       </select>
       <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
           <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
         </div>
       </div>
       <br />
-      <label class="label" for="text">Observed:</label>
-      <textarea class="input" name="text" rows="5" cols="30"></textarea><br />
-      <label class="label" for="summary">Summary:</label>
-      <textarea class="input" name="summary" rows="5" cols="30"></textarea><br />
+      <label class="label" for="text">Observed*:</label>
+      <textarea class="input" name="text" rows="5" cols="30" placeholder="Write observation" required></textarea><br />
+      <label class="label" for="summary">Summary*:</label>
+      <textarea class="input" name="summary" rows="5" cols="30" placeholder="Give summary" required></textarea><br />
 
       <input class="btn" type="submit" value="Submit" />
       </div>

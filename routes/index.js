@@ -73,13 +73,13 @@ router.get("/sighting/:index", (req, res) => {
   read("data.json", (err, data) => {
     const { index } = req.params;
     const sight = data.sightings[index];
-    sight.index = index;
+    
     //console.log(sight)
     if (!sight) {
       res.status(404).send("Sorry, we cannot find that!");
       return;
     }
-
+    sight.index = index;
    res.render("viewSighting", sight)
   });
 })

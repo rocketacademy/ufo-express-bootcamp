@@ -9,6 +9,8 @@ Content-Type: application/x-www-form-urlencoded
 
 city=City value
 &state=TestState value
+&date=02/01/2022
+&time=06:00 PM
 &shape=Fireball
 &text=Text value
 &summary=Summary value
@@ -20,6 +22,8 @@ Content-Type: application/x-www-form-urlencoded
 text=Text values
 &city=City value test
 &state=TestState value test
+&date=02/01/2022
+&time=06:00 PM
 &shape=Fireball
 &summary=Summary value test
 ###
