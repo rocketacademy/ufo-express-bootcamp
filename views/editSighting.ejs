@@ -1,18 +1,19 @@
 <%- include('header', {title: `Edit Sighting`}); -%>
   
-    <form action="/sighting/<%= sight.index %>?_method=PUT" method="POST">
+    <form autocomplete="off" action="/sighting/<%= sight.index %>?_method=PUT" method="POST">
+      <input autocomplete="false" name="hidden" type="text" style="display:none;">
       <div>
     <label class="label" for="city">City*:</label>
       <input class="input" type="text" id="city" name="city" value="<%= sight.city %>" placeholder="Enter city" required/><br />
       <label class="label" for="state">State*:</label>
       <input class="input" type="text" id="state" name="state" value="<%= sight.state %>" placeholder="Enter state" required/><br />
 
-    <label class="label" for="date_time">Date*:</label>
+    <label class="label" for="date">Date*:</label>
       <div class="relative">
       <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
       <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
       </div>
-      <input id="date_time" name="date_time" datepicker type="text" class="input pl-10 p-2.5 mb-5" placeholder="MM/DD/YYYY" required>
+      <input id="date" name="date" datepicker type="text" class="input pl-10 p-2.5 mb-5" placeholder="MM/DD/YYYY" value="<%= sight.date %>" required>
       </div>
 
     <label class="label" for="time">Time*:</label>
@@ -22,6 +23,7 @@
       id="time"
       name="time"
       class="input"
+      value="<%= sight.time %>"
       placeholder="HH:MM AM/PM" 
       required/>
       </div>
@@ -51,6 +53,7 @@ for ( let i = 0; i < options.length; i++ )
       <textarea class="input" name="text" rows="5" cols="30" placeholder="Write observation" required><%= sight.text %></textarea><br />
       <label class="label" for="summary">Summary*:</label>
       <textarea class="input" name="summary" rows="5" cols="30" placeholder="Give summary" required><%= sight.summary %></textarea><br />
+      <input class="btn" type="reset" value="Reset" />
       <input class="btn" type="submit" value="Submit" />
       </div>
     </form>
