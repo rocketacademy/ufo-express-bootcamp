@@ -22,14 +22,21 @@
   <body>
     <h1 class="text-center">UFO Sighting Catalog</h1>
     <br />
-    <% if (singleSighting) {%>
+    <% if (locals.singleSighting) {%>
     <div class="container border border-dark border-3 rounded">
       <h3 class="mt-2 mb-3">Sighting #<%= index %></h3>
       <p><b>Date:</b> <%= singleSighting.date_time %></p>
       <p><b>City:</b> <%= singleSighting.city %></p>
       <p><b>Summary:</b><br /><%= singleSighting.summary %></p>
     </div>
-
-    <% } %>
+    <% } else if (locals.sightings) { for (let i = 0; i < sightings.length; i++)
+    { %>
+    <div class="container border border-dark border-3 rounded mb-3">
+      <h3 class="mt-2 mb-3">Sighting #<%= i %></h3>
+      <p><b>Date:</b> <%= sightings[i].date_time %></p>
+      <p><b>City:</b> <%= sightings[i].city %></p>
+      <p><b>Summary:</b><br /><%= sightings[i].summary %></p>
+    </div>
+    <% } %> <% } %>
   </body>
 </html>

@@ -13,26 +13,33 @@ app.use(express.static('public'))
 const PORT = 3004;
 
 app.get('/sighting', (req, res) => {
-  read('data.json', (err, jsonContentObj) => {
-    if (err) {
-      res.status(500).send('DB read error.');
-    }
+  // read('data.json', (err, jsonContentObj) => {
+  //   if (err) {
+  //     res.status(500).send('DB read error.');
+  //   }
 
-    // const {sightings} = jsonContentObj
-    res.render('sighting')
-  })
+  //   // const {sightings} = jsonContentObj
+    
+  // })
+  res.render('sighting')
 })
 
-// app.post('/sighting', (req, res) => {
-//   add('data.json', 'sightings', req.body, (err) => {
-//     if (err) {
-//       res.status(500).send('DB write error.');
-//       return;
-//     }
-//     // Acknowledge recipe saved.
-//     res.send('Saved sighting!');
-//   });
-// })
+app.post('/sighting', (req, res) => {
+  const form = req.body
+  form.duration += ' minutes'
+  const datetimeArray = form.date_time.split('T')
+  datetimeArray[0] = datetimeArray[0].replaceAll('-',' ')
+  const datetime = datetimeArray[0]
+
+  add('data.json', 'sightings', form, (err) => {
+    if (err) {
+      res.status(500).send('DB write error.');
+      return;
+    }
+    // Acknowledge recipe saved.
+    res.send('Saved sighting!');
+  });
+})
 
 app.get('/sighting/:index', (req, res) => {
   read('data.json', (err, jsonContentObj) => {
@@ -50,11 +57,31 @@ app.get('/sighting/:index', (req, res) => {
 })
 
 app.get('/', (req,res) => {
+  read('data.json', (err, jsonContentObj) => {
+    if (err) {
+      res.status(500).send('DB read error.');
+    }
 
+    const {sightings} = jsonContentObj
+    const ejsObject = {sightings}
+
+    res.render('viewSighting', ejsObject)
+  })
 })
 
 app.get('/sighting/:index/edit', (req, res) => {
+read('data.json', (err, jsonContentObj) => {
+    if (err) {
+      res.status(500).send('DB read error.');
+    }
 
+    const {sightings} = jsonContentObj
+    const {index} = req.params
+    const singleSighting = sightings[index]
+    const ejsObject = {singleSighting, index}
+
+    res.render('sighting', ejsObject)
+  })
 })
 
 app.put('/sighting/:index/edit', (req, res) => {
