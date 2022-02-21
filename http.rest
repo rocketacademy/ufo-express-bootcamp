@@ -9,23 +9,25 @@ Content-Type: application/x-www-form-urlencoded
 
 city=City value
 &state=TestState value
-&date=02/01/2022
+&date=02/01/2021
 &time=06:00 PM
 &shape=Fireball
 &text=Text value
 &summary=Summary value
+&errormsg=[{value: '',msg: '',param: '',location: ''}];
 ###
 
-PUT http://localhost:3004/sighting/3/edit
+PUT http://localhost:3004/sighting/4/edit
 Content-Type: application/x-www-form-urlencoded
 
 text=Text values
 &city=City value test
 &state=TestState value test
-&date=02/01/2022
+&date=02/01/2021
 &time=06:00 PM
 &shape=Fireball
 &summary=Summary value test
+&errormsg=[{value: '',msg: '',param: '',location: ''}];
 ###
 
 DELETE http://localhost:3004/sighting/3

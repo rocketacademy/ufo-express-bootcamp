@@ -58,10 +58,20 @@ router.get("/", (req, res) => {
   read("data.json", (err, data) => {  
   //add visit counter
   data["visit_counter"] = visits;
+  let sightings = JSON.parse(JSON.stringify(data.sightings));;
+  
+  for (let i = 0; i < sightings.length; i++) {
+    //dayjs to format date
+    dayjs.extend(LocalizedFormat)
+    let formattedDate = dayjs(sightings[i]["date"]).format('dddd, LL');
+    sightings[i]["date"] = formattedDate;
+  }
+  let ejsData = {sightings};
+  ejsData["visit_counter"] = visits;
+  //console.log(ejsData);
   write('data.json', data, (err) => {
-      res.render("viewList",data);
+      res.render("viewList",ejsData);
     });
-  //console.log(data);
   });
   
 });
