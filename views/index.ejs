@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./partials/head.ejs') %> 
+  </head>
+  <body>
+    <div id="cover"></div>
+    <%- include('./partials/navbar.ejs') %> 
+
+    <div id="center-content">
+      <h1>Welcome! </h1>
+      <p class="lead">This is where every UFO sighting can be found<br></p>  
+    </div>
+    <div class="container-fluid" id="sighting-content">
+      
+      <div class="row justify-content-center">
+        <div class="col-md-5">
+          <h4>List of Sightings</h4>
+        </div>
+        <div class="col-md-5"> 
+          <div class="d-flex justify-content-end">
+            <form id="sort-section">
+         
+            <select name="sighting" id="sort-options">
+              <option value="shape">
+                Shape
+              </option>
+              <option value = "city">
+                City
+              </option>
+              <option value = "state">
+                State
+              </option>
+                <option value="date_time">
+                Date and Time
+              </option>
+            </select>
+            <button class="btn btn-outline-secondary btn-sm" input type="submit" id="sort-button">Sort</button>
+           </form>
+          </div>
+        </div>
+      </div>
+     
+      
+     <div class="row justify-content-center">
+       <div class="col-md-10">
+        <div class="table-responsive">
+          <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Date and Time</th>
+              <!-- hides the following headers when table is partially collapsed -->
+              <th class="d-none d-sm-table-cell">Shape</th>
+              <th class="d-none d-sm-table-cell">City</th>
+              <th>State</th>
+              <th id="delete-heading">Delete</th>
+            </tr>
+          </thead>
+          
+          <tr>
+            <!-- to access a JS variable in EJS, simply call the properties of the JS object passed as the second argument of the res.render function -->
+            <% for (let i = 0; i < sightings.length; i += 1) { %> 
+            <th scope="row"><a href="/sighting/<%= i %>"><%= i %> </a></th>
+            <td><%= sightings[i].date_time %></td>
+            <!-- hides the following row entries when table is partially collapsed -->
+            <td class="d-none d-sm-table-cell"><%= sightings[i].shape %></td>
+            <td class="d-none d-sm-table-cell"><%= sightings[i].city %></td>
+            <td><%= sightings[i].state %></td>
+            <td><form id="delete-button" action="/sighting/<%= i %>/delete?_method=DELETE" method="POST">
+          <button class="btn btn-sm btn-secondary" type="submit"><i class="fa fa-trash-alt"></i></button>
+        </form></td>
+        </tr>
+              <% } %>
+          </tr>
+        </table>
+        </div>
+       </div>
+     </div>
+        
+    </div>
+    
+
+    <!-- Optional JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+  </html>
