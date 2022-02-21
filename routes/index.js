@@ -13,13 +13,26 @@ router.use(express.urlencoded({ extended: false }));
 router.use(methodOverride("_method"));
 
 router.get("/", (req, res) => {
-  
+  let visits = 0;
+  // check if it's not the first time a request has been made
+  if (req.cookies.visits) {
+    visits = Number(req.cookies.visits); // get the value from the request
+  }
+  // set a new value of the cookie
+  visits += 1;
+  res.cookie('visits', visits);
+  //console.log(req.cookies.visits);
+
   read("data.json", (err, data) => {  
+  //add visit counter
+  data["visit_counter"] = visits;
+  //console.log(data);
   res.render("viewList",data);
   });
 });
 
 router.get("/sighting/:index/edit", (req,res) => {
+  //res.clearCookie('visits');
   read('data.json', (err, jsonData) => {
     const { index } = req.params;
     const sight = jsonData.sightings[index];
