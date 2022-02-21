@@ -1,5 +1,5 @@
 import express from 'express';
-import { read, add, edit } from './jsonFileStorage.js';
+import { read, add, edit, write } from './jsonFileStorage.js';
 import methodOverride from 'method-override'
 
 const app = express();
@@ -21,15 +21,16 @@ app.get('/sighting', (req, res) => {
   //   // const {sightings} = jsonContentObj
     
   // })
-  res.render('sighting')
+  res.render('sighting');
 })
 
 app.post('/sighting', (req, res) => {
-  const form = req.body
-  form.duration += ' minutes'
-  const datetimeArray = form.date_time.split('T')
-  datetimeArray[0] = datetimeArray[0].replaceAll('-',' ')
-  const datetime = datetimeArray[0]
+  const form = req.body;
+  form.duration += ' minutes';
+  const datetimeArray = form.date_time.split('T');
+  const dateArray = datetimeArray[0].split('-');
+  const datetime = `${dateArray[2]}/${Number(dateArray[1])}/${dateArray[0].substr(2,2)} ${datetimeArray[1]}`;
+  form.date_time = datetime;
 
   add('data.json', 'sightings', form, (err) => {
     if (err) {
@@ -49,10 +50,10 @@ app.get('/sighting/:index', (req, res) => {
 
     const {sightings} = jsonContentObj;
     const {index} = req.params;
-    const singleSighting = sightings[index]
+    const singleSighting = sightings[index];
     const ejsObject = {singleSighting, index};
-    console.log(ejsObject)
-    res.render('viewSighting', ejsObject)
+    console.log(ejsObject);
+    res.render('viewSighting', ejsObject);
   })
 })
 
@@ -62,30 +63,55 @@ app.get('/', (req,res) => {
       res.status(500).send('DB read error.');
     }
 
-    const {sightings} = jsonContentObj
-    const ejsObject = {sightings}
+    const {sightings} = jsonContentObj;
+    const ejsObject = {sightings};
 
-    res.render('viewSighting', ejsObject)
-  })
+    res.render('viewSighting', ejsObject);
+  });
 })
 
 app.get('/sighting/:index/edit', (req, res) => {
-read('data.json', (err, jsonContentObj) => {
+  read('data.json', (err, jsonContentObj) => {
     if (err) {
       res.status(500).send('DB read error.');
     }
 
-    const {sightings} = jsonContentObj
-    const {index} = req.params
-    const singleSighting = sightings[index]
-    const ejsObject = {singleSighting, index}
+    const {sightings} = jsonContentObj;
+    const {index} = req.params;
+    const singleSighting = sightings[index];
+    const ejsObject = {singleSighting, index};
 
-    res.render('sighting', ejsObject)
-  })
+    res.render('sighting', ejsObject);
+  });
 })
 
 app.put('/sighting/:index/edit', (req, res) => {
+  const index = Number(req.body.index);
+  delete req.body.index;
+  const form = req.body;
+  form.duration += ' minutes';
+  const datetimeArray = form.date_time.split('T');
+  const dateArray = datetimeArray[0].split('-');
+  const datetime = `${dateArray[2]}/${Number(dateArray[1])}/${dateArray[0].substr(2,2)} ${datetimeArray[1]}`;
+  form.date_time = datetime;
 
+  edit('data.json', (readErr, jsonContentObj) => {
+    if (readErr) {
+      res.status(500).send('DB read error.');
+    }
+
+    const {sightings} = jsonContentObj
+    sightings[index] = form;
+    jsonContentObj.sightings = sightings
+    console.log(jsonContentObj.sightings[index])
+
+  }, (writeErr) => {
+    if (writeErr) {
+      res.status(500).send('DB write error.');
+    }
+    
+    res.send('Sighting edited!');
+  });
 })
 
 app.delete('/sighting/:index/delete', (req, res) => {

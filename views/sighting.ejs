@@ -21,89 +21,83 @@
   </head>
   <body>
     <% if (locals.singleSighting) { %>
-    <form action="/sighting/<%= index %>/edit" method="POST">
-      <label for="description">Text: </label><br />
-      <textarea
-        id="description"
-        name="text"
-        value="<%= singleSighting.text %>"
-      ></textarea
-      ><br />
-      <label for="date_time">Datetime: </label><br />
-      <input
-        type="datetime-local"
-        id="date_time"
-        name="date_time"
-        value="<%= singleSighting.date_time %>"
-      /><br />
-      <label for="city">City: </label><br />
-      <input
-        type="text"
-        id="city"
-        name="city"
-        value="<%= singleSighting.city %>"
-      /><br />
-      <label for="state">State: </label><br />
-      <input
-        type="text"
-        id="state"
-        name="state"
-        value="<%= singleSighting.state %>"
-      /><br />
-      <label for="shape">Shape: </label><br />
-      <input
-        type="text"
-        id="shape"
-        name="shape"
-        value="<%= singleSighting.shape %>"
-      /><br />
-      <label for="duration">Duration: </label><br />
-      <input
-        type="number"
-        id="duration"
-        name="duration"
-        min="0"
-        value="<%= singleSighting.duration %>"
-      />
-      <label for="duration">minutes</label><br />
-      <label for="summary">Summary: </label><br />
-      <input
-        type="text"
-        id="summary"
-        name="summary"
-        value="<%= singleSighting.summary %>"
-      /><br /><br />
-      <input type="submit" value="Submit" />
-    </form>
+    <div class="container border border-dark border-3 rounded mt-3 w-75">
+      <h3 class="mt-2 mb-3">Sighting #<%= index %></h3>
+      <p><b>Date:</b> <%= singleSighting.date_time %></p>
+      <p><b>City:</b> <%= singleSighting.city %></p>
+      <p><b>Summary:</b><br /><%= singleSighting.summary %></p>
+    </div>
+    <br />
+    <div class="ml-3">
+      <form action="/sighting/<%= index %>/edit?_method=PUT" method="POST">
+        <label for="description">Text: </label><br />
+        <textarea id="description" name="text">
+<%= singleSighting.text %></textarea
+        ><br />
+        <label for="date_time">Datetime: </label><br />
+        <input type="datetime-local" id="date_time" name="date_time" /><br />
+        <label for="city">City: </label><br />
+        <input
+          type="text"
+          id="city"
+          name="city"
+          value="<%= singleSighting.city %>"
+        /><br />
+        <label for="state">State: </label><br />
+        <input
+          type="text"
+          id="state"
+          name="state"
+          value="<%= singleSighting.state %>"
+        /><br />
+        <label for="shape">Shape: </label><br />
+        <input
+          type="text"
+          id="shape"
+          name="shape"
+          value="<%= singleSighting.shape %>"
+        /><br />
+        <label for="duration">Duration: </label><br />
+        <input
+          type="number"
+          id="duration"
+          name="duration"
+          min="0"
+          value="<%= Number(singleSighting.duration.replace(' minutes', '')) %>"
+        />
+        <label for="duration">minutes</label><br />
+        <label for="summary">Summary: </label><br />
+        <input
+          type="text"
+          id="summary"
+          name="summary"
+          value="<%= singleSighting.summary %>"
+        /><br /><br />
+        <input type="hidden" id="index" name="index" value="<%= index  %> " />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
     <% } else { %>
-    <form action="/sighting" method="POST">
-      <label for="description">Text: </label><br />
-      <textarea id="description" name="text"></textarea><br />
-      <label for="day month year">Date (DD-MM-YY): </label><br />
-      <input type="number" id="day" name="day" min="1" max="31" class="w-1" />/
-      <input type="number" id="month" name="month" min="1" max="12" />/
-      <input type="number" id="year" name="year" min="0" max="99" /><br />
-      <label for="hour minute">Time: </label><br />
-      <input type="number" id="hour" name="hour" min="0" max="23" />:<input
-        type="number"
-        id="minute"
-        name="minute"
-        min="0"
-        max="59"
-      /><br />
-      <label for="city">City: </label><br />
-      <input type="text" id="city" name="city" /><br />
-      <label for="state">State: </label><br />
-      <input type="text" id="state" name="state" /><br />
-      <label for="shape">Shape: </label><br />
-      <input type="text" id="shape" name="shape" /><br />
-      <label for="duration">Duration: </label><br />
-      <input type="number" id="duration" name="duration" min="0" />
-      <label for="duration">minutes</label><br />
-      <label for="summary">Summary: </label><br />
-      <input type="text" id="summary" name="summary" /><br /><br />
-      <input type="submit" value="Submit" />
-    </form>
+    <div class="ml-3">
+      <form action="/sighting" method="POST">
+        <label for="description">Text: </label><br />
+        <textarea id="description" name="text"></textarea><br />
+        <label for="date_time">Datetime: </label><br />
+        <input type="datetime-local" id="date_time" name="date_time" /><br />
+        <label for="city">City: </label><br />
+        <input type="text" id="city" name="city" /><br />
+        <label for="state">State: </label><br />
+        <input type="text" id="state" name="state" /><br />
+        <label for="shape">Shape: </label><br />
+        <input type="text" id="shape" name="shape" /><br />
+        <label for="duration">Duration: </label><br />
+        <input type="number" id="duration" name="duration" min="0" />
+        <label for="duration">minutes</label><br />
+        <label for="summary">Summary: </label><br />
+        <input type="text" id="summary" name="summary" /><br /><br />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
     <% } %>
   </body>
 </html>
