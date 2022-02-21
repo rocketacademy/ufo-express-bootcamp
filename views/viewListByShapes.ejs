@@ -1,13 +1,58 @@
 <%- include('header', {title: `Shapes`}); -%>
-    <% sightings.forEach((element, index) => { %>
-    <form action="/sighting/<%= element.index %>?_method=DELETE" method="POST">
-    <a class="mr-6" href="/sighting/<%= element.index %>">Sighting <%= element.index %></a>
-    <a href="/sighting/<%= element.index %>/edit">
-    <input type="button" value="Edit" class="btn" /></a>
-    <input class="btn" type="submit" value="Delete" />
-    <br/>
-    </form>
-    <% }); %>
+    <div class="flex flex-col">
+  <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+    <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+      <div class="overflow-x-auto">
+        <table class="min-w-full">
+          <thead class="border-b">
+            <tr>
+              <th scope="col" class="table-header">
+                #
+              </th>
+              <th scope="col" class="table-header">
+                Date & Time
+              </th>
+              <th scope="col" class="table-header">
+                City
+              </th>
+              <th scope="col" class="table-header">
+                Shape
+              </th>
+              <th scope="col" class="table-header">
+                Action
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+          <% sightings.forEach((element, index) => { %>
+            <tr class="border-b">
+            <form action="/sighting/<%= element.index %>?_method=DELETE" method="POST">
+             <td class="table-cell font-medium"><a href="/sighting/<%= element.index %>"><%= index %></a></td>
+              <td class="table-cell font-light">
+                <a href="/sighting/<%= element.index %>"><%= element.date %> <%= element.time %></a>
+              </td>
+              <td class="table-cell font-light">
+                <a href="/sighting/<%= element.index %>"><%= element.city %></a>
+              </td>
+              <td class="table-cell font-light">
+                <a href="/sighting/<%= element.index %>"><%= element.shape %></a>
+              </td>
+              
+              <td class="table-cell font-light">
+                <a href="/sighting/<%= element.index %>/edit">
+                <input type="button" value="Edit" class="btn" /></a>
+                <input class="btn" type="submit" value="Delete" />
+              </td>
+            </form>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
     
   </body>
 </html>
