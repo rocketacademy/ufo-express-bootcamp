@@ -1,5 +1,6 @@
 import express from "express";
-import {add, read, write} from "../jsonFileStorage.js";
+import {check, validationResult} from 'express-validator';
+import {add, read, write,edit} from "../jsonFileStorage.js";
 import methodOverride from "method-override";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime.js';
@@ -23,12 +24,16 @@ router.get("/", (req, res) => {
   res.cookie('visits', visits);
   //console.log(req.cookies.visits);
 
+  
   read("data.json", (err, data) => {  
   //add visit counter
   data["visit_counter"] = visits;
+  write('data.json', data, (err) => {
+      res.render("viewList",data);
+    });
   //console.log(data);
-  res.render("viewList",data);
   });
+  
 });
 
 router.get("/sighting/:index/edit", (req,res) => {
@@ -70,14 +75,56 @@ router.delete('/sighting/:index',(req,res) => {
 });
 
 router.get("/sighting", (req, res) => {
-  res.render("postSighting");
+  let newData = {};
+  newData['city'] = null;
+  newData['state'] = null;
+  newData['date'] = null;
+  newData['time'] = null;
+  newData['text'] = null;
+  newData['summary'] = null;
+  newData['errormsg'] = [{
+      value: '',
+      msg: '',
+      param: '',
+      location: ''
+    }];
+  //console.log(newData);
+  res.render("postSighting",newData);
 });
 
-router.post("/sighting", (req, res) => {
+const validationMessages = [
+    check('city')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('state')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('date')
+        .not().isEmpty()
+        .withMessage('This field is required')
+        .matches(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/)
+        .withMessage('Please type in MM/DD/YYYY format'),
+    check('time')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('shape')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('text')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('summary')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+]
+
+router.post("/sighting", validationMessages ,(req, res, next) => {
+  const errors = validationResult(req)
+  
   let newData = req.body;
   newData['created_on'] = Date();
-  console.log(newData);
-
+  newData['errormsg'] = errors.errors;
+  //console.log(newData);
 
   add('data.json', 'sightings', newData, (err,jsonContentStr) => {
     if (err) {
@@ -86,11 +133,24 @@ router.post("/sighting", (req, res) => {
     }
     
     const jsonContentObj = JSON.parse(jsonContentStr);
-    
-    // Acknowledge data saved.
-    //res.send('Your data has been saved successfully!');
     let index = jsonContentObj.sightings.length;
-    res.redirect(`/sighting/${index-1}`)
+    // re-render if error
+    if (!errors.isEmpty()) {
+      res.render("postSighting",newData);
+      //delete the posted data because it shouldnt be posted
+      read('data.json', (err, data) => {
+      data['sightings'].pop();
+      write('data.json', data, (err) => {
+      if (err) {
+        console.log(err)
+      }
+    });
+  });
+      next();
+    } else {
+      res.redirect(`/sighting/${index-1}`)
+    }
+    
   })
 })
 
