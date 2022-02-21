@@ -1,7 +1,7 @@
 <%- include('header'); -%>
 
-<body class="bg-info">
-  <div class="container ml-1">
+<body class="bg-dark">
+  <div class="container ml-1 text-white">
     <br />
     <h1>Edit Your Sighting</h1>
 
@@ -11,34 +11,37 @@
         type="text"
         id="date_time"
         name="date_time"
-        size="50"
         class="form-control"
         value="<%= sightings.date_time %>"
       /><br />
-      <label for="city">City:</label><br />
-      <input
-        type="text"
-        id="city"
-        name="city"
-        size="50"
-        class="form-control"
-        value="<%=sightings.city%>"
-      /><br />
-      <label for="state">State:</label><br />
-      <input
-        type="text"
-        id="state"
-        name="state"
-        size="50"
-        class="form-control"
-        value="<%= sightings.state %>"
-      /><br />
+      <div class="row">
+        <div class="col">
+          <label for="city">City:</label><br />
+          <input
+            type="text"
+            id="city"
+            name="city"
+            class="form-control"
+            value="<%=sightings.city%>"
+          />
+        </div>
+        <div class="col">
+          <label for="state">State:</label><br />
+          <input
+            type="text"
+            id="state"
+            name="state"
+            class="form-control"
+            value="<%= sightings.state %>"
+          />
+        </div>
+      </div>
+      <br />
       <label for="shape">Shape:</label><br />
       <input
         type="text"
         id="shape"
         name="shape"
-        size="50"
         class="form-control"
         value="<%= sightings.shape %>"
       /><br />
@@ -47,15 +50,14 @@
         type="text"
         id="duration"
         name="duration"
-        size="55"
         class="form-control"
         value="<%= sightings.duration %>"
       /><br />
-      <label for="itext">Statement:</label><br />
+      <label for="description">Description:</label><br />
       <textarea
         type="text"
-        id="itext"
-        name="text"
+        id="description"
+        name="description"
         rows="4"
         cols="40"
         class="form-control"
@@ -64,10 +66,16 @@
 <%= sightings.text %>
       </textarea>
       <br />
-      <br />
-
+      <label for="summary">Summary:</label><br />
+      <input
+        type="text"
+        id="summary"
+        name="summary"
+        class="form-control"
+        value="<%= sightings.summary %>"
+      /><br />
       <input type="submit" value="Update Sighting" class="submit-btn" />
     </form>
   </div>
-  <%- include('footer'); -%>
 </body>
+<!-- <%- include('footer'); -%> -->

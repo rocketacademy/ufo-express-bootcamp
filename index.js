@@ -1,10 +1,14 @@
 import express from 'express';
 import methodOverride from 'method-override';
+import cookieParser from 'cookie-parser';
 import {
   read, add, edit, write,
 } from './jsonFileStorage.js';
 
+import { visitCounter } from './helper.js';
+
 const app = express();
+app.use(cookieParser());
 
 // Override POST requests with query param ?_method=PUT to be PUT requests
 app.use(methodOverride('_method'));
@@ -15,18 +19,30 @@ app.use(express.urlencoded({ extended: false }));
 
 const renderIndex = (request, response) => {
   console.log('request to load list of sightings came in');
+
+  const visits = visitCounter(request, response);
+
   read('data.json', (err, data) => {
     if (err) {
       console.log('Read error', err);
     }
     const { sightings } = data;
-    response.render('index', { sightings });
+
+    response.render('index', { sightings, visits });
   });
 };
 
 // render the form
 const renderForm = (request, response) => {
-  response.render('form');
+  const visits = visitCounter(request, response);
+
+  read('data.json', (err, data) => {
+    if (err) {
+      console.log('Read error', err);
+    }
+
+    response.render('form', { visits });
+  });
 };
 
 // add new sighting
@@ -55,6 +71,8 @@ const renderAddNewSighting = (request, response) => {
 const renderIndividualSighting = (request, response) => {
   console.log('request to render individual sighting  came in');
 
+  const visits = visitCounter(request, response);
+
   const sightingIndex = request.params.index;
 
   read('data.json', (err, data) => {
@@ -62,12 +80,15 @@ const renderIndividualSighting = (request, response) => {
       console.log('read error!');
     }
     const sighting = data.sightings[sightingIndex];
-    response.render('singleSight', { sightings: sighting, index: sightingIndex });
+
+    response.render('singleSight', { sightings: sighting, index: sightingIndex, visits });
   });
 };
 
 // render form to edit a single sighting
 const renderEditSighting = (request, response) => {
+  const visits = visitCounter(request, response);
+
   const { index } = request.params;
   read('data.json', (err, data) => {
     if (err) {
@@ -78,7 +99,9 @@ const renderEditSighting = (request, response) => {
     // add index value to sighting
     sightings.index = index;
     // add index obj for ejs template to reference
-    response.render('edit', { sightings, index });
+    data.visits = visits;
+
+    response.render('edit', { sightings, index, visits });
   });
 };
 
@@ -122,6 +145,8 @@ const deleteSighting = (request, response) => {
 };
 
 const renderListOfShapes = (request, response) => {
+  const visits = visitCounter(request, response);
+
   read('data.json', (err, data) => {
     if (err) {
       console.log('Read error:', err);
@@ -132,12 +157,14 @@ const renderListOfShapes = (request, response) => {
     });
     const filteredShapeList = [...new Set(shapesList)];
     console.log(filteredShapeList);
-    response.render('shapes', { filteredShapeList });
+    response.render('shapes', { filteredShapeList, visits });
   });
 };
 
 const renderSightingByShape = (request, response) => {
   console.log('request for selected shape came in ');
+  const visits = visitCounter(request, response);
+
   const { shapes } = request.params;
   console.log(shapes);
 
@@ -145,13 +172,14 @@ const renderSightingByShape = (request, response) => {
     if (err) {
       console.log('read error', err);
     }
-    console.log(data.sightings);
 
     // eslint-disable-next-line max-len
     const selectedShapeSightings = data.sightings.filter((sighting) => (sighting.shape.toLowerCase()) === shapes);
 
+    console.log(selectedShapeSightings);
+
     if (selectedShapeSightings.length > 0) {
-      response.render('sightingsByShape', { selectedShapeSightings, shapes });
+      response.render('sightingsByShape', { selectedShapeSightings, shapes, visits });
     }
     else response.status(404).send('Sorry, we cannot find that!');
   });

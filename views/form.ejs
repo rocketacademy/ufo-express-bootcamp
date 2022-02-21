@@ -1,9 +1,9 @@
 <%- include('header'); -%>
 
-<body class="bg-info">
+<body class="bg-dark">
   <div class="container">
     <div
-      class="col-12 my-5 d-flex align-items-center justify-content-center flex-column"
+      class="col-12 my-5 d-flex align-items-center justify-content-center flex-column text-white"
     >
       <h1>UFO Sightings App</h1>
       <br />
@@ -32,6 +32,16 @@
         <br />
         <label for="summary">Summary:</label><br />
         <input type="text" id="summary" name="summary" size="50" /><br />
+        <% let createTime = new Date(); %>
+        <label for="createTime">Create Time:</label><br />
+        <input
+          type="text"
+          id="createTime"
+          name="createTime"
+          size="50"
+          value="<%=
+        createTime.toLocaleString() %>"
+        /><br />
         <br />
         <input type="submit" value="Submit" class="submit-btn" />
       </form>
