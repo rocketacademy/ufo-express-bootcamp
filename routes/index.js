@@ -24,7 +24,9 @@ const validationMessages = [
         .not().isEmpty()
         .withMessage('This field is required')
         .matches(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/)
-        .withMessage('Please type in MM/DD/YYYY format'),
+        .withMessage('Please type in MM/DD/YYYY format')
+        .isBefore(new Date().toDateString())
+        .withMessage('Date cannot be in the future'),
     check('time')
         .not().isEmpty()
         .withMessage('This field is required')
