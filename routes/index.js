@@ -13,6 +13,32 @@ router.use(express.urlencoded({ extended: false }));
 // Override POST requests with query param ?_method=PUT/DELETE to be PUT/DELETE requests
 router.use(methodOverride("_method"));
 
+const validationMessages = [
+    check('city')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('state')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('date')
+        .not().isEmpty()
+        .withMessage('This field is required')
+        .matches(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/)
+        .withMessage('Please type in MM/DD/YYYY format'),
+    check('time')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('shape')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('text')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+    check('summary')
+        .not().isEmpty()
+        .withMessage('This field is required'),
+]
+
 router.get("/", (req, res) => {
   let visits = 0;
   // check if it's not the first time a request has been made
@@ -23,7 +49,7 @@ router.get("/", (req, res) => {
   visits += 1;
   res.cookie('visits', visits);
   //console.log(req.cookies.visits);
-
+  //res.clearCookie('visits');
   
   read("data.json", (err, data) => {  
   //add visit counter
@@ -36,30 +62,45 @@ router.get("/", (req, res) => {
   
 });
 
-router.get("/sighting/:index/edit", (req,res) => {
-  //res.clearCookie('visits');
+router.get("/sighting/:index/edit", (req,res) => { 
   read('data.json', (err, jsonData) => {
     const { index } = req.params;
     const sight = jsonData.sightings[index];
-    // Pass the recipe index to the edit form for the PUT request URL.
+    // Pass the sight index to the edit form for the PUT request URL.
     sight.index = index;
+    sight.errormsg = [{
+      value: '',
+      msg: '',
+      param: '',
+      location: ''
+    }]
     const ejsData = { sight };
     //console.log(ejsData);
+    //console.log(sight);
+    
     res.render('editSighting', ejsData);
   });
 })
 
-router.put("/sighting/:index", (req,res) => {
-  let newData = req.body;
-  newData['created_on'] = Date();
-  
-   const { index } = req.params;
+router.put("/sighting/:index/edit", validationMessages, (req,res) => {
+  const errors = validationResult(req);
    read('data.json', (err, data) => {
+    const { index } = req.params;
+    let sight = data.sightings[index];
+      if (!errors.isEmpty()) {
+      sight = req.body
+      // Pass the sight index to the edit form for the PUT request URL.
+      sight.index = index;
+      sight.errormsg = errors.errors;
+      let ejsData = { sight };
+      console.log(sight);
+      res.render("editSighting", ejsData);
+    } else {
      // Replace the data in the object at the given index
-     data['sightings'][index] = newData;
+     data['sightings'][index] = req.body;
      write('data.json', data, (err) => {
        res.redirect(`/sighting/${index}`)
-     });
+     });}
    });
 });
 
@@ -92,66 +133,25 @@ router.get("/sighting", (req, res) => {
   res.render("postSighting",newData);
 });
 
-const validationMessages = [
-    check('city')
-        .not().isEmpty()
-        .withMessage('This field is required'),
-    check('state')
-        .not().isEmpty()
-        .withMessage('This field is required'),
-    check('date')
-        .not().isEmpty()
-        .withMessage('This field is required')
-        .matches(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/)
-        .withMessage('Please type in MM/DD/YYYY format'),
-    check('time')
-        .not().isEmpty()
-        .withMessage('This field is required'),
-    check('shape')
-        .not().isEmpty()
-        .withMessage('This field is required'),
-    check('text')
-        .not().isEmpty()
-        .withMessage('This field is required'),
-    check('summary')
-        .not().isEmpty()
-        .withMessage('This field is required'),
-]
+
 
 router.post("/sighting", validationMessages ,(req, res, next) => {
   const errors = validationResult(req)
-  
-  let newData = req.body;
-  newData['created_on'] = Date();
-  newData['errormsg'] = errors.errors;
-  //console.log(newData);
-
-  add('data.json', 'sightings', newData, (err,jsonContentStr) => {
-    if (err) {
-      res.status(500).send('DB write error.');
-      return;
-    }
-    
-    const jsonContentObj = JSON.parse(jsonContentStr);
-    let index = jsonContentObj.sightings.length;
-    // re-render if error
+  read('data.json', (err, data) => {
+    let index = data.sightings.length;
+    let newData = req.body;
+    newData['created_on'] = Date();
+    newData['errormsg'] = errors.errors; 
+    //console.log(newData);
     if (!errors.isEmpty()) {
-      res.render("postSighting",newData);
-      //delete the posted data because it shouldnt be posted
-      read('data.json', (err, data) => {
-      data['sightings'].pop();
-      write('data.json', data, (err) => {
-      if (err) {
-        console.log(err)
-      }
-    });
-  });
-      next();
+      res.render("postSighting", newData);
     } else {
-      res.redirect(`/sighting/${index-1}`)
-    }
-    
-  })
+      // Post the data in the object at the new index
+      data['sightings'].push(newData);
+      write('data.json', data, (err) => {
+       res.redirect(`/sighting/${index}`)
+     });}
+   });
 })
 
 router.get("/sighting/:index", (req, res) => {

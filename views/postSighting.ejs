@@ -4,11 +4,11 @@
       <div>
       <label class="label" for="city">City*:</label>
       <input class="input" type="text" id="city" name="city" placeholder="Enter city" value="<%= city %>"/>
-      <p class="text-red-500 text-xs italic"><%= errormsg.filter(item => item.param === 'city').map(item => item.msg) %></p>
+      <p class="errormsg"><%= errormsg.filter(item => item.param === 'city').map(item => item.msg) %></p>
       <br />
       <label class="label" for="state">State*:</label>
       <input class="input" type="text" id="state" name="state" placeholder="Enter state" value="<%= state %>"/>
-      <p class="text-red-500 text-xs italic"><%= errormsg.filter(item => item.param === 'state').map(item => item.msg) %></p>
+      <p class="errormsg"><%= errormsg.filter(item => item.param === 'state').map(item => item.msg) %></p>
       <br />
       
       <label class="label" for="date">Date*:</label>
@@ -18,7 +18,7 @@
       </div>
       <input id="date" name="date" datepicker type="text" class="input pl-10 p-2.5" placeholder="MM/DD/YYYY" value="<%= date %>">
       </div>
-      <p class="text-red-500 text-xs italic"><%= errormsg.filter(item => item.param === 'date').map(item => item.msg) %></p>
+      <p class="errormsg"><%= errormsg.filter(item => item.param === 'date').map(item => item.msg) %></p>
       <br/>
       
       
@@ -34,7 +34,7 @@
     />
       </div>
       </div>
-      <p class="text-red-500 text-xs italic"><%= errormsg.filter(item => item.param === 'time').map(item => item.msg) %></p>
+      <p class="errormsg"><%= errormsg.filter(item => item.param === 'time').map(item => item.msg) %></p>
       <br/>
       
       
@@ -52,17 +52,17 @@
           <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
         </div>
       </div>
-      <p class="text-red-500 text-xs italic"><%= errormsg.filter(item => item.param === 'shape').map(item => item.msg) %></p>
+      <p class="errormsg"><%= errormsg.filter(item => item.param === 'shape').map(item => item.msg) %></p>
       <br />
 
       <label class="label" for="text">Observed*:</label>
       <textarea class="input" name="text" rows="5" cols="30" placeholder="Write observation"><%= text %></textarea>
-      <p class="text-red-500 text-xs italic"><%= errormsg.filter(item => item.param === 'text').map(item => item.msg) %></p>
+      <p class="errormsg"><%= errormsg.filter(item => item.param === 'text').map(item => item.msg) %></p>
       <br />
 
       <label class="label" for="summary">Summary*:</label>
       <textarea class="input" name="summary" rows="5" cols="30" placeholder="Give summary" ><%= summary %></textarea>
-      <p class="text-red-500 text-xs italic"><%= errormsg.filter(item => item.param === 'summary').map(item => item.msg) %></p>
+      <p class="errormsg"><%= errormsg.filter(item => item.param === 'summary').map(item => item.msg) %></p>
       <br />
       <input class="btn" type="reset" value="Reset" />
       <input class="btn" type="submit" value="Submit" />
