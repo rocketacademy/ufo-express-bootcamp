@@ -27,7 +27,9 @@ const validationMessages = [
         .withMessage('Please type in MM/DD/YYYY format'),
     check('time')
         .not().isEmpty()
-        .withMessage('This field is required'),
+        .withMessage('This field is required')
+        .matches( /((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/)
+        .withMessage('Please type in HH:MM (AM/PM) format'),
     check('shape')
         .not().isEmpty()
         .withMessage('This field is required'),
@@ -93,7 +95,7 @@ router.put("/sighting/:index/edit", validationMessages, (req,res) => {
       sight.index = index;
       sight.errormsg = errors.errors;
       let ejsData = { sight };
-      console.log(sight);
+      //console.log(sight);
       res.render("editSighting", ejsData);
     } else {
      // Replace the data in the object at the given index
@@ -119,6 +121,7 @@ router.get("/sighting", (req, res) => {
   let newData = {};
   newData['city'] = null;
   newData['state'] = null;
+  newData['shape'] = null;
   newData['date'] = null;
   newData['time'] = null;
   newData['text'] = null;
