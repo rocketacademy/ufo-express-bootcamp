@@ -43,6 +43,13 @@ const validationMessages = [
         .withMessage('This field is required'),
 ]
 
+const availableQueries = [
+  'date',
+  'city',
+  'state',
+  'shape',
+];
+
 router.get("/", (req, res) => {
   let visits = 0;
   // check if it's not the first time a request has been made
@@ -58,14 +65,32 @@ router.get("/", (req, res) => {
   read("data.json", (err, data) => {  
   //add visit counter
   data["visit_counter"] = visits;
-  let sightings = JSON.parse(JSON.stringify(data.sightings));;
+  for (let j = 0; j < data.sightings.length; j++) { 
+    data.sightings[j]['index'] = j;
+  }
+
+  let sightings = JSON.parse(JSON.stringify(data.sightings));
   
   for (let i = 0; i < sightings.length; i++) {
     //dayjs to format date
     dayjs.extend(LocalizedFormat)
     let formattedDate = dayjs(sightings[i]["date"]).format('dddd, LL');
     sightings[i]["date"] = formattedDate;
+
   }
+  
+  //sorting logic
+  let sortBy = 'Default';
+  // only run the below logic if is a query param
+    if (Object.keys(req.query).length > 0) {
+      // reassign the sortBy value using the query param
+      sortBy = req.query.sortBy;
+      console.log(sortBy)
+      // sort them in a descending order
+      sightings = sightings.sort((a, b) => b[sortBy].toLowerCase() > a[sortBy].toLowerCase() ? 1 : -1);
+      //console.log(sightings);
+    }
+  
   let ejsData = {sightings};
   ejsData["visit_counter"] = visits;
   //console.log(ejsData);

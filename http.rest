@@ -1,6 +1,9 @@
 GET http://localhost:3004/
 ###
 
+GET http://localhost:3004/?sortBy=city
+###
+
 GET http://localhost:3004/sighting
 ###
 

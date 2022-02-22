@@ -28,20 +28,20 @@
           <tbody>
           <% sightings.forEach((element, index) => { %>
             <tr class="border-b">
-            <form action="/sighting/<%= index %>?_method=DELETE" method="POST">
-             <td class="table-cell font-medium"><a href="/sighting/<%= index %>"><%= index %></a></td>
+            <form action="/sighting/<%= element.index %>?_method=DELETE" method="POST">
+             <td class="table-cell font-medium"><a href="/sighting/<%= element.index %>"><%= index %></a></td>
               <td class="table-cell font-light">
-                <a href="/sighting/<%= index %>"><%= element.date %> <%= element.time %></a>
+                <a href="/sighting/<%= element.index %>"><%= element.date %> <%= element.time %></a>
               </td>
               <td class="table-cell font-light">
-                <a href="/sighting/<%= index %>"><%= element.city %></a>
+                <a href="/sighting/<%= element.index %>"><%= element.city %></a>
               </td>
               <td class="table-cell font-light">
-                <a href="/sighting/<%= index %>"><%= element.shape %></a>
+                <a href="/sighting/<%= element.index %>"><%= element.shape %></a>
               </td>
               
               <td class="table-cell font-light">
-                <a href="/sighting/<%= index %>/edit">
+                <a href="/sighting/<%= element.index %>/edit">
                 <input type="button" value="Edit" class="btn" /></a>
                 <input class="btn" type="submit" value="Delete" />
               </td>
