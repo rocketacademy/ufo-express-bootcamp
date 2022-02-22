@@ -85,7 +85,7 @@ router.get("/", (req, res) => {
     if (Object.keys(req.query).length > 0) {
       // reassign the sortBy value using the query param
       sortBy = req.query.sortBy;
-      console.log(sortBy)
+      //console.log(sortBy)
       // sort them in a descending order
       sightings = sightings.sort((a, b) => b[sortBy].toLowerCase() > a[sortBy].toLowerCase() ? 1 : -1);
       //console.log(sightings);
