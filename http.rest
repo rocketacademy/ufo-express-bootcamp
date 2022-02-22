@@ -7,6 +7,9 @@ GET http://localhost:3004/?sortBy=city
 GET http://localhost:3004/sighting
 ###
 
+GET http://localhost:3004/favourites/3
+###
+
 POST http://localhost:3004/sighting
 Content-Type: application/x-www-form-urlencoded
 

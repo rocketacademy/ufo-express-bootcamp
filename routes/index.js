@@ -4,7 +4,7 @@ import {add, read, write,edit} from "../jsonFileStorage.js";
 import methodOverride from "method-override";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime.js';
-import LocalizedFormat from 'dayjs/plugin/localizedFormat.js'
+import LocalizedFormat from 'dayjs/plugin/localizedFormat.js';
 
 export const router = express.Router();
 
@@ -93,6 +93,7 @@ router.get("/", (req, res) => {
   });
   
 });
+
 
 router.get("/sighting/:index/edit", (req,res) => { 
   read('data.json', (err, jsonData) => {
@@ -189,9 +190,15 @@ router.post("/sighting", validationMessages ,(req, res, next) => {
 })
 
 router.get("/sighting/:index", (req, res) => {
-
+  
   read("data.json", (err, data) => {
     const { index } = req.params;
+    //console.log(req.cookies[index]); // yes or no or undefined
+
+    let isFav = req.cookies[index];
+    if (isFav == undefined) {
+      isFav = "no";
+    }
     const sight = data.sightings[index];
 
     if (!sight) {
@@ -206,12 +213,32 @@ router.get("/sighting/:index", (req, res) => {
     let createdAgo = dayjs(sight['created_on']).from(Date()); //a year ago
 
     sight.index = index;
-    sight["created_ago"] = createdAgo
-    sight["created_datetime"] = createdDateTime
+    sight["created_ago"] = createdAgo;
+    sight["created_datetime"] = createdDateTime;
+    sight["isFav"] = isFav;
     //console.log(sight)
    res.render("viewSighting", sight)
   });
 })
+
+
+router.get("/favourites/:index", (req,res) => {
+  //get the index where cookie is going to be set
+  let favIndex = req.params.index; //eg. 3
+
+  // check the current req.cookies.favIndex is empty or no, then set cookie as yes
+  if (!req.cookies[favIndex] || req.cookies[favIndex] == "no") {
+      res.cookie(favIndex, 'yes'); //eg {'3':yes}
+  }
+
+  //vice versa
+  if (req.cookies[favIndex] == "yes" ) {
+      res.cookie(favIndex, 'no'); //eg {'3':no}
+  }
+  //send response so cookie will be set
+  res.redirect(`/sighting/${favIndex}`);
+  //console.log (req.cookies);
+});
 
 router.get("/shapes", (req,res) => {
   read("data.json", (err, data) => { 

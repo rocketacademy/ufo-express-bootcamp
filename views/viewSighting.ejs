@@ -16,6 +16,13 @@
       <p class="label">Created:</p>
       <p class="field-values"><%= created_datetime %> (<%= created_ago %>)</p>
       <br>
+      
+<a href="/favourites/<%= index %>">
+      <input type="button" value=<%= (isFav==="yes") ? "Unlike" : "Like"
+      %> class="btn">
+      </input>
+  </a>
+
       <a href="/sighting/<%= index %>/edit"><input type="button" value="Edit" class="btn" /></a>
 
       <input class="btn" type="submit" value="Delete" />
