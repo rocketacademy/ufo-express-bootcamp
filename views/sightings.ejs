@@ -2,19 +2,38 @@
 <html lang="en">
   <%- include('header'); -%>
   <body>
-    <div class="container my-container">
+    <div class="container">
       <%- include('navigation', { page: 'sightings' }); -%> <% if(source ===
       'root') { %>
       <div class="row">
         <img src="images/ufo-logo.jpg" alt="" />
       </div>
       <% } %>
-      <div class="row">
-        <div class="col">
+      <div class="row align-items-center">
+        <div class="col ms-3">
           <h2>Sighting List</h2>
         </div>
         <div class="col">
-          <span class="align-text-bottom">Date | Shape | City</span>
+          <span>            <a
+              href="?sortBy=date_time<%= ((sortBy === 'date_time') && (sortOrder === 'asc')) ? '&sortOrder=desc' : '&sortOrder=asc' %>"
+              >Date <% if ((sortBy === 'date_time') && (sortOrder ===
+              'asc')) { %>↑<% } else if ((sortBy === 'date_time') && (sortOrder ===
+              'desc')) { %>↓<% }%>
+            </a> |  
+            <% if (!source.startsWith('shapes')) { %>
+            <a
+              href="?sortBy=shape<%= ((sortBy === 'shape') && (sortOrder === 'asc')) ? '&sortOrder=desc' : '&sortOrder=asc' %>"
+              >Shape <% if ((sortBy === 'shape') && (sortOrder ===
+              'asc')) { %>↑<% } else if ((sortBy === 'shape') && (sortOrder ===
+              'desc')) { %>↓<% }%>
+            </a> |  
+            <% } %>
+            <a
+              href="?sortBy=city<%= ((sortBy === 'city') && (sortOrder === 'asc')) ? '&sortOrder=desc' : '&sortOrder=asc' %>"
+              >City <% if ((sortBy === 'city') && (sortOrder ===
+              'asc')) { %>↑<% } else if ((sortBy === 'city') && (sortOrder ===
+              'desc')) { %>↓<% }%>
+            </a></span>
         </div>
       </div>
       <% sightings.forEach((sighting) => { %>
@@ -91,7 +110,7 @@
         </div>
         <div class="card-footer bg-transparent border-dark">
           <div class="row">
-            <div class="col-6">
+            <div class="col-7">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -131,7 +150,7 @@
               </form>
               <% } %>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

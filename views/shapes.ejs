@@ -2,14 +2,16 @@
 <html lang="en">
   <%- include('header'); -%>
   <body>
-    <%- include('navigation', { page: 'shapes' }); -%>
-    <h1>Sightings Shapes</h1>
-    <ul>
-      <% shapes.forEach((shape) => { %>
-      <li>
-        <a href="/shapes/<%= shape.toLowerCase() %>"><%= shape %></a>
-      </li>
-      <% }); %>
-    </ul>
+    <div class="container">
+      <%- include('navigation', { page: 'shapes' }); -%>
+      <h1>Sightings Shapes</h1>
+      <ul>
+        <% shapes.forEach((shape) => { %>
+        <li>
+          <a href="/shapes/<%= shape.toLowerCase() %>"><%= shape %></a>
+        </li>
+        <% }); %>
+      </ul>
+    </div>
   </body>
 </html>

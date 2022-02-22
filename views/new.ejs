@@ -2,21 +2,28 @@
 <html lang="en">
   <%- include('header'); -%>
   <body>
-    <%- include('navigation', { page: 'new' }); -%>
-    <form action="/sighting" method="POST">
-      <label for="text">DESCRIPTION:</label><br />
-      <input type="text" id="text" name="text" /><br />
-      <label for="date_time">DATE/TIME:</label><br />
-      <input type="text" id="date_time" name="date_time" /><br />
-      <label for="city">CITY:</label><br />
-      <input type="text" id="city" name="city" /><br />
-      <label for="state">STATE:</label><br />
-      <input type="text" id="state" name="state" /><br />
-      <label for="shape">SHAPE:</label><br />
-      <input type="text" id="shape" name="shape" /><br />
-      <label for="duration">DURATION:</label><br />
-      <input type="text" id="duration" name="duration" /><br />
-      <input type="submit" value="Submit" />
-    </form>
+    <div class="container">
+      <%- include('navigation', { page: 'new' }); -%>
+      <form action="/sighting" method="POST">
+        <label for="text" class="form-label">Description:</label>
+        <input type="text" class="form-control" id="text" name="text" />
+        <label for="date_time" class="form-label">Date/Time:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="date_time"
+          name="date_time"
+        />
+        <label for="city" class="form-label">City:</label>
+        <input type="text" class="form-control" id="city" name="city" />
+        <label for="state" class="form-label">State:</label>
+        <input type="text" class="form-control" id="state" name="state" />
+        <label for="shape" class="form-label">Shape:</label>
+        <input type="text" class="form-control" id="shape" name="shape" />
+        <label for="duration" class="form-label">Duration:</label>
+        <input type="text" class="form-control" id="duration" name="duration" />
+        <input type="submit" class="btn btn-secondary" value="Submit" />
+      </form>
+    </div>
   </body>
 </html>

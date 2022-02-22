@@ -37,6 +37,52 @@ app.set('view engine', 'ejs');
 
 moment().format();
 
+const compareStrings = (firstItemAttr, secondItemAttr, sortOrder) => {
+  // get attributes to compare
+  let firstItem = firstItemAttr;
+  if (!Number.isInteger(firstItem)) {
+    firstItem = firstItem.toUpperCase();
+  }
+  let secondItem = secondItemAttr;
+  if (!Number.isInteger(secondItem)) {
+    secondItem = secondItem.toUpperCase();
+  }
+
+  // return comparison result
+  if (firstItem < secondItem) {
+    return (sortOrder === 'desc') ? 1 : -1;
+  }
+  if (firstItem > secondItem) {
+    return (sortOrder === 'desc') ? -1 : 1;
+  }
+  return 0;
+};
+
+const compareDates = (firstItemAttr, secondItemAttr, sortOrder) => {
+  // get attributes to compare
+  const firstItem = moment(firstItemAttr);
+  const secondItem = moment(secondItemAttr);
+
+  // return comparison result
+  if (firstItem.isBefore(secondItem)) {
+    return (sortOrder === 'desc') ? 1 : -1;
+  }
+  if (firstItem.isAfter(secondItem)) {
+    return (sortOrder === 'desc') ? -1 : 1;
+  }
+  return 0;
+};
+
+const compare = (first, second, sortBy, sortOrder) => {
+  const firstItemAttr = first[sortBy] || '';
+  const secondItemAttr = second[sortBy] || '';
+
+  if (moment(firstItemAttr).isValid() && moment(secondItemAttr).isValid()) {
+    return compareDates(firstItemAttr, secondItemAttr, sortOrder);
+  }
+  return compareStrings(firstItemAttr, secondItemAttr, sortOrder);
+};
+
 const addToFavorites = (req, res) => {
   const { index, remove, source } = req.query;
 
@@ -134,6 +180,11 @@ const getSightings = (req, res) => {
       return;
     }
 
+    const { sortBy, sortOrder } = req.query;
+    if (sortBy) {
+      data.sightings.sort((first, second) => compare(first, second, sortBy, sortOrder));
+    }
+
     data.sightings.forEach((sighting, index) => {
       sighting.index = index;
       sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
@@ -146,7 +197,9 @@ const getSightings = (req, res) => {
     }
 
     if (sightings.length > 0) {
-      res.render('sightings', { sightings, source: 'root', favorites });
+      res.render('sightings', {
+        sightings, source: 'root', favorites, sortBy, sortOrder,
+      });
     } else {
       res.status(404).send('Sorry, we cannot find that!');
     }
@@ -276,8 +329,14 @@ const getSightingsByShape = (req, res) => {
       return;
     }
 
+    const { sortBy, sortOrder } = req.query;
+    if (sortBy) {
+      data.sightings.sort((first, second) => compare(first, second, sortBy, sortOrder));
+    }
+
     data.sightings.forEach((sighting, index) => {
       sighting.index = index;
+      sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
     });
 
     let favorites = [];
@@ -290,7 +349,9 @@ const getSightingsByShape = (req, res) => {
 
     if (filteredSightings) {
       const sightings = filteredSightings;
-      res.render('sightings', { sightings, source: `shapes-${shape}`, favorites });
+      res.render('sightings', {
+        sightings, source: `shapes-${shape}`, favorites, sortBy, sortOrder,
+      });
     } else {
       res.status(404).send('Sorry, we cannot find that!');
     }
