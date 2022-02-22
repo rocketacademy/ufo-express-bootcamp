@@ -43,13 +43,6 @@ const validationMessages = [
         .withMessage('This field is required'),
 ]
 
-const availableQueries = [
-  'date',
-  'city',
-  'state',
-  'shape',
-];
-
 router.get("/", (req, res) => {
   let visits = 0;
   // check if it's not the first time a request has been made
@@ -184,6 +177,7 @@ router.post("/sighting", validationMessages ,(req, res, next) => {
     newData['errormsg'] = errors.errors; 
     //console.log(newData);
     if (!errors.isEmpty()) {
+      console.log(newData);
       res.render("postSighting", newData);
     } else {
       // Post the data in the object at the new index
