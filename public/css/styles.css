@@ -4,5 +4,11 @@ body {
 }
 
 img {
-  border: 1px solid black;
+  width: 382px;
+  height: 382px;
+  object-fit: contain;
+}
+
+.hidden-submit-button {
+  display: none;
 }

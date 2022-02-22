@@ -37,6 +37,46 @@ app.set('view engine', 'ejs');
 
 moment().format();
 
+const addToFavorites = (req, res) => {
+  const { index, remove, source } = req.query;
+
+  // eslint-disable-next-line no-restricted-globals
+  if (isNaN(index)) {
+    res.status(404).send('Sorry, we cannot find that!');
+    return;
+  }
+
+  let favorites = [];
+  if (req.cookies.favorites) {
+    favorites = req.cookies.favorites;
+  }
+
+  if (!favorites.includes(index) && (remove !== '1')) {
+    favorites.push(index);
+  } else if (favorites.includes(index) && (remove === '1')) {
+    favorites = favorites.filter((favIndex) => (favIndex !== index));
+  }
+
+  res.cookie('favorites', favorites);
+
+  if (source.includes('shapes')) {
+    const sourcePath = source.split('-');
+    res.redirect(`/${sourcePath[0]}/${sourcePath[1]}`);
+  } else {
+    res.redirect('/');
+  }
+};
+
+const removeFromFavorites = (req, res, index) => {
+  if (req.cookies.favorites) {
+    let { favorites } = req.cookies;
+
+    favorites = favorites.filter((favIndex) => (favIndex !== index));
+
+    res.cookie('favorites', favorites);
+  }
+};
+
 const getSightingShapes = (req, res) => {
   read('data.json', (err, data) => {
     if (err) {
@@ -96,11 +136,17 @@ const getSightings = (req, res) => {
 
     data.sightings.forEach((sighting, index) => {
       sighting.index = index;
+      sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
     });
     const { sightings } = data;
 
+    let favorites = [];
+    if (req.cookies.favorites) {
+      favorites = req.cookies.favorites;
+    }
+
     if (sightings.length > 0) {
-      res.render('sightings', { sightings, source: 'root' });
+      res.render('sightings', { sightings, source: 'root', favorites });
     } else {
       res.status(404).send('Sorry, we cannot find that!');
     }
@@ -214,6 +260,8 @@ const deleteSightingByIndex = (req, res) => {
         return;
       }
 
+      removeFromFavorites(req, res, index);
+
       res.redirect('/');
     });
   });
@@ -232,12 +280,17 @@ const getSightingsByShape = (req, res) => {
       sighting.index = index;
     });
 
+    let favorites = [];
+    if (req.cookies.favorites) {
+      favorites = req.cookies.favorites;
+    }
+
     // eslint-disable-next-line max-len
     const filteredSightings = data.sightings.filter((sighting) => (sighting.shape.toUpperCase() === shape.toUpperCase()));
 
     if (filteredSightings) {
       const sightings = filteredSightings;
-      res.render('sightings', { sightings, source: 'shapes' });
+      res.render('sightings', { sightings, source: `shapes-${shape}`, favorites });
     } else {
       res.status(404).send('Sorry, we cannot find that!');
     }
@@ -253,5 +306,6 @@ app.put('/sighting/:index', editSighting);
 app.delete('/sighting/:index', deleteSightingByIndex);
 app.get('/shapes', getSightingShapes);
 app.get('/shapes/:shape', getSightingsByShape);
+app.post('/favorites', addToFavorites);
 
 app.listen(3004);
