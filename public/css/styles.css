@@ -12,3 +12,12 @@ img {
 .hidden-submit-button {
   display: none;
 }
+
+.read-more {
+  text-decoration: none;
+}
+
+.silent-link {
+  text-decoration: none;
+  color: black;
+}
