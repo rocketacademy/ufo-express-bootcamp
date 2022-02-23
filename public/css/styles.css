@@ -1,11 +1,6 @@
-body {
-  min-height: 75rem;
-  padding-top: 4.5rem;
-}
-
 img {
-  width: 382px;
-  height: 382px;
+  width: 300px;
+  height: 300px;
   object-fit: contain;
 }
 

@@ -105,7 +105,7 @@ const addToFavorites = (req, res) => {
 
   res.cookie('favorites', favorites);
 
-  if (source.includes('shapes')) {
+  if (source.includes('shapes') || source.includes('sighting')) {
     const sourcePath = source.split('-');
     res.redirect(`/${sourcePath[0]}/${sourcePath[1]}`);
   } else {
@@ -281,9 +281,15 @@ const getSightingByIndex = (req, res) => {
     const sighting = data.sightings[index];
     sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
     sighting.created_time = moment(sighting.created_time).fromNow();
+    sighting.index = index;
+
+    let favorites = [];
+    if (req.cookies.favorites) {
+      favorites = req.cookies.favorites;
+    }
 
     if (sighting) {
-      res.render('sighting', { sighting });
+      res.render('sighting', { sighting, source: `sighting-${index}`, favorites });
     } else {
       res.status(404).send('Sorry, we cannot find that!');
     }

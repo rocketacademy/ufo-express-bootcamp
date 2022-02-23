@@ -2,9 +2,9 @@
 <html lang="en">
   <%- include('header'); -%>
   <body>
+    <%- include('navigation', { page: 'shapes' }); -%>
     <div class="container">
-      <%- include('navigation', { page: 'shapes' }); -%>
-      <h1>Sightings Shapes</h1>
+      <h2 class="mt-3">Sightings Shapes</h2>
       <ul>
         <% shapes.forEach((shape) => { %>
         <li>

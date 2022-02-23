@@ -2,8 +2,9 @@
 <html lang="en">
   <%- include('header'); -%>
   <body>
+    <%- include('navigation', { page: 'edit' }); -%>
     <div class="container">
-      <%- include('navigation', { page: 'edit' }); -%>
+      <h2 class="mt-3">Edit Sighting</h2>
       <form action="/sighting/<%= sighting.index %>?_method=PUT" method="POST">
         <label for="text" class="form-label">DESCRIPTION:</label>
         <input

@@ -2,180 +2,181 @@
 <html lang="en">
   <%- include('header'); -%>
   <body>
+    <%- include('navigation', { page: 'sightings' }); -%>
     <div class="container">
-      <%- include('navigation', { page: 'sightings' }); -%> <% if(source ===
-      'root') { %>
+      <% if(source === 'root') { %>
       <div class="row">
         <img src="images/ufo-logo.jpg" alt="" />
       </div>
       <% } %>
       <div class="row align-items-center">
-        <div class="col ms-3">
+        <div class="col ms-3 mt-3">
+          <% if(source === 'root') { %>
           <h2>Sightings</h2>
+          <% } else { %>
+          <h2><%= sightings[0].shape %></h2>
+          <% } %>
         </div>
-        <div class="col">
-          <span>            <a
+        <div class="col text-end me-3 mt-3">
+          <span>            
+            <a
               href="?sortBy=date_time<%= ((sortBy === 'date_time') && (sortOrder === 'asc')) ? '&sortOrder=desc' : '&sortOrder=asc' %>"
-              >Date <% if ((sortBy === 'date_time') && (sortOrder ===
+              ><small>Date</small> <% if ((sortBy === 'date_time') && (sortOrder ===
               'asc')) { %>↑<% } else if ((sortBy === 'date_time') && (sortOrder ===
               'desc')) { %>↓<% }%>
             </a> |  
             <% if (!source.startsWith('shapes')) { %>
             <a
               href="?sortBy=shape<%= ((sortBy === 'shape') && (sortOrder === 'asc')) ? '&sortOrder=desc' : '&sortOrder=asc' %>"
-              >Shape <% if ((sortBy === 'shape') && (sortOrder ===
+              ><small>Shape</small> <% if ((sortBy === 'shape') && (sortOrder ===
               'asc')) { %>↑<% } else if ((sortBy === 'shape') && (sortOrder ===
               'desc')) { %>↓<% }%>
             </a> |  
             <% } %>
             <a
               href="?sortBy=city<%= ((sortBy === 'city') && (sortOrder === 'asc')) ? '&sortOrder=desc' : '&sortOrder=asc' %>"
-              >City <% if ((sortBy === 'city') && (sortOrder ===
+              ><small>City</small> <% if ((sortBy === 'city') && (sortOrder ===
               'asc')) { %>↑<% } else if ((sortBy === 'city') && (sortOrder ===
               'desc')) { %>↓<% }%>
             </a></span>
         </div>
       </div>
-      <% sightings.forEach((sighting) => { %>
-      <div class="card border-dark mb-3" style="max-width: 24rem">
-        <div class="card-header bg-transparent border-dark">
-          <div class="row">
-            <div class="col-8">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-calendar"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"
-                />
-              </svg>
-              <small><%= sighting.date_time %></small>
-            </div>
-            <div class="col-4 text-end">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-diamond"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134z"
-                />
-              </svg>
-              <small><%= sighting.shape %></small>              
-            </div>
-          </div>
-        </div>
-        <div class="card-body text-secondary" style="transform: rotate(0)">
-          <p class="card-text">
-            <%= sighting.summary %>
-            <a href="/sighting/<%= sighting.index %>" class="stretched-link read-more text-secondary"
-              >...
-            </a>
-          </p>
-        </div>
-        <div class="card-footer bg-transparent border-dark">
-          <div class="row">
-            <div class="col-9">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-geo-fill"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"
-                />
-              </svg>
-              <small><%= sighting.city %>, <%= sighting.state %></small>
-            </div>
-            <div class="col-1 ps-0">
-              <% if (favorites.includes(sighting.index.toString())) { %>
-              <form
-                action="/favorites?index=<%= sighting.index %>&source=<%= source %>&remove=1"
-                method="POST"
-              >
-                <label>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+        <% sightings.forEach((sighting) => { %>
+        <div class="col">
+          <div class="card border-dark mb-3" style="max-width: 24rem;">
+            <div class="card-header bg-transparent border-dark">
+              <div class="row">
+                <div class="col-8">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                    <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                    <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                  </svg>
+                  <small><%= sighting.date_time %></small>
+                </div>
+                <div class="col-4 text-end">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"
                     height="16"
                     fill="currentColor"
-                    class="bi bi-heart-fill"
+                    class="bi bi-diamond"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M6.95.435c.58-.58 1.52-.58 2.1 0l6.515 6.516c.58.58.58 1.519 0 2.098L9.05 15.565c-.58.58-1.519.58-2.098 0L.435 9.05a1.482 1.482 0 0 1 0-2.098L6.95.435zm1.4.7a.495.495 0 0 0-.7 0L1.134 7.65a.495.495 0 0 0 0 .7l6.516 6.516a.495.495 0 0 0 .7 0l6.516-6.516a.495.495 0 0 0 0-.7L8.35 1.134z"
+                    />
+                  </svg>
+                  <small><%= sighting.shape %></small>              
+                </div>
+              </div>
+            </div>
+            <div class="card-body text-secondary" style="transform: rotate(0)">
+              <p class="card-text">
+                <%= sighting.summary %>
+                <a href="/sighting/<%= sighting.index %>" class="stretched-link read-more text-secondary"
+                  >...
+                </a>
+              </p>
+            </div>
+            <div class="card-footer bg-transparent border-dark">
+              <div class="row">
+                <div class="col-9">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-geo-fill"
                     viewBox="0 0 16 16"
                   >
                     <path
                       fill-rule="evenodd"
-                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                      d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999zm2.493 8.574a.5.5 0 0 1-.411.575c-.712.118-1.28.295-1.655.493a1.319 1.319 0 0 0-.37.265.301.301 0 0 0-.057.09V14l.002.008a.147.147 0 0 0 .016.033.617.617 0 0 0 .145.15c.165.13.435.27.813.395.751.25 1.82.414 3.024.414s2.273-.163 3.024-.414c.378-.126.648-.265.813-.395a.619.619 0 0 0 .146-.15.148.148 0 0 0 .015-.033L12 14v-.004a.301.301 0 0 0-.057-.09 1.318 1.318 0 0 0-.37-.264c-.376-.198-.943-.375-1.655-.493a.5.5 0 1 1 .164-.986c.77.127 1.452.328 1.957.594C12.5 13 13 13.4 13 14c0 .426-.26.752-.544.977-.29.228-.68.413-1.116.558-.878.293-2.059.465-3.34.465-1.281 0-2.462-.172-3.34-.465-.436-.145-.826-.33-1.116-.558C3.26 14.752 3 14.426 3 14c0-.599.5-1 .961-1.243.505-.266 1.187-.467 1.957-.594a.5.5 0 0 1 .575.411z"
                     />
                   </svg>
-              <% } else { %>
-              <form
-                action="/favorites?index=<%= sighting.index %>&source=<%= source %>"
-                method="POST"
-              >
-                <label>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-heart"
-                    viewBox="0 0 16 16"
+                  <small><%= sighting.city %>, <%= sighting.state %></small>
+                </div>
+                <div class="col-1 ps-0">
+                  <% if (favorites.includes(sighting.index.toString())) { %>
+                  <form
+                    action="/favorites?index=<%= sighting.index %>&source=<%= source %>&remove=1"
+                    method="POST"
                   >
-                    <path
-                      d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
-                    />
-                  </svg>
-                  <% } %>
-                  <input class="hidden-submit-button" type="submit" />
-                </label>
-              </form>
-            </div>            
-            <div class="col-1 ps-0">
-              <a
-                href="/sighting/<%= sighting.index %>/edit" class="silent-link">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                  </svg>                            
-              </a>
-            </div>
-            <div class="col-1 ps-0">
-              <form
-                action="/sighting/<%= sighting.index %>?_method=DELETE"
-                method="POST"
-              >
-              <label>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-trash3"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
-                  />
-                </svg>
-                <input class="hidden-submit-button" type="submit" />
-                </label>              
-              </form>
+                    <label>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-heart-fill"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                        />
+                      </svg>
+                  <% } else { %>
+                  <form
+                    action="/favorites?index=<%= sighting.index %>&source=<%= source %>"
+                    method="POST"
+                  >
+                    <label>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-heart"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+                        />
+                      </svg>
+                      <% } %>
+                      <input class="hidden-submit-button" type="submit" />
+                    </label>
+                  </form>
+                </div>            
+                <div class="col-1 ps-0">
+                  <a
+                    href="/sighting/<%= sighting.index %>/edit" class="silent-link">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                      </svg>                            
+                  </a>
+                </div>
+                <div class="col-1 ps-0">
+                  <form
+                    action="/sighting/<%= sighting.index %>?_method=DELETE"
+                    method="POST"
+                  >
+                  <label>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-trash3"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
+                      />
+                    </svg>
+                    <input class="hidden-submit-button" type="submit" />
+                    </label>              
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        <% }); %>
       </div>
-      <% }); %>
     </div>
   </body>
 </html>
