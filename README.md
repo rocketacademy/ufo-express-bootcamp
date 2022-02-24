@@ -2,7 +2,7 @@
 
 ## Overview
 
-![pokermon-logo](https://user-images.githubusercontent.com/17814490/148029887-b316643f-f27a-4f93-8a4d-eccd6934373a.png)
+![ufo-main](https://user-images.githubusercontent.com/17814490/155581608-f5b24b0a-66e7-4b76-be5d-911a47c4e74e.jpg)
 
 **LIVE LINK** : https://hertantoirawan.github.io/ufo-express-bootcamp/
 
