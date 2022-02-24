@@ -10,15 +10,50 @@
 
       <form action="/sighting" method="post">
         <label for="date_time">Date & Time :</label><br />
-        <input type="text" id="date_time" name="date_time" size="50" /><br />
+        <input
+          type="text"
+          id="date_time"
+          name="date_time"
+          size="50"
+          class="form-control"
+          required
+        /><br />
         <label for="city">City:</label><br />
-        <input type="text" id="city" name="city" size="50" /><br />
+        <input
+          type="text"
+          id="city"
+          name="city"
+          size="50"
+          class="form-control"
+          required
+        /><br />
         <label for="state">State:</label><br />
-        <input type="text" id="state" name="state" size="50" /><br />
+        <input
+          type="text"
+          id="state"
+          name="state"
+          size="50"
+          class="form-control"
+          required
+        /><br />
         <label for="shape">Shape:</label><br />
-        <input type="text" id="shape" name="shape" size="50" /><br />
+        <input
+          type="text"
+          id="shape"
+          name="shape"
+          size="50"
+          class="form-control"
+          required
+        /><br />
         <label for="duration">Duration:</label><br />
-        <input type="text" id="duration" name="duration" size="50" /><br />
+        <input
+          type="text"
+          id="duration"
+          name="duration"
+          size="50"
+          class="form-control"
+          required
+        /><br />
         <label for="description"
           >Please describe your encounter here in detail:</label
         ><br />
@@ -28,6 +63,8 @@
           name="description"
           rows="5"
           cols="50"
+          class="form-control"
+          required
         ></textarea>
         <br />
         <label for="summary">Summary:</label><br />
@@ -39,11 +76,12 @@
           id="createTime"
           name="createTime"
           size="50"
-          value="<%=
-        createTime.toLocaleString() %>"
+          value="<%=createTime.toLocaleString() %>"
+          class="form-control"
+          required
         /><br />
         <br />
-        <input type="submit" value="Submit" class="submit-btn" />
+        <input type="submit" value="Submit" class="btn btn-primary" />
       </form>
     </div>
   </div>

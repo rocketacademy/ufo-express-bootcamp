@@ -28,6 +28,9 @@ const renderIndex = (request, response) => {
     }
     const { sightings } = data;
 
+    // const favSighting = request.cookies.index;
+    // console.log(request.cookies.index);
+
     response.render('index', { sightings, visits });
   });
 };
@@ -185,6 +188,31 @@ const renderSightingByShape = (request, response) => {
   });
 };
 
+const favourites = (req, res) => {
+  const { favorite } = req.query;
+  let arrayOfFavorites = [];
+
+  /* if favorite cookie is present, assign the cookie to array */
+  if (req.cookies.favorite) {
+    arrayOfFavorites = req.cookies.favorite;
+    /* add the new favorite sighting into the array */
+    arrayOfFavorites.push(Number(favorite));
+
+    arrayOfFavorites.forEach((el, ind, array) => {
+      if (array.indexOf(el) !== array.lastIndexOf(el)) {
+        array.splice(ind, 2);
+      }
+    });
+  } else {
+    /* if the cookie does not exist */
+    arrayOfFavorites.push(Number(favorite));
+  }
+  /* send the cookie back to the browser */
+  res.cookie('favorite', arrayOfFavorites);
+  /* redirect to main page */
+  res.redirect('/');
+};
+
 app.get('/', renderIndex);
 app.get('/sighting', renderForm);
 app.post('/sighting', renderAddNewSighting);
@@ -195,4 +223,6 @@ app.get('/sighting/:index', renderDeleteSighting);
 app.delete('/sighting/:index', deleteSighting);
 app.get('/shapes', renderListOfShapes);
 app.get('/shapes/:shapes', renderSightingByShape);
+app.get('/favourites', favourites);
+
 app.listen(3004);
