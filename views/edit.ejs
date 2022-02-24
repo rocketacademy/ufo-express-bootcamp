@@ -6,54 +6,73 @@
     <div class="container">
       <h2 class="mt-3">Edit Sighting</h2>
       <form action="/sighting/<%= sighting.index %>?_method=PUT" method="POST">
-        <label for="text" class="form-label">DESCRIPTION:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="text"
-          name="text"
-          value="<%= sighting.text %>"
-        />
-        <label for="date_time" class="form-label">DATE/TIME:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="date_time"
-          name="date_time"
-          value="<%= sighting.date_time %>"
-        />
-        <label for="city" class="form-label">CITY:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="city"
-          name="city"
-          value="<%= sighting.city %>"
-        />
-        <label for="state" class="form-label">STATE:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="state"
-          name="state"
-          value="<%= sighting.state %>"
-        />
-        <label for="shape" class="form-label">SHAPE:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="shape"
-          name="shape"
-          value="<%= sighting.shape %>"
-        />
-        <label for="duration" class="form-label">DURATION:</label>
-        <input
-          type="text"
-          class="form-control"
-          id="duration"
-          name="duration"
-          value="<%= sighting.duration %>"
-        />
+        <div class="mb-3">
+          <label for="text" class="form-label">Description:</label>
+          <textarea
+            class="form-control"
+            id="text"
+            name="text"
+            rows="10"
+            required
+          >
+<%= sighting.text %></textarea
+          >
+        </div>
+        <div class="mb-3">
+          <label for="date_time" class="form-label">Date:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="date_time"
+            name="date_time"
+            value="<%= sighting.date_time %>"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="city" class="form-label">City:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="city"
+            name="city"
+            value="<%= sighting.city %>"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="state" class="form-label">State:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="state"
+            name="state"
+            value="<%= sighting.state %>"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="shape" class="form-label">Shape:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="shape"
+            name="shape"
+            value="<%= sighting.shape %>"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="duration" class="form-label">Duration:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="duration"
+            name="duration"
+            value="<%= sighting.duration %>"
+            required
+          />
+        </div>
         <input type="submit" class="btn btn-secondary" value="Submit" />
       </form>
     </div>

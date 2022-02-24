@@ -1,0 +1,46 @@
+[
+  {
+    "word": "fireball",
+    "phonetic": "/ˈfaɪə(ɹ)bɔːl/",
+    "phonetics": [{ "text": "/ˈfaɪə(ɹ)bɔːl/", "audio": "" }],
+    "meanings": [
+      {
+        "partOfSpeech": "noun",
+        "definitions": [
+          {
+            "definition": "A ball of fire, especially one associated with an explosion."
+          },
+          {
+            "definition": "A meteor bright enough to cast shadows.",
+            "synonyms": ["bolis"]
+          },
+          {
+            "definition": "A class of sailing dinghy with a single trapeze and a symmetrical spinnaker, sailed by a crew of two."
+          },
+          {
+            "definition": "A charge made of a disc-shaped bomb shell, with four sets of flames, at the top, bottom and on either side."
+          },
+          {
+            "definition": "A ball filled with combustibles to be thrown among enemies."
+          }
+        ]
+      },
+      {
+        "partOfSpeech": "verb",
+        "definitions": [
+          {
+            "definition": "To explode in a ball of flame.",
+            "example": "The car swerved off a road, hit a wall, and fireballed as the petrol tank exploded."
+          },
+          { "definition": "To pitch the ball very fast." },
+          { "definition": "To attack with balls of fire." }
+        ]
+      }
+    ],
+    "license": {
+      "name": "CC BY-SA 3.0",
+      "url": "https://creativecommons.org/licenses/by-sa/3.0"
+    },
+    "sourceUrls": ["https://en.wiktionary.org/wiki/fireball"]
+  }
+]

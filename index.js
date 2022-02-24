@@ -2,6 +2,7 @@ import express from 'express';
 import methodOverride from 'method-override';
 import moment from 'moment';
 import crypto from 'crypto';
+import fetch from 'node-fetch';
 import cookieParser from 'cookie-parser';
 import { read, add, write } from './jsonFileStorage.js';
 
@@ -83,6 +84,15 @@ const compare = (first, second, sortBy, sortOrder) => {
   return compareStrings(firstItemAttr, secondItemAttr, sortOrder);
 };
 
+const getDefinition = async (word) => fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
+  .then((res) => res.json())
+  .then((data) => ({
+    word: data[0].word,
+    phonetic: data[0].phonetic,
+    partOfSpeech: data[0].meanings[0].partOfSpeech,
+    definition: data[0].meanings[0].definitions[0].definition,
+  })).catch((error) => console.error(error));
+
 const addToFavorites = (req, res) => {
   const { index, remove, source } = req.query;
 
@@ -133,7 +143,33 @@ const getSightingShapes = (req, res) => {
     }
 
     // eslint-disable-next-line max-len
-    const shapes = [...new Set(data.sightings.filter((sighting) => sighting.shape !== undefined).map((sighting) => sighting.shape))];
+    const uniqueShapes = [...new Set(data.sightings.filter((sighting) => sighting.shape !== undefined).map((sighting) => sighting.shape))];
+
+    const shapes = [];
+    for (let i = 0; i < uniqueShapes.length; i += 1) {
+      const shape = uniqueShapes[i];
+      shapes.push({
+        shape,
+        count: 0,
+        favorites: 0,
+      });
+    }
+
+    let favorites = [];
+    if (req.cookies.favorites) {
+      favorites = req.cookies.favorites;
+    }
+
+    // Count number of sightings of a certain shape and how many are favorites
+    data.sightings.forEach((sighting, index) => {
+      // eslint-disable-next-line max-len
+      const shape = shapes.find((item) => item.shape.toUpperCase() === sighting.shape.toUpperCase());
+
+      shape.count += 1;
+      if (favorites.includes(index.toString())) {
+        shape.favorites += 1;
+      }
+    });
 
     if (shapes.length > 0) {
       res.render('shapes', { shapes });

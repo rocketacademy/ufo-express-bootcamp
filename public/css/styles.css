@@ -1,7 +1,25 @@
-img {
+body {
+  padding-top: 3rem;
+}
+
+.img-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.img-main {
   width: 300px;
   height: 300px;
   object-fit: contain;
+}
+
+a:link,
+a:visited,
+a:active,
+a:hover {
+  color: black;
+  text-decoration: none;
 }
 
 .hidden-submit-button {
@@ -12,7 +30,6 @@ img {
   text-decoration: none;
 }
 
-.silent-link {
-  text-decoration: none;
-  color: black;
+.icon-btn:hover {
+  cursor: pointer;
 }
