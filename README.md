@@ -2,7 +2,7 @@
 
 ## Overview
 
-![ufo-main](https://user-images.githubusercontent.com/17814490/155581608-f5b24b0a-66e7-4b76-be5d-911a47c4e74e.jpg)
+<img src="https://user-images.githubusercontent.com/17814490/155581608-f5b24b0a-66e7-4b76-be5d-911a47c4e74e.jpg" alt="ufo-main" width="300"/>
 
 **LIVE LINK** : https://hertantoirawan.github.io/ufo-express-bootcamp/
 
