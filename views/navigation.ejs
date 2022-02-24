@@ -15,8 +15,8 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
         <a
-          class="nav-link<%= ((page === 'new') || (page === 'shapes')) ? '' : ' active' %>"
-          <%= ((page === 'new') || (page === 'shapes')) ? '' : 'aria-current="page"' %>
+          class="nav-link<%= ((page === 'new') || page.startsWith('shapes') || (page === 'favorites')) ? '' : ' active' %>"
+          <%= ((page === 'new') || page.startsWith('shapes') || (page === 'favorites')) ? '' : 'aria-current="page"' %>
           href="/"
           >Home</a
         >
@@ -27,10 +27,16 @@
           >New Sighting</a
         >
         <a
-          class="nav-link<%= (page === 'shapes') ? ' active' : '' %>"
-          <%= (page === 'shapes') ? 'aria-current="page"' : '' %>
+          class="nav-link<%= page.startsWith('shapes') ? ' active' : '' %>"
+          <%= page.startsWith('shapes') ? 'aria-current="page"' : '' %>
           href="/shapes"
           >Shapes</a
+        >
+        <a
+          class="nav-link<%= (page === 'favorites') ? ' active' : '' %>"
+          <%= (page === 'favorites') ? 'aria-current="page"' : '' %>
+          href="/favorites"
+          >Favorites</a
         >
       </div>
     </div>

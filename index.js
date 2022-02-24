@@ -108,6 +108,8 @@ const addToFavorites = (req, res) => {
   if (source.includes('shapes') || source.includes('sighting')) {
     const sourcePath = source.split('-');
     res.redirect(`/${sourcePath[0]}/${sourcePath[1]}`);
+  } else if (source.includes('favorites')) {
+    res.redirect(`/${source}`);
   } else {
     res.redirect('/');
   }
@@ -364,6 +366,42 @@ const getSightingsByShape = (req, res) => {
   });
 };
 
+const getFavoriteSightings = (req, res) => {
+  read('data.json', (err, data) => {
+    if (err) {
+      res.status(500).send('DB read error.');
+      return;
+    }
+
+    const { sortBy, sortOrder } = req.query;
+    if (sortBy) {
+      data.sightings.sort((first, second) => compare(first, second, sortBy, sortOrder));
+    }
+
+    data.sightings.forEach((sighting, index) => {
+      sighting.index = index;
+      sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
+    });
+
+    let favorites = [];
+    if (req.cookies.favorites) {
+      favorites = req.cookies.favorites;
+    }
+
+    // eslint-disable-next-line max-len
+    const filteredSightings = data.sightings.filter((sighting) => (favorites.includes(sighting.index.toString())));
+
+    if (filteredSightings) {
+      const sightings = filteredSightings;
+      res.render('sightings', {
+        sightings, source: 'favorites', favorites, sortBy, sortOrder,
+      });
+    } else {
+      res.status(404).send('Sorry, we cannot find that!');
+    }
+  });
+};
+
 app.get('/sighting', getNewSighting);
 app.post('/sighting', createSighting);
 app.get('/sighting/:index', getSightingByIndex);
@@ -373,6 +411,7 @@ app.put('/sighting/:index', editSighting);
 app.delete('/sighting/:index', deleteSightingByIndex);
 app.get('/shapes', getSightingShapes);
 app.get('/shapes/:shape', getSightingsByShape);
+app.get('/favorites', getFavoriteSightings);
 app.post('/favorites', addToFavorites);
 
 app.listen(3004);

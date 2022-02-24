@@ -2,7 +2,7 @@
 <html lang="en">
   <%- include('header'); -%>
   <body>
-    <%- include('navigation', { page: 'sightings' }); -%>
+    <%- include('navigation', { page: source }); -%>
     <div class="container">
       <% if(source === 'root') { %>
       <div class="row">
@@ -11,8 +11,10 @@
       <% } %>
       <div class="row align-items-center">
         <div class="col ms-3 mt-3">
-          <% if(source === 'root') { %>
+          <% if (source === 'root') { %>
           <h2>Sightings</h2>
+          <% } else if (source === 'favorites') { %>
+          <h2>Favorites</h2>
           <% } else { %>
           <h2><%= sightings[0].shape %></h2>
           <% } %>
