@@ -5,7 +5,7 @@ import {
   read, add, edit, write,
 } from './jsonFileStorage.js';
 
-import { visitCounter } from './helper.js';
+import { visitCounter, daysFromNow } from './helper.js';
 
 const app = express();
 app.use(cookieParser());
@@ -28,10 +28,7 @@ const renderIndex = (request, response) => {
     }
     const { sightings } = data;
 
-    // const favSighting = request.cookies.index;
-    // console.log(request.cookies.index);
-
-    response.render('index', { sightings, visits });
+    response.render('index', { sightings, visits, daysFromNow });
   });
 };
 
@@ -83,6 +80,7 @@ const renderIndividualSighting = (request, response) => {
       console.log('read error!');
     }
     const sighting = data.sightings[sightingIndex];
+    console.log(sighting);
 
     response.render('singleSight', { sightings: sighting, index: sightingIndex, visits });
   });
@@ -97,13 +95,10 @@ const renderEditSighting = (request, response) => {
     if (err) {
       console.log('Read error: ', err);
     }
-    // get the sighting data from content
     const sightings = data.sightings[index];
-    // add index value to sighting
     sightings.index = index;
-    // add index obj for ejs template to reference
     data.visits = visits;
-
+    console.log(sightings);
     response.render('edit', { sightings, index, visits });
   });
 };
@@ -213,9 +208,29 @@ const favourites = (req, res) => {
   res.redirect('/');
 };
 
+const renderFavourites = (req, res) => {
+  const visits = visitCounter(req, res);
+  let arrayOfFavorites;
+  if (req.cookies.favorite) {
+    arrayOfFavorites = req.cookies.favorite;
+  }
+  read('data.json', (err, data) => {
+    if (err) {
+      console.log('Read error', err);
+    }
+    const favsightings = [];
+    for (let i = 0; i < arrayOfFavorites.length; i += 1) {
+      favsightings.push(data.sightings[arrayOfFavorites[i]]);
+    }
+    console.log(favsightings);
+    res.render('favourite', { favsightings, arrayOfFavorites, visits });
+  });
+};
+
 app.get('/', renderIndex);
 app.get('/sighting', renderForm);
 app.post('/sighting', renderAddNewSighting);
+app.get('/sighting/favourites', renderFavourites);
 app.get('/sighting/:index', renderIndividualSighting);
 app.get('/sighting/:index/edit', renderEditSighting);
 app.put('/sighting/:index/edit', putEditSighting);
