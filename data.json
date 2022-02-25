@@ -1,22 +1,81 @@
 {
   "sightings": [
     {
-      "text": "Witnessed an orange, slow moving light. Was looking out my window and saw a orange colored, non blinking light floating across the night sky. Woke up my daughters to confirm what I was seeing. The object did not blink, was definitely not a helicopter. Very bright orange and moved slowly for about 2 minutes, disappeared behind the trees and did not see it again. Never seen anything like this in my life.",
-      "date_time": "10/2/19 22:00",
       "city": "Black Mountain",
       "state": "NC",
       "shape": "Fireball",
-      "duration": "2 minutes",
-      "summary": "Witnessed an orange, slow moving light. Was looking out my window and saw a orange colored, non blinking light floating across the nigh"
+      "datetime": "2019-10-02T22:00",
+      "duration": 3,
+      "text": "Witnessed an orange, slow moving light. Was looking out my window and saw a orange colored, non blinking light floating across the night sky. Woke up my daughters to confirm what I was seeing. The object did not blink, was definitely not a helicopter. Very bright orange and moved slowly for about 2 minutes, disappeared behind the trees and did not see it again. Never seen anything like this in my life.",
+      "summary": "Witnessed an orange, slow moving light. Was looking out my window and saw a orange colored, non blinking light floating across the night",
+      "updated_at": "2022-02-25T20:51:54",
+      "created_at": "2022-02-25T16:24:58"
     },
     {
-      "text": "Glowing lights in formation  just south of San Quentin I witnessed 10 or 11 spherical glowing objects in formation swarming and hovering near the top of Ring Mtn. -Corte Madera.  I very quickly ran up to 2 firemen emergency responders to ask them to quote \"take a quick glance at what is going on over here\".  They flat out refused to take 5 steps over to the side to look at what I was trying to show them.  They were handling some kind of a medical emergency, but it would have been really nice to have them witness this because this was highlight of the whole night.",
-      "date_time": "10/2/19 22:00",
+      "text": "Glowing lights in formation just south of San Quentin I witnessed 10 or 11 spherical glowing objects in formation swarming and hovering near the top of Ring Mtn. -Corte Madera.  I very quickly ran up to 2 firemen emergency responders to ask them to quote \"take a quick glance at what is going on over here\".  They flat out refused to take 5 steps over to the side to look at what I was trying to show them.  They were handling some kind of a medical emergency, but it would have been really nice to have them witness this because this was highlight of the whole night.",
+      "datetime": "2019-10-02T22:00",
       "city": "Marin County",
       "state": "CA",
       "shape": "Sphere",
-      "duration": "3 minutes",
-      "summary": "Glowing lights in formation  just south of San Quentin"
+      "duration": 3,
+      "summary": "Glowing lights in formation just south of San Quentin",
+      "created_at": "2022-02-25T16:24:58",
+      "updated_at": "2022-02-25T16:24:58"
+    },
+    {
+      "city": "Montgomery",
+      "state": "AL",
+      "shape": "Cigarette",
+      "datetime": "2018-04-12T19:30",
+      "duration": 5,
+      "text": "Two Eastern Air Lines pilots, flying in the wee hours, reported seeing a cigar-shaped aircraft with two rows of windows. But after investigators generated a top-secret report, the Air Force incinerated it. Some wonder if the craft was Soviet, or part of the rocketry tests being run by former Nazi aerospace engineers spirited to the U.S. after the war",
+      "summary": "The Cigar-Shaped UFO",
+      "created_at": "2022-02-25T16:24:58",
+      "updated_at": "2022-02-25T16:24:58"
+    },
+    {
+      "city": "Washington",
+      "state": "DC",
+      "shape": "Saucer",
+      "datetime": "1952-07-09T12:00",
+      "duration": 2,
+      "text": "One air-traffic controller at National Airport joked about the radar blips being flying saucers. But after colleagues saw them too—and after the lights buzzed the Capitol and White House—fighter jets were deployed. As newspaper headlines screamed “Saucers Swarm Over Capital,” the Air Force blamed a temperature inversion.",
+      "summary": "UFOs Buzzed the White House",
+      "created_at": "2022-02-25T16:24:58",
+      "updated_at": "2022-02-25T16:24:58"
+    },
+    {
+      "city": "Mount Palomar",
+      "state": "CA",
+      "shape": "Saucer",
+      "datetime": "1952-11-01T03:40",
+      "duration": 3,
+      "text": "Starting in the late 1940s, George Adamski gained fame in UFO circles for his countless \"flying saucer\" photos. He later claimed to have met and communicated with a visitor from Venus, using a combination of hand gestures and mental telepathy. Adamski particularly admired the creature’s baby-soft flesh and glistening hair.",
+      "summary": "Conversing with a Venusian",
+      "created_at": "2022-02-25T16:24:58",
+      "updated_at": "2022-02-25T16:24:58"
+    },
+    {
+      "city": "Roswell",
+      "state": "NM",
+      "shape": "Disc",
+      "datetime": "1947-06-17T20:45",
+      "duration": 6,
+      "text": "After U.S. Army Air Forces shockingly announced they’d recovered remnants of a “flying disc” from a New Mexico ranch, officials quickly backtracked, claiming the debris actually came from a downed “weather balloon.” Decades later, the Air Force admitted they’d concocted that story to cover the fact that the wreckage came from an aerial spy device. Conspiracy theories endure about captured aliens and government cover-ups. ",
+      "summary": "America's Most Famous UFO Incident",
+      "created_at": "2022-02-25T16:45:10",
+      "updated_at": "2022-02-25T16:45:10"
+    },
+    {
+      "city": "Holloman Air Force Base",
+      "state": "NM",
+      "shape": "Disc",
+      "datetime": "1956-03-09T11:07",
+      "duration": 3,
+      "text": "This bizarre case involved two military personnel searching the desert for debris from a recent missile launch. One of the men reported seeing the other pulled up into a flying silver disk; three days later, the alleged abductee’s corpse was found 10 miles away, severely mutilated and drained of blood. Proof remains thin, resting largely on a \"government report\" that has reportedly vanished.",
+      "summary": "Alien Abduction and Mutilation?",
+      "created_at": "2022-02-25T20:47:13",
+      "updated_at": "2022-02-25T20:47:13"
     }
   ]
 }

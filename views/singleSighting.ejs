@@ -1,0 +1,47 @@
+<%- include('header'); -%> <%- include('navbar'); -%>
+<body>
+  <div class="container">
+    <div class="row mt-3">
+      <a href="/" class="link-primary">< Back to all sightings</a>
+    </div>
+    <div class="row mt-3">
+      <div class="card text-center">
+        <div class="card-header">
+          <p><%= sighting.summary %></p>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">UFO Sighting <%= Number(index) + 1 %></h5>
+          <h6 class="card-subtitle mb-2 text-muted"><%= sighting.city %></h6>
+          <h6 class="card-subtitle mb-2 text-muted"><%= sighting.state %></h6>
+          <p class="card-text"><%= sighting.text %></p>
+        </div>
+        <h5 class="card-title">Details</h5>
+        <div class="card-footer text-muted">
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <td>Witnessed At</td>
+                <td><%= sighting.datetime %></td>
+              </tr>
+              <tr>
+                <td>Witnessed Duration (min)</td>
+                <td><%= sighting.duration %></td>
+              </tr>
+              <tr>
+                <td>Shape</td>
+                <td><%= sighting.shape %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <br />
+    </div>
+    <div class="row mt-3 justify-content-center">
+      <a href="/" class="btn btn-primary">Back to all UFO Sightings</a>
+    </div>
+  </div>
+
+  <!-- <a href="/favorite?index=<%= index %>" class="btn btn-primary">Favorite</a> -->
+</body>
+<%- include('footer'); -%>

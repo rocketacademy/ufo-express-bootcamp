@@ -1,0 +1,41 @@
+<%- include('header'); -%>
+<%- include('navbar'); -%>
+<body>
+    <div class="container">
+      <div class="row mt-3">
+        <a href="/shapes" class="link-primary">< Back to all shapes</a>
+      </div>
+      <div class="row-12 mt-3">
+        <span id="headings-block">
+          <h1 class="display-4"><%= shape %></h1>
+          <p class="fw-normal text-muted" >Sightings with <%= shape %> shape</p>
+          <hr class="border-2 border-top border-dark">
+      </span>
+      </div>
+      <div class="row-12 mt-3">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Witnessed At</th>
+              <th scope="col">Shape</th>
+              <th scope="col">City</th>
+              <th scope="col">Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let i=0; i<sightings.length; i+=1) { %>
+            <tr>
+              <th scope="row"> <%= i+1 %></th>
+              <td><%= sightings[i].sighting.datetime %></td>
+              <td><%= sightings[i].sighting.shape %></td>
+              <td><%= sightings[i].sighting.city %></td>
+              <td><%= sightings[i].sighting.created_at %></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</body>
+<%- include('footer'); -%>
