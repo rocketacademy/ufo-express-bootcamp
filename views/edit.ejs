@@ -2,76 +2,83 @@
 <html lang="en">
   <%- include('header'); -%>
   <body>
-    <%- include('navigation', { page: 'edit' }); -%>
+    <%- include('navigation', { page: source }); -%>
     <div class="container">
+      <% if (source === 'edit') { %>        
       <h2 class="mt-3">Edit Sighting</h2>
       <form action="/sighting/<%= sighting.index %>?_method=PUT" method="POST">
-        <div class="mb-3">
-          <label for="text" class="form-label">Description:</label>
-          <textarea
-            class="form-control"
-            id="text"
-            name="text"
-            rows="10"
-            required
-          >
-<%= sighting.text %></textarea
-          >
-        </div>
-        <div class="mb-3">
-          <label for="date_time" class="form-label">Date:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="date_time"
-            name="date_time"
-            value="<%= sighting.date_time %>"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="city" class="form-label">City:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="city"
-            name="city"
-            value="<%= sighting.city %>"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="state" class="form-label">State:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="state"
-            name="state"
-            value="<%= sighting.state %>"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="shape" class="form-label">Shape:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="shape"
-            name="shape"
-            value="<%= sighting.shape %>"
-            required
-          />
-        </div>
-        <div class="mb-3">
-          <label for="duration" class="form-label">Duration:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="duration"
-            name="duration"
-            value="<%= sighting.duration %>"
-            required
-          />
+      <% } else { %>
+      <h2 class="mt-3">New Sighting</h2>
+      <form action="/sighting" method="POST">
+      <% } %>
+        <div class="row">
+          <div class="mb-3 col col-sm-12">
+            <label for="text" class="form-label">Description:</label>
+            <textarea
+              class="form-control"
+              id="text"
+              name="text"
+              rows="10"
+              required
+            >
+<%= (source === 'edit') ? sighting.text : '' %></textarea
+            >
+          </div>
+          <div class="mb-3 col-sm-4">
+            <label for="date_time" class="form-label">Date:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="date_time"
+              name="date_time"
+              value="<%= (source === 'edit') ? sighting.date_time : '' %>"
+              required
+            />
+          </div>
+          <div class="mb-3 col-sm-4">
+            <label for="shape" class="form-label">Shape:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="shape"
+              name="shape"
+              value="<%= (source === 'edit') ? sighting.shape : '' %>"
+              required
+            />
+          </div>
+          <div class="mb-3 col-sm-4">
+            <label for="duration" class="form-label">Duration:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="duration"
+              name="duration"
+              value="<%= (source === 'edit') ? sighting.duration : '' %>"
+              required
+            />
+          </div>
+          <div class="mb-3 col-sm-6">
+            <label for="city" class="form-label">City:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="city"
+              name="city"
+              value="<%= (source === 'edit') ? sighting.city : '' %>"
+              required
+            />
+          </div>
+          <div class="mb-3 col-sm-6">
+            <label for="state" class="form-label">State:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="state"
+              name="state"
+              value="<%= (source === 'edit') ? sighting.state : '' %>"
+              required
+            />
+          </div>
         </div>
         <input type="submit" class="btn btn-secondary" value="Submit" />
       </form>

@@ -13,6 +13,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(cookieParser());
 
+const SUMMARY_LENGTH = 100;
+
+/**
+ * Count unique visits.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ * @param {*} next Next route.
+ */
 const countVisits = (req, res, next) => {
   let visits = 0;
 
@@ -38,6 +46,13 @@ app.set('view engine', 'ejs');
 
 moment().format();
 
+/**
+ * Function to compare strings.
+ * @param {*} firstItemAttr First item.
+ * @param {*} secondItemAttr Second item.
+ * @param {*} sortOrder Sort order.
+ * @returns 0 if equal, 1 if first item < second item, -1 otherwise.
+ */
 const compareStrings = (firstItemAttr, secondItemAttr, sortOrder) => {
   // get attributes to compare
   let firstItem = firstItemAttr;
@@ -59,6 +74,13 @@ const compareStrings = (firstItemAttr, secondItemAttr, sortOrder) => {
   return 0;
 };
 
+/**
+ * Function to compare dates.
+ * @param {*} firstItemAttr First item.
+ * @param {*} secondItemAttr Second item.
+ * @param {*} sortOrder Sort order.
+ * @returns 0 if equal, 1 if first item < second item, -1 otherwise.
+ */
 const compareDates = (firstItemAttr, secondItemAttr, sortOrder) => {
   // get attributes to compare
   const firstItem = moment(firstItemAttr);
@@ -74,6 +96,14 @@ const compareDates = (firstItemAttr, secondItemAttr, sortOrder) => {
   return 0;
 };
 
+/**
+ * Function to compare strings.
+ * @param {*} first First object.
+ * @param {*} second Second object.
+ * @param {*} sortBy Field to sort by.
+ * @param {*} sortOrder Sort order.
+ * @returns 0 if equal, 1 if first item < second item, -1 otherwise.
+ */
 const compare = (first, second, sortBy, sortOrder) => {
   const firstItemAttr = first[sortBy] || '';
   const secondItemAttr = second[sortBy] || '';
@@ -84,6 +114,11 @@ const compare = (first, second, sortBy, sortOrder) => {
   return compareStrings(firstItemAttr, secondItemAttr, sortOrder);
 };
 
+/**
+ * Get dictionary definition of a word.
+ * @param {*} word Word.
+ * @returns Definition of a word.
+ */
 const getDefinition = async (word) => fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
   .then((res) => res.json())
   .then((data) => ({
@@ -93,6 +128,12 @@ const getDefinition = async (word) => fetch(`https://api.dictionaryapi.dev/api/v
     definition: data[0].meanings[0].definitions[0].definition,
   })).catch((error) => console.error(error));
 
+/**
+ * Add/remove sighting to/from favorites.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ * @returns Redirection to previous page.
+ */
 const addToFavorites = (req, res) => {
   const { index, remove, source } = req.query;
 
@@ -102,11 +143,13 @@ const addToFavorites = (req, res) => {
     return;
   }
 
+  // get favorites from cookie
   let favorites = [];
   if (req.cookies.favorites) {
     favorites = req.cookies.favorites;
   }
 
+  // add/remove from favorites
   if (!favorites.includes(index) && (remove !== '1')) {
     favorites.push(index);
   } else if (favorites.includes(index) && (remove === '1')) {
@@ -125,6 +168,12 @@ const addToFavorites = (req, res) => {
   }
 };
 
+/**
+ * Remove sighting from favorites.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ * @param {*} index Index of sighting to remove.
+ */
 const removeFromFavorites = (req, res, index) => {
   if (req.cookies.favorites) {
     let { favorites } = req.cookies;
@@ -135,6 +184,11 @@ const removeFromFavorites = (req, res, index) => {
   }
 };
 
+/**
+ * Get different types of sighting shapes.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ */
 const getSightingShapes = (req, res) => {
   read('data.json', (err, data) => {
     if (err) {
@@ -145,6 +199,7 @@ const getSightingShapes = (req, res) => {
     // eslint-disable-next-line max-len
     const uniqueShapes = [...new Set(data.sightings.filter((sighting) => sighting.shape !== undefined).map((sighting) => sighting.shape))];
 
+    // put shape and its stats to a list
     const shapes = [];
     for (let i = 0; i < uniqueShapes.length; i += 1) {
       const shape = uniqueShapes[i];
@@ -155,12 +210,13 @@ const getSightingShapes = (req, res) => {
       });
     }
 
+    // get favorites from cookie
     let favorites = [];
     if (req.cookies.favorites) {
       favorites = req.cookies.favorites;
     }
 
-    // Count number of sightings of a certain shape and how many are favorites
+    // count number of sightings of a certain shape and how many are favorites
     data.sightings.forEach((sighting, index) => {
       // eslint-disable-next-line max-len
       const shape = shapes.find((item) => item.shape.toUpperCase() === sighting.shape.toUpperCase());
@@ -179,24 +235,46 @@ const getSightingShapes = (req, res) => {
   });
 };
 
+/**
+ * Get new sighting form.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ */
 const getNewSighting = (req, res) => {
-  res.render('new');
+  res.render('edit', { source: 'new' });
 };
 
+/**
+ * Create summary from full description.
+ * @param {*} text Description.
+ * @returns Summarized description.
+ */
 const createSummary = (text) => {
-  const description = text.substring(0, 100);
+  const description = text.substring(0, SUMMARY_LENGTH);
   return description;
 };
 
+/**
+ * Check if sighting data is valid.
+ * @param {*} data Sighting data.
+ * @returns True if valid, False otherwise.
+ */
 // eslint-disable-next-line max-len
 const isSightingDataValid = (data) => moment(data.date_time).isValid() && moment(data.date_time).isSameOrBefore(moment());
 
+/**
+ * Add new sighting.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ * @returns Redirection to newly added sighting page.
+ */
 const createSighting = (req, res) => {
   if (!isSightingDataValid(req.body)) {
     res.status(404).send('Input is invalid!');
     return;
   }
 
+  // add summary and format date
   req.body.summary = createSummary(req.body.text);
   req.body.created_time = moment().format('YYYY-MM-DD HH:mm:ss');
 
@@ -211,6 +289,11 @@ const createSighting = (req, res) => {
   });
 };
 
+/**
+ * Get list of sightings.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ */
 const getSightings = (req, res) => {
   read('data.json', (err, data) => {
     if (err) {
@@ -218,17 +301,20 @@ const getSightings = (req, res) => {
       return;
     }
 
+    // sort list
     const { sortBy, sortOrder } = req.query;
     if (sortBy) {
       data.sightings.sort((first, second) => compare(first, second, sortBy, sortOrder));
     }
 
+    // add index and format date
     data.sightings.forEach((sighting, index) => {
       sighting.index = index;
       sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
     });
     const { sightings } = data;
 
+    // get favorites from cookie
     let favorites = [];
     if (req.cookies.favorites) {
       favorites = req.cookies.favorites;
@@ -244,6 +330,12 @@ const getSightings = (req, res) => {
   });
 };
 
+/**
+ * Get edit sighting form.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ * @returns Edit sighting page.
+ */
 const getEditSighting = (req, res) => {
   const { index } = req.params;
 
@@ -261,10 +353,16 @@ const getEditSighting = (req, res) => {
 
     const sighting = data.sightings[index];
     sighting.index = index;
-    res.render('edit', { sighting });
+    res.render('edit', { sighting, source: 'edit' });
   });
 };
 
+/**
+ * Edit a sighting.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ * @returns Redirection to edited sighting page.
+ */
 const editSighting = (req, res) => {
   const { index } = req.params;
 
@@ -274,6 +372,7 @@ const editSighting = (req, res) => {
     return;
   }
 
+  // validate sighting data
   if (!isSightingDataValid(req.body)) {
     res.status(404).send('Input is invalid!');
     return;
@@ -285,6 +384,7 @@ const editSighting = (req, res) => {
       return;
     }
 
+    // modify fields before saving
     req.body.summary = createSummary(req.body.text);
     req.body.created_time = data.sightings[index].created_time;
     req.body.updated_time = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -301,6 +401,12 @@ const editSighting = (req, res) => {
   });
 };
 
+/**
+ * Get sighting page.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ * @returns Sighting page.
+ */
 const getSightingByIndex = (req, res) => {
   const { index } = req.params;
 
@@ -316,11 +422,13 @@ const getSightingByIndex = (req, res) => {
       return;
     }
 
+    // format data before showing
     const sighting = data.sightings[index];
     sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
     sighting.created_time = moment(sighting.created_time).fromNow();
     sighting.index = index;
 
+    // get favorites from cookie
     let favorites = [];
     if (req.cookies.favorites) {
       favorites = req.cookies.favorites;
@@ -334,6 +442,12 @@ const getSightingByIndex = (req, res) => {
   });
 };
 
+/**
+ * Delete sighting.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ * @returns Redirection to home page.
+ */
 const deleteSightingByIndex = (req, res) => {
   const { index } = req.params;
 
@@ -364,6 +478,11 @@ const deleteSightingByIndex = (req, res) => {
   });
 };
 
+/**
+ * Get list of sightings based on shape.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ */
 const getSightingsByShape = (req, res) => {
   const { shape } = req.params;
 
@@ -373,16 +492,19 @@ const getSightingsByShape = (req, res) => {
       return;
     }
 
+    // sort list
     const { sortBy, sortOrder } = req.query;
     if (sortBy) {
       data.sightings.sort((first, second) => compare(first, second, sortBy, sortOrder));
     }
 
+    // add index and format date
     data.sightings.forEach((sighting, index) => {
       sighting.index = index;
       sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
     });
 
+    // get favorites from cookie
     let favorites = [];
     if (req.cookies.favorites) {
       favorites = req.cookies.favorites;
@@ -402,6 +524,11 @@ const getSightingsByShape = (req, res) => {
   });
 };
 
+/**
+ * Get sighting favorites.
+ * @param {*} req Request object.
+ * @param {*} res Response object.
+ */
 const getFavoriteSightings = (req, res) => {
   read('data.json', (err, data) => {
     if (err) {
@@ -409,16 +536,19 @@ const getFavoriteSightings = (req, res) => {
       return;
     }
 
+    // sort list
     const { sortBy, sortOrder } = req.query;
     if (sortBy) {
       data.sightings.sort((first, second) => compare(first, second, sortBy, sortOrder));
     }
 
+    // add index and format date
     data.sightings.forEach((sighting, index) => {
       sighting.index = index;
       sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
     });
 
+    // get favorites from cookie
     let favorites = [];
     if (req.cookies.favorites) {
       favorites = req.cookies.favorites;
