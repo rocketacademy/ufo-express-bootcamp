@@ -1,11 +1,12 @@
 import express from 'express';
 import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
+
 import {
   read, add, edit, write,
 } from './jsonFileStorage.js';
 
-import { visitCounter, daysFromNow } from './helper.js';
+import { visitCounter, daysFromNow, uniqueVisitor } from './helper.js';
 
 const app = express();
 app.use(cookieParser());
@@ -21,6 +22,7 @@ const renderIndex = (request, response) => {
   console.log('request to load list of sightings came in');
 
   const visits = visitCounter(request, response);
+  const uniqueVisits = uniqueVisitor(request, response);
 
   read('data.json', (err, data) => {
     if (err) {
@@ -28,20 +30,23 @@ const renderIndex = (request, response) => {
     }
     const { sightings } = data;
 
-    response.render('index', { sightings, visits, daysFromNow });
+    response.render('index', {
+      sightings, visits, uniqueVisits, daysFromNow,
+    });
   });
 };
 
 // render the form
 const renderForm = (request, response) => {
   const visits = visitCounter(request, response);
+  const uniqueVisits = uniqueVisitor(request, response);
 
   read('data.json', (err, data) => {
     if (err) {
       console.log('Read error', err);
     }
 
-    response.render('form', { visits });
+    response.render('form', { visits, uniqueVisits });
   });
 };
 
@@ -72,6 +77,7 @@ const renderIndividualSighting = (request, response) => {
   console.log('request to render individual sighting  came in');
 
   const visits = visitCounter(request, response);
+  const uniqueVisits = uniqueVisitor(request, response);
 
   const sightingIndex = request.params.index;
 
@@ -82,13 +88,16 @@ const renderIndividualSighting = (request, response) => {
     const sighting = data.sightings[sightingIndex];
     console.log(sighting);
 
-    response.render('singleSight', { sightings: sighting, index: sightingIndex, visits });
+    response.render('singleSight', {
+      sightings: sighting, index: sightingIndex, visits, uniqueVisits,
+    });
   });
 };
 
 // render form to edit a single sighting
 const renderEditSighting = (request, response) => {
   const visits = visitCounter(request, response);
+  const uniqueVisits = uniqueVisitor(request, response);
 
   const { index } = request.params;
   read('data.json', (err, data) => {
@@ -99,7 +108,9 @@ const renderEditSighting = (request, response) => {
     sightings.index = index;
     data.visits = visits;
     console.log(sightings);
-    response.render('edit', { sightings, index, visits });
+    response.render('edit', {
+      sightings, index, visits, uniqueVisits,
+    });
   });
 };
 
@@ -144,6 +155,7 @@ const deleteSighting = (request, response) => {
 
 const renderListOfShapes = (request, response) => {
   const visits = visitCounter(request, response);
+  const uniqueVisits = uniqueVisitor(request, response);
 
   read('data.json', (err, data) => {
     if (err) {
@@ -155,13 +167,14 @@ const renderListOfShapes = (request, response) => {
     });
     const filteredShapeList = [...new Set(shapesList)];
     console.log(filteredShapeList);
-    response.render('shapes', { filteredShapeList, visits });
+    response.render('shapes', { filteredShapeList, visits, uniqueVisits });
   });
 };
 
 const renderSightingByShape = (request, response) => {
   console.log('request for selected shape came in ');
   const visits = visitCounter(request, response);
+  const uniqueVisits = uniqueVisitor(request, response);
 
   const { shapes } = request.params;
   console.log(shapes);
@@ -177,7 +190,9 @@ const renderSightingByShape = (request, response) => {
     console.log(selectedShapeSightings);
 
     if (selectedShapeSightings.length > 0) {
-      response.render('sightingsByShape', { selectedShapeSightings, shapes, visits });
+      response.render('sightingsByShape', {
+        selectedShapeSightings, shapes, visits, uniqueVisits,
+      });
     }
     else response.status(404).send('Sorry, we cannot find that!');
   });
@@ -210,6 +225,8 @@ const favourites = (req, res) => {
 
 const renderFavourites = (req, res) => {
   const visits = visitCounter(req, res);
+  const uniqueVisits = uniqueVisitor(req, res);
+
   let arrayOfFavorites;
   if (req.cookies.favorite) {
     arrayOfFavorites = req.cookies.favorite;
@@ -223,7 +240,9 @@ const renderFavourites = (req, res) => {
       favsightings.push(data.sightings[arrayOfFavorites[i]]);
     }
     console.log(favsightings);
-    res.render('favourite', { favsightings, arrayOfFavorites, visits });
+    res.render('favourite', {
+      favsightings, arrayOfFavorites, visits, uniqueVisits,
+    });
   });
 };
 
