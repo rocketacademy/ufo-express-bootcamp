@@ -1,10 +1,11 @@
 import express from 'express';
 import methodOverride from 'method-override';
 import moment from 'moment';
-import crypto from 'crypto';
 import fetch from 'node-fetch';
 import cookieParser from 'cookie-parser';
 import { read, add, write } from './jsonFileStorage.js';
+import { countVisits, countDailyUniqueVisits } from './counter.js';
+import { compare } from './compare.js';
 
 const app = express();
 
@@ -12,114 +13,21 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(cookieParser());
+app.use(countVisits);
+app.use(countDailyUniqueVisits);
+
+app.set('view engine', 'ejs');
+
+moment().format();
+moment.suppressDeprecationWarnings = true;
 
 const SUMMARY_LENGTH = 100;
 const DICTIONARY_API_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
 /**
- * Count unique visits.
- * @param {*} req Request object.
- * @param {*} res Response object.
- * @param {*} next Next route.
- */
-const countVisits = (req, res, next) => {
-  let visits = 0;
-
-  if (!req.cookies['user-id']
-    || (moment().diff(req.cookies['last-visit'], 'days') > 1)) {
-    res.cookie('user-id', crypto.randomUUID());
-    res.cookie('last-visit', moment().format('YYYY-MM-DD HH:mm:ss'));
-
-    if (req.cookies.visits) {
-      visits = Number(req.cookies.visits);
-    }
-    visits += 1;
-
-    res.cookie('visits', visits);
-  }
-
-  next();
-};
-
-app.use(countVisits);
-
-app.set('view engine', 'ejs');
-
-moment().format();
-
-/**
- * Function to compare strings.
- * @param {*} firstItemAttr First item.
- * @param {*} secondItemAttr Second item.
- * @param {*} sortOrder Sort order.
- * @returns 0 if equal, 1 if first item < second item, -1 otherwise.
- */
-const compareStrings = (firstItemAttr, secondItemAttr, sortOrder) => {
-  // get attributes to compare
-  let firstItem = firstItemAttr;
-  if (!Number.isInteger(firstItem)) {
-    firstItem = firstItem.toUpperCase();
-  }
-  let secondItem = secondItemAttr;
-  if (!Number.isInteger(secondItem)) {
-    secondItem = secondItem.toUpperCase();
-  }
-
-  // return comparison result
-  if (firstItem < secondItem) {
-    return (sortOrder === 'desc') ? 1 : -1;
-  }
-  if (firstItem > secondItem) {
-    return (sortOrder === 'desc') ? -1 : 1;
-  }
-  return 0;
-};
-
-/**
- * Function to compare dates.
- * @param {*} firstItemAttr First item.
- * @param {*} secondItemAttr Second item.
- * @param {*} sortOrder Sort order.
- * @returns 0 if equal, 1 if first item < second item, -1 otherwise.
- */
-const compareDates = (firstItemAttr, secondItemAttr, sortOrder) => {
-  // get attributes to compare
-  const firstItem = moment(firstItemAttr);
-  const secondItem = moment(secondItemAttr);
-
-  // return comparison result
-  if (firstItem.isBefore(secondItem)) {
-    return (sortOrder === 'desc') ? 1 : -1;
-  }
-  if (firstItem.isAfter(secondItem)) {
-    return (sortOrder === 'desc') ? -1 : 1;
-  }
-  return 0;
-};
-
-/**
- * Function to compare strings.
- * @param {*} first First object.
- * @param {*} second Second object.
- * @param {*} sortBy Field to sort by.
- * @param {*} sortOrder Sort order.
- * @returns 0 if equal, 1 if first item < second item, -1 otherwise.
- */
-const compare = (first, second, sortBy, sortOrder) => {
-  const firstItemAttr = first[sortBy] || '';
-  const secondItemAttr = second[sortBy] || '';
-
-  moment.suppressDeprecationWarnings = true;
-  if (moment(firstItemAttr).isValid() && moment(secondItemAttr).isValid()) {
-    return compareDates(firstItemAttr, secondItemAttr, sortOrder);
-  }
-  return compareStrings(firstItemAttr, secondItemAttr, sortOrder);
-};
-
-/**
  * Add/remove sighting to/from favorites.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  * @returns Redirection to previous page.
  */
 const addToFavorites = (req, res) => {
@@ -158,9 +66,9 @@ const addToFavorites = (req, res) => {
 
 /**
  * Remove sighting from favorites.
- * @param {*} req Request object.
- * @param {*} res Response object.
- * @param {*} index Index of sighting to remove.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
+ * @param {Number} index Index of sighting to remove.
  */
 const removeFromFavorites = (req, res, index) => {
   if (req.cookies.favorites) {
@@ -174,8 +82,8 @@ const removeFromFavorites = (req, res, index) => {
 
 /**
  * Get different types of sighting shapes.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  */
 const getSightingShapes = (req, res) => {
   read('data.json', async (err, data) => {
@@ -237,8 +145,8 @@ const getSightingShapes = (req, res) => {
 
 /**
  * Get new sighting form.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  */
 const getNewSighting = (req, res) => {
   res.render('edit', { source: 'new' });
@@ -246,7 +154,7 @@ const getNewSighting = (req, res) => {
 
 /**
  * Create summary from full description.
- * @param {*} text Description.
+ * @param {string} text Description.
  * @returns Summarized description.
  */
 const createSummary = (text) => {
@@ -256,7 +164,7 @@ const createSummary = (text) => {
 
 /**
  * Check if sighting data is valid.
- * @param {*} data Sighting data.
+ * @param {object} data Sighting data.
  * @returns True if valid, False otherwise.
  */
 // eslint-disable-next-line max-len
@@ -264,8 +172,8 @@ const isSightingDataValid = (data) => moment(data.date_time).isValid() && moment
 
 /**
  * Add new sighting.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  * @returns Redirection to newly added sighting page.
  */
 const createSighting = (req, res) => {
@@ -291,8 +199,8 @@ const createSighting = (req, res) => {
 
 /**
  * Get list of sightings.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  */
 const getSightings = (req, res) => {
   read('data.json', (err, data) => {
@@ -332,8 +240,8 @@ const getSightings = (req, res) => {
 
 /**
  * Get edit sighting form.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  * @returns Edit sighting page.
  */
 const getEditSighting = (req, res) => {
@@ -359,8 +267,8 @@ const getEditSighting = (req, res) => {
 
 /**
  * Edit a sighting.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  * @returns Redirection to edited sighting page.
  */
 const editSighting = (req, res) => {
@@ -403,8 +311,8 @@ const editSighting = (req, res) => {
 
 /**
  * Get sighting page.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  * @returns Sighting page.
  */
 const getSightingByIndex = (req, res) => {
@@ -444,8 +352,8 @@ const getSightingByIndex = (req, res) => {
 
 /**
  * Delete sighting.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  * @returns Redirection to home page.
  */
 const deleteSightingByIndex = (req, res) => {
@@ -480,8 +388,8 @@ const deleteSightingByIndex = (req, res) => {
 
 /**
  * Get list of sightings based on shape.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  */
 const getSightingsByShape = (req, res) => {
   const { shape } = req.params;
@@ -526,8 +434,8 @@ const getSightingsByShape = (req, res) => {
 
 /**
  * Get sighting favorites.
- * @param {*} req Request object.
- * @param {*} res Response object.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
  */
 const getFavoriteSightings = (req, res) => {
   read('data.json', (err, data) => {
@@ -572,6 +480,87 @@ const getFavoriteSightings = (req, res) => {
   });
 };
 
+/**
+ * Get statistics.
+ * @param {Object} req Request object.
+ * @param {Object} res Response object.
+ */
+const getStatistics = (req, res) => {
+  read('data.json', (err, data) => {
+    if (err) {
+      res.status(500).send('DB read error.');
+      return;
+    }
+
+    // get total visits
+    let visits = 0;
+    if (req.cookies.visits) {
+      visits = Number(req.cookies.visits);
+    }
+
+    // get daily unique visits
+    let dailyUniqueVisits = 0;
+    if (req.cookies['daily-unique-visits']) {
+      dailyUniqueVisits = Number(req.cookies['daily-unique-visits']);
+    }
+
+    // get total sightings
+    const totalSightings = data.sightings.length;
+
+    // sort by sighting date
+    data.sightings.sort((first, second) => compare(first, second, 'date_time', 'asc'));
+
+    // get oldest and latest sightings date
+    const oldestSighting = moment(data.sightings[0].date_time).format('dddd, MMMM Do, YYYY');
+    const latestSighting = moment(data.sightings[data.sightings.length - 1].date_time).format('dddd, MMMM Do, YYYY');
+
+    // sort by sighting create time
+    data.sightings.sort((first, second) => compare(first, second, 'created_time', 'asc'));
+
+    // get oldest and latest sightings date
+    const firstSightingCreated = moment(data.sightings[0].created_time).format('dddd, MMMM Do, YYYY');
+    const lastSightingCreated = moment(data.sightings[data.sightings.length - 1].created_time).format('dddd, MMMM Do, YYYY');
+
+    // tally sighting cities and states
+    const sightingCities = [];
+    const sightingStates = [];
+    data.sightings.forEach((sighting) => {
+      if (sightingCities[sighting.city]) {
+        sightingCities[sighting.city] += 1;
+      } else {
+        sightingCities[sighting.city] = 1;
+      }
+      if (sightingStates[sighting.state]) {
+        sightingStates[sighting.state] += 1;
+      } else {
+        sightingStates[sighting.state] = 1;
+      }
+    });
+
+    // eslint-disable-next-line max-len
+    const cityWithMostSightings = Object.keys(sightingCities).reduce((a, b) => (sightingCities[a] > sightingCities[b] ? a : b));
+
+    // eslint-disable-next-line max-len
+    const stateWithMostSightings = Object.keys(sightingStates).reduce((a, b) => (sightingStates[a] > sightingStates[b] ? a : b));
+
+    const statistics = {
+      visits,
+      dailyUniqueVisits,
+      totalSightings,
+      oldestSighting,
+      latestSighting,
+      firstSightingCreated,
+      lastSightingCreated,
+      cityWithMostSightings,
+      mostSightingsInCity: sightingCities[cityWithMostSightings],
+      stateWithMostSightings,
+      mostSightingsInState: sightingStates[stateWithMostSightings],
+    };
+
+    res.render('statistics', { statistics });
+  });
+};
+
 app.get('/sighting', getNewSighting);
 app.post('/sighting', createSighting);
 app.get('/sighting/:index', getSightingByIndex);
@@ -583,5 +572,6 @@ app.get('/shapes', getSightingShapes);
 app.get('/shapes/:shape', getSightingsByShape);
 app.get('/favorites', getFavoriteSightings);
 app.post('/favorites', addToFavorites);
+app.get('/statistics', getStatistics);
 
 app.listen(3004);
