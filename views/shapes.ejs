@@ -9,14 +9,28 @@
         <% shapes.forEach((item) => { %>
         <div class="col">
           <div class="card border-dark mb-3" style="max-width: 24rem">
-            <div class="card-body text-secondary" style="transform: rotate(0)">
-              <p class="card-text pb-3">
-                <a
-                  href="/shapes/<%= item.shape.toLowerCase() %>"
-                  class="stretched-link read-more text-secondary"
-                  ><%= item.shape %></a
-                >
-              </p>
+            <div class="card-header bg-transparent border-dark">
+              <a
+                href="/shapes/<%= item.shape.toLowerCase() %>"
+                class="stretched-link read-more text-secondary"
+                ><%= item.shape %>
+              </a>
+            </div>
+            <div
+              class="card-body text-secondary pt-1"
+              style="transform: rotate(0)"
+            >
+              <div class="card-text pb-3 row row-cols-1">
+                <div class="col-8">
+                  <small><%= item.definition.phonetic %></small>
+                </div>
+                <div class="col-4 text-end">
+                  <small><%= item.definition.partOfSpeech %></small>
+                </div>
+                <div class="col-12">
+                  <small><%= item.definition.definition %></small>
+                </div>
+              </div>
             </div>
             <div class="card-footer bg-transparent border-dark">
               <div class="row">

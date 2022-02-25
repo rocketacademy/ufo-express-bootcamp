@@ -14,6 +14,7 @@ app.use(methodOverride('_method'));
 app.use(cookieParser());
 
 const SUMMARY_LENGTH = 100;
+const DICTIONARY_API_URL = 'https://api.dictionaryapi.dev/api/v2/entries/en/';
 
 /**
  * Count unique visits.
@@ -108,25 +109,12 @@ const compare = (first, second, sortBy, sortOrder) => {
   const firstItemAttr = first[sortBy] || '';
   const secondItemAttr = second[sortBy] || '';
 
+  moment.suppressDeprecationWarnings = true;
   if (moment(firstItemAttr).isValid() && moment(secondItemAttr).isValid()) {
     return compareDates(firstItemAttr, secondItemAttr, sortOrder);
   }
   return compareStrings(firstItemAttr, secondItemAttr, sortOrder);
 };
-
-/**
- * Get dictionary definition of a word.
- * @param {*} word Word.
- * @returns Definition of a word.
- */
-const getDefinition = async (word) => fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`)
-  .then((res) => res.json())
-  .then((data) => ({
-    word: data[0].word,
-    phonetic: data[0].phonetic,
-    partOfSpeech: data[0].meanings[0].partOfSpeech,
-    definition: data[0].meanings[0].definitions[0].definition,
-  })).catch((error) => console.error(error));
 
 /**
  * Add/remove sighting to/from favorites.
@@ -190,7 +178,7 @@ const removeFromFavorites = (req, res, index) => {
  * @param {*} res Response object.
  */
 const getSightingShapes = (req, res) => {
-  read('data.json', (err, data) => {
+  read('data.json', async (err, data) => {
     if (err) {
       res.status(500).send('DB read error.');
       return;
@@ -199,12 +187,21 @@ const getSightingShapes = (req, res) => {
     // eslint-disable-next-line max-len
     const uniqueShapes = [...new Set(data.sightings.filter((sighting) => sighting.shape !== undefined).map((sighting) => sighting.shape))];
 
+    // get dictionary definition of shapes
+    const dictionaryPromises = uniqueShapes.map((word) => fetch(`${DICTIONARY_API_URL}${word}`).then((result) => result.json()));
+    const definition = await Promise.all(dictionaryPromises);
+
     // put shape and its stats to a list
     const shapes = [];
     for (let i = 0; i < uniqueShapes.length; i += 1) {
       const shape = uniqueShapes[i];
       shapes.push({
         shape,
+        definition: {
+          phonetic: definition[i][0].phonetic,
+          partOfSpeech: definition[i][0].meanings[0].partOfSpeech,
+          definition: definition[i][0].meanings[0].definitions[0].definition,
+        },
         count: 0,
         favorites: 0,
       });
@@ -226,6 +223,9 @@ const getSightingShapes = (req, res) => {
         shape.favorites += 1;
       }
     });
+
+    // sort list by count descending
+    shapes.sort((first, second) => compare(first, second, 'count', 'desc'));
 
     if (shapes.length > 0) {
       res.render('shapes', { shapes });
