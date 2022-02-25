@@ -13,11 +13,14 @@ export const visitCounter = (request, response) => {
 };
 
 export const daysFromNow = (data) => {
+  if (data === undefined) {
+    return ' ';
+  }
   const day = data.toString().slice(0, 2);
   const month = data.toString().slice(3, 5);
-  const year = data.toString().slice(6);
+  const year = data.toString().slice(6, 10);
 
-  return moment([year, month, day]).fromNow();
+  return moment().from([year, month, day]);
 };
 
 export const uniqueVisitor = (request, response) => {
@@ -26,8 +29,10 @@ export const uniqueVisitor = (request, response) => {
     const unique = Number(request.cookies.uniqueVisitor);
     return unique;
   }
-  /* if cookie does not exist, sen  */
-  response.cookie('UUID', uuidv4());
+  /* if cookie does not exist, set a UUID to expire in 24 hrs  */
+
+  response.cookie('UUID', uuidv4(), { maxAge: 24 * 60 * 60 * 1000 });
+  /* increment unique by 1 if UUID does not exist */
   let unique = 0;
   unique += 1;
   response.cookie('uniqueVisitor', unique);

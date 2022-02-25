@@ -28,7 +28,7 @@
           <td><%= sightings[i].state %></td>
           <td><%= sightings[i].shape %></td>
           <td><%= sightings[i].duration %></td>
-          <td><%= sightings[i].createTime%></td>
+          <td><%= daysFromNow(sightings[i].createTime) %></td>
           <td>
             <a href="/sighting/<%= i %>" class="btn btn-info">Edit</a>
           </td>

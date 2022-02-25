@@ -191,7 +191,7 @@ const renderSightingByShape = (request, response) => {
 
     if (selectedShapeSightings.length > 0) {
       response.render('sightingsByShape', {
-        selectedShapeSightings, shapes, visits, uniqueVisits,
+        selectedShapeSightings, shapes, visits, uniqueVisits, daysFromNow,
       });
     }
     else response.status(404).send('Sorry, we cannot find that!');
@@ -241,7 +241,7 @@ const renderFavourites = (req, res) => {
     }
     console.log(favsightings);
     res.render('favourite', {
-      favsightings, arrayOfFavorites, visits, uniqueVisits,
+      favsightings, arrayOfFavorites, visits, uniqueVisits, daysFromNow,
     });
   });
 };

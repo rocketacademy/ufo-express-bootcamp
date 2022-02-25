@@ -36,7 +36,7 @@ href="/sighting/<%= i %>"
         <td><%= selectedShapeSightings[i].state %></td>
         <td><%= selectedShapeSightings[i].shape %></td>
         <td><%= selectedShapeSightings[i].duration %></td>
-        <td><%= selectedShapeSightings[i].createTime %></td>
+        <td><%= daysFromNow(selectedShapeSightings[i].createTime) %></td>
         <td>
           <a href="/sighting/<%= i %>" class="btn btn-info">Details</a>
         </td>

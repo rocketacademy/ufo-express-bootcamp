@@ -28,7 +28,7 @@
           <td><%= favsightings[i].state %></td>
           <td><%= favsightings[i].shape %></td>
           <td><%= favsightings[i].duration %></td>
-          <td><%= favsightings[i].createTime%></td>
+          <td><%= daysFromNow(favsightings[i].createTime)%></td>
           <td>
             <a href="/sighting/<%= i %>" class="btn btn-info">Edit</a>
           </td>
