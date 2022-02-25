@@ -30,7 +30,7 @@ const countDailyUniqueVisits = (req, res, next) => {
   let dailyUniqueVisits = 0;
 
   if (!req.cookies['user-id']
-    || (moment().diff(req.cookies['last-visit'], 'minutes') > 1)) {
+    || (moment().diff(req.cookies['last-visit'], 'days') > 1)) {
     res.cookie('user-id', crypto.randomUUID());
     res.cookie('last-visit', moment().format('YYYY-MM-DD HH:mm:ss'));
 
