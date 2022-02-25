@@ -1,6 +1,30 @@
 body {
-  /* background-color: green; */
+  background-color: #f1ecdf;
+  /* margin: 50px; */
+}
+
+.container {
+  position: relative;
+  background: linear-gradient(135deg, #b6e4f9, #f7b9bf);
+}
+
+/* body {
+  background-color: green;
   background: url(./images/topography.svg),
     linear-gradient(90deg, #8dcf78, #8a63f7);
-  /* margin: 50px; */
+  margin: 50px;
+}
+*/
+.border {
+  border-width: 2px !important;
+}
+
+a.sighting-link {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-decoration: none;
+  z-index: 10;
 }

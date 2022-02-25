@@ -1,7 +1,8 @@
-import express from 'express';
+import express, { query } from 'express';
 import { read, add, edit, write } from './jsonFileStorage.js';
 import methodOverride from 'method-override'
-
+import cookieParser from 'cookie-parser';
+ 
 const app = express();
 app.set('view engine', 'ejs');
 
@@ -9,6 +10,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(express.static('public'))
+app.use(cookieParser());
 
 const PORT = 3004;
 
@@ -42,7 +44,19 @@ app.post('/sighting', (req, res) => {
   });
 })
 
+// app.get('/favourite', (req, res) => {
+//   console.log(req.params);
+//   console.log(req.query);
+
+//   const {sighting} = req.query;
+//   res.cookie('favourite', sighting);
+//   const example = JSON.parse(res.cookie.favourite);
+//   res.send("Cookie saved!")
+// })
+
 app.get('/sighting/:index', (req, res) => {
+  // res.cookie('name', 'john');
+  const {index} = req.params
   read('data.json', (err, jsonContentObj) => {
     if (err) {
       res.status(500).send('DB write error.');
@@ -77,7 +91,7 @@ app.get('/sighting/:index/edit', (req, res) => {
     }
 
     const {sightings} = jsonContentObj;
-    const {index} = req.params;
+    const index = Number(req.params.index);
     const singleSighting = sightings[index];
     const ejsObject = {singleSighting, index};
 
@@ -114,8 +128,43 @@ app.put('/sighting/:index/edit', (req, res) => {
   });
 })
 
-app.delete('/sighting/:index/delete', (req, res) => {
+// app.get('/sighting/:index/delete', (req, res) => {
+//   read('data.json', (err, jsonContentObj) => {
+//     if (err) {
+//       res.status(500).send('DB read error.');
+//     }
 
+//     const {sightings} = jsonContentObj;
+//     const {index} = req.params;
+//     const mode = 'delete'
+//     const singleSighting = sightings[index];
+//     const ejsObject = {singleSighting, index, mode};
+
+//     res.render('sighting', ejsObject);
+//   });
+//   }
+// )
+
+app.delete('/sighting/:index/delete', (req, res) => {
+  const index = req.params.index
+
+  edit('data.json', (readErr, jsonContentObj) => {
+    if (readErr) {
+      res.status(500).send('DB read error.');
+    }
+
+    const {sightings} = jsonContentObj
+    sightings.splice(index, 1)
+    jsonContentObj.sightings = sightings
+    console.log(jsonContentObj.sightings)
+
+  }, (writeErr) => {
+    if (writeErr) {
+      res.status(500).send('DB write error.');
+    }
+    
+    res.send('Sighting deleted!');
+  });
 })
 
 app.get('/shapes', (req,res) => {
