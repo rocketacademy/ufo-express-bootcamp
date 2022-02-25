@@ -2,7 +2,7 @@ import { add, read, write } from "../utils/jsonFileStorage.js";
 import { FILENAME } from "../app.js";
 import sortBy from "lodash/sortBy.js";
 import { handleFileError } from "../utils/error.js";
-import { generateRandomID, getDateTimeNow } from "../utils/common.js";
+import { getDateTimeNow } from "../utils/date.js";
 
 export const getAllSightings = (req, resp) => {
   // sort params
@@ -10,7 +10,7 @@ export const getAllSightings = (req, resp) => {
 
   read(FILENAME, (err, data) => {
     if (err) {
-      handleFileError(err, "read");
+      handleFileError(resp, err, "read");
     }
 
     let sightings = data.sightings;
@@ -38,7 +38,7 @@ export const getSightingByIndex = (req, resp) => {
   const sid = req.params.index;
   read(FILENAME, (err, data) => {
     if (err) {
-      handleFileError(err, "read");
+      handleFileError(resp, err, "read");
     }
 
     if (sid && sid < data.sightings.length) {
@@ -63,14 +63,13 @@ export const getSightingByIndex = (req, resp) => {
 export const postNewSightingForm = (req, resp) => {
   const payload = req.body;
   // go through payload to validate (capitalization, type checks) and add other fields
-  payload["id"] = generateRandomID();
   payload["duration"] = parseInt(payload["duration"]);
   payload["created_at"] = getDateTimeNow();
   payload["updated_at"] = getDateTimeNow();
 
   add(FILENAME, "sightings", payload, (err, data) => {
     if (err) {
-      handleFileError(err, "read");
+      handleFileError(resp, err, "read");
     }
   });
 
@@ -88,7 +87,7 @@ export const getSightingForm = (req, resp) => {
 
   read(FILENAME, (err, data) => {
     if (err) {
-      handleFileError(err, "read");
+      handleFileError(resp, err, "read");
     }
 
     if (sid && sid < data.sightings.length) {
@@ -116,7 +115,7 @@ export const editSightingForm = (req, resp) => {
 
   read(FILENAME, (err, data) => {
     if (err) {
-      handleFileError(err, "read");
+      handleFileError(resp, err, "read");
     }
 
     // overwrite sighting at existing index
@@ -126,7 +125,7 @@ export const editSightingForm = (req, resp) => {
 
     write(FILENAME, data, (err) => {
       if (err) {
-        handleFileError(err, "write");
+        handleFileError(resp, err, "write");
       }
 
       resp.redirect("/");
@@ -139,7 +138,7 @@ export const deleteSighting = (req, resp) => {
 
   read(FILENAME, (err, data) => {
     if (err) {
-      handleFileError(err, "read");
+      handleFileError(resp, err, "read");
     }
 
     // remove sighting at index
@@ -147,7 +146,7 @@ export const deleteSighting = (req, resp) => {
 
     write(FILENAME, data, (err) => {
       if (err) {
-        handleFileError(err, "write");
+        handleFileError(resp, err, "write");
       }
 
       resp.redirect("/");

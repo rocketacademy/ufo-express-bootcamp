@@ -6,7 +6,7 @@ export const getFavorite = (req, resp) => {
   const favIdx = req.query.index;
   read(COOKIES, (err, data) => {
     if (err) {
-      handleFileError(err, "read");
+      handleFileError(resp, err, "read");
     }
 
     if (!data.favorite_sightings.includes(Number(favIdx))) {
@@ -14,7 +14,7 @@ export const getFavorite = (req, resp) => {
     }
 
     write(COOKIES, data, (err, data) => {
-      handleFileError(err, "write");
+      handleFileError(resp, err, "write");
     });
 
     resp.cookie("favorite", JSON.stringify(data.favorite_sightings));

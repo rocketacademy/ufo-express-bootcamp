@@ -34,7 +34,7 @@ router.post("/sighting", postNewSightingForm);
 router.get("/sighting/:index/edit", getSightingForm);
 router.put("/sighting/:index/edit", editSightingForm);
 
-router.delete("/sighting/:id/delete", deleteSighting);
+router.delete("/sighting/:index/delete", deleteSighting);
 
 router.get("/favorite", getFavorite);
 

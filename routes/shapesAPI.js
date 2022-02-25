@@ -6,7 +6,7 @@ import _ from "lodash";
 export const getSightingShapes = (req, resp) => {
   read(FILENAME, (err, data) => {
     if (err) {
-      handleFileError(err, "read");
+      handleFileError(resp, err, "read");
     }
 
     const shapes = data.sightings.map((s) => s.shape);
@@ -31,7 +31,7 @@ export const getSightingByShape = (req, resp) => {
 
   read(FILENAME, (err, data) => {
     if (err) {
-      handleFileError(err, "read");
+      handleFileError(resp, err, "read");
     }
 
     const shapes = data.sightings.map((s) => s.shape.toLowerCase());
