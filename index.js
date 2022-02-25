@@ -6,7 +6,9 @@ import {
   read, add, edit, write,
 } from './jsonFileStorage.js';
 
-import { visitCounter, daysFromNow, uniqueVisitor } from './helper.js';
+import {
+  visitCounter, daysFromNow, uniqueVisitor, formatDate,
+} from './helper.js';
 
 const app = express();
 app.use(cookieParser());
@@ -31,7 +33,7 @@ const renderIndex = (request, response) => {
     const { sightings } = data;
 
     response.render('index', {
-      sightings, visits, uniqueVisits, daysFromNow,
+      sightings, visits, uniqueVisits, daysFromNow, formatDate,
     });
   });
 };

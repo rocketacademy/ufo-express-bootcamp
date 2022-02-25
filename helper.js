@@ -16,11 +16,16 @@ export const daysFromNow = (data) => {
   if (data === undefined) {
     return ' ';
   }
-  const day = data.toString().slice(0, 2);
-  const month = data.toString().slice(3, 5);
-  const year = data.toString().slice(6, 10);
+  const day = data.toString().slice(8, 10);
+  const month = data.toString().slice(5, 7);
+  const year = data.toString().slice(0, 4);
+  console.log(year, month, day);
+  return moment().fromNow([year, month, day]);
+};
 
-  return moment().from([year, month, day]);
+export const formatDate = (date) => {
+  const formattedDate = moment(date).format('dddd, MMMM Do YYYY');
+  return formattedDate;
 };
 
 export const uniqueVisitor = (request, response) => {

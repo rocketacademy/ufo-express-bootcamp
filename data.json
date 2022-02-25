@@ -10,15 +10,6 @@
       "summary": "Witnessed an orange, slow moving light. Was looking out my window and saw a orange colored, non blinking light floating across the nigh"
     },
     {
-      "date_time": "21 Jan 2022, 10:10am",
-      "city": "Singapore",
-      "state": "Singapore",
-      "shape": "Round",
-      "duration": "2 mins",
-      "description": "It was round.\r\n      ",
-      "summary": "It was round."
-    },
-    {
       "date_time": "10/9/2019 10:30",
       "city": "NZ",
       "state": "Singapore",
@@ -26,7 +17,17 @@
       "duration": "3 mins",
       "description": "It was ok",
       "summary": "It was ok",
-      "createTime": "22/02/2022, 00:24:01"
+      "createTime": "2022-02-25T13:55:09.738Z"
+    },
+    {
+      "date_time": "2016-06-29T11:00",
+      "city": "South Park",
+      "state": "CA",
+      "shape": "Round",
+      "duration": "1 min",
+      "description": "It was flashing non stop.",
+      "summary": "It was flashing non stop.",
+      "createTime": "2022-01-25T13:55:09.738Z"
     }
   ]
 }

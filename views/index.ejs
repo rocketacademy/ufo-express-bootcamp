@@ -23,7 +23,7 @@
         <% for( let i = 0; i < sightings.length; i++ ) { %>
         <tr>
           <td><%= i + 1 %></td>
-          <td><%= sightings[i].date_time %></td>
+          <td><%= formatDate(sightings[i].date_time) %></td>
           <td><%= sightings[i].city %></td>
           <td><%= sightings[i].state %></td>
           <td><%= sightings[i].shape %></td>
