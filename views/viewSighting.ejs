@@ -22,35 +22,14 @@
   <body>
     <h1 class="text-center">UFO Sighting Catalog</h1>
     <br />
-    <% if (locals.singleSighting) {%>
-    <div class="container border border-dark rounded w-75">
-      <h3 class="mt-2 mb-3">Sighting #<%= index %></h3>
-      <p><b>Date:</b> <%= singleSighting.date_time %></p>
-      <p><b>City:</b> <%= singleSighting.city %></p>
-      <p><b>Summary:</b><br /><%= singleSighting.summary %></p>
-
-      <div>
-        <form action="/sighting/<%= index %>/edit">
-          <input type="submit" value="Edit" class="btn-success text-center" />
-        </form>
-        <form
-          action="/sighting/<%= index %>/delete?method=DELETE"
-          method="POST"
-        >
-          <input
-            type="submit"
-            value="Delete"
-            class="btn-danger my-2 text-center"
-          />
-        </form>
-      </div>
-    </div>
-    <% } else if (locals.sightings) { for (let i = 0; i < sightings.length; i++)
-    { %>
+    <% if (locals.singleSighting) {%> <%- include('sightingFormat', {element:
+    singleSighting}); %> <% } else if (locals.sightings) { for (let i = 0; i <
+    sightings.length; i++) { %>
     <div class="container border border-dark rounded mb-3 w-75">
       <h3 class="mt-2 mb-3">Sighting #<%= i %></h3>
       <p><b>Date:</b> <%= sightings[i].date_time %></p>
       <p><b>City:</b> <%= sightings[i].city %></p>
+      <p><b>Shape:</b> <%= sightings[i].shape %></p>
       <p><b>Summary:</b><br /><%= sightings[i].summary %></p>
       <p><a href="/sighting/<%= i %>" class="sighting-link"></a></p>
     </div>

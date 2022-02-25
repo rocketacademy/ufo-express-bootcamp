@@ -65,7 +65,8 @@ app.get('/sighting/:index', (req, res) => {
     const {sightings} = jsonContentObj;
     const {index} = req.params;
     const singleSighting = sightings[index];
-    const ejsObject = {singleSighting, index};
+    singleSighting.index = index
+    const ejsObject = {singleSighting};
     console.log(ejsObject);
     res.render('viewSighting', ejsObject);
   })
@@ -109,22 +110,26 @@ app.put('/sighting/:index/edit', (req, res) => {
   const datetime = `${dateArray[2]}/${Number(dateArray[1])}/${dateArray[0].substr(2,2)} ${datetimeArray[1]}`;
   form.date_time = datetime;
 
+  let ejsObject;
+
   edit('data.json', (readErr, jsonContentObj) => {
     if (readErr) {
       res.status(500).send('DB read error.');
     }
 
-    const {sightings} = jsonContentObj
-    sightings[index] = form;
-    jsonContentObj.sightings = sightings
-    console.log(jsonContentObj.sightings[index])
+    const original = jsonContentObj.sightings;
+    original[index] = form;
+    jsonContentObj.sightings = original;
+
+    const {sightings} = jsonContentObj;
+    ejsObject = {sightings};
 
   }, (writeErr) => {
     if (writeErr) {
       res.status(500).send('DB write error.');
     }
     
-    res.send('Sighting edited!');
+    res.render('viewSighting', ejsObject);
   });
 })
 
@@ -146,52 +151,71 @@ app.put('/sighting/:index/edit', (req, res) => {
 // )
 
 app.delete('/sighting/:index/delete', (req, res) => {
-  const index = req.params.index
+  const index = req.params.index;
+
+  let ejsObject;
 
   edit('data.json', (readErr, jsonContentObj) => {
     if (readErr) {
       res.status(500).send('DB read error.');
     }
 
-    const {sightings} = jsonContentObj
-    sightings.splice(index, 1)
-    jsonContentObj.sightings = sightings
+    const original = jsonContentObj.sightings
+    original.splice(index, 1)
+    jsonContentObj.sightings = original
     console.log(jsonContentObj.sightings)
+
+    const {sightings} = jsonContentObj;
+    ejsObject = {sightings};
 
   }, (writeErr) => {
     if (writeErr) {
       res.status(500).send('DB write error.');
     }
     
-    res.send('Sighting deleted!');
+    res.render('viewSighting', ejsObject);
   });
-})
+});
 
 app.get('/shapes', (req,res) => {
-
-})
-
-app.get('/shapes/:shape', (req,res) => {
-  
-})
-
-// Save new recipe data sent via POST request from our form
-app.post('/recipe', (request, response) => {
-
-  // Add new recipe data in request.body to recipes array in data.json.
-  add('data.json', 'recipes', request.body, (err) => {
+  read('data.json', (err, jsonContentObj) => {
     if (err) {
-      response.status(500).send('DB write error.');
-      return;
+      res.status(500).send('DB read error.');
     }
-    // Acknowledge recipe saved.
-    response.send('Saved recipe!');
+
+    const {sightings} = jsonContentObj;
+    const shapes = [];
+    sightings.forEach(element => {
+      if (!shapes.includes(element.shape)) {
+        shapes.push(element.shape);
+      }
+    });
+    const ejsObject = {shapes};
+
+    res.render('shapes', ejsObject);
   });
 });
 
-// Render the form to input new recipes
-app.get('/recipe', (request, response) => {
-  response.render('recipe');
-});
+app.get('/shapes/:shape', (req,res) => {
+  read('data.json', (err, jsonContentObj) => {
+    if (err) {
+      res.status(500).send('DB read error.');
+    }
+
+    const {sightings} = jsonContentObj;
+    const {shape} = req.params 
+    const filteredSightings = [];
+    sightings.forEach((element, index) => {
+      if (element.shape === shape) {
+        element.index = index;
+        filteredSightings.push(element);
+      }
+    });
+    console.log(filteredSightings)
+    const ejsObject = {filteredSightings};
+
+    res.render('shapes', ejsObject);
+  });
+})
 
 app.listen(PORT);
