@@ -209,24 +209,28 @@ const getSightings = (req, res) => {
       return;
     }
 
+    // add index
+    data.sightings.forEach((sighting, index) => {
+      sighting.index = index;
+    });
+
     // sort list
     const { sortBy, sortOrder } = req.query;
     if (sortBy) {
       data.sightings.sort((first, second) => compare(first, second, sortBy, sortOrder));
     }
 
-    // add index and format date
-    data.sightings.forEach((sighting, index) => {
-      sighting.index = index;
-      sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
-    });
-    const { sightings } = data;
-
     // get favorites from cookie
     let favorites = [];
     if (req.cookies.favorites) {
       favorites = req.cookies.favorites;
     }
+
+    // format date
+    data.sightings.forEach((sighting) => {
+      sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
+    });
+    const { sightings } = data;
 
     if (sightings.length > 0) {
       res.render('sightings', {
