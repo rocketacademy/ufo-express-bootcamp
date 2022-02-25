@@ -536,23 +536,27 @@ const getFavoriteSightings = (req, res) => {
       return;
     }
 
+    // add index
+    data.sightings.forEach((sighting, index) => {
+      sighting.index = index;
+    });
+
     // sort list
     const { sortBy, sortOrder } = req.query;
     if (sortBy) {
       data.sightings.sort((first, second) => compare(first, second, sortBy, sortOrder));
     }
 
-    // add index and format date
-    data.sightings.forEach((sighting, index) => {
-      sighting.index = index;
-      sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
-    });
-
     // get favorites from cookie
     let favorites = [];
     if (req.cookies.favorites) {
       favorites = req.cookies.favorites;
     }
+
+    // format date
+    data.sightings.forEach((sighting) => {
+      sighting.date_time = moment(sighting.date_time).format('dddd, MMMM Do, YYYY');
+    });
 
     // eslint-disable-next-line max-len
     const filteredSightings = data.sightings.filter((sighting) => (favorites.includes(sighting.index.toString())));
