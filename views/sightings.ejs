@@ -1,0 +1,79 @@
+<%- include('header'); -%>
+<%- include('navbar'); -%>
+<body>
+  <br>
+  <div class="container">
+      <!-- headings span -->
+      <div class="row-12">
+        <span id="headings-block">
+          <h1 class="display-4">UFO Sightings</h1>
+          <p class="fw-normal text-muted" >View and manage sightings</p>
+          <hr class="border-2 border-top border-dark">
+        </span>
+      </div>
+      <!-- buttons -->
+      <div class="row">
+        <!-- sort buttons -->
+        <div class="col-10">
+          <form name="select-sort" id="select-sort" action="">
+            <select name="sort" class="form-control" aria-label=".form-select-lg sort-selection">
+              <option value="">Select sort...</option>
+              <option value="city">City</option>
+              <option value="shape">Shape</option>
+              <option value="created_at">Created At</option>
+              <option value="datetime">Witnessed At</option>
+            </select>
+          </form>
+        </div>
+        <!-- add new sighting button -->
+        <div class="col-2 text-right">
+          <a class="btn btn-primary" href="/sighting" role="button">Add sighting</a>
+        </div>
+      </div>
+      <!-- table view -->
+      <div class="row mt-3">
+        <table class="table table-dark table-striped">
+          <thead class="text-center">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Witnessed At</th>
+              <th scope="col">Shape</th>
+              <th scope="col">City</th>
+              <th scope="col">Created At</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <% for (let i=0; i<sightings.length; i+=1) { %>
+            <tr onclick="onTableRowClick(<%= i %>)">
+              <th scope="row"> <%= i+1 %></th>
+              <td><%= sightings[i].datetime %></td>
+              <td><%= sightings[i].shape %></td>
+              <td><%= sightings[i].city %></td>
+              <td><%= sightings[i].created_at %></td>
+              <td><a class="btn btn-secondary" href="/sighting/<%= i %>/edit" role="button">Edit</a></td>
+              <td>
+                <form method="POST" action="/sighting/<%= i %>/delete?_method=DELETE">
+                  <button class="btn btn-secondary" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- script -->
+    <script>
+        document.getElementById('select-sort').sort.onchange = function() {
+            var newaction = `/?sort=${this.value}`;
+            document.getElementById('select-sort').action = newaction;
+            this.form.submit();
+        };
+
+        function onTableRowClick(rowIdx) {
+            window.location.href = `/sighting/${rowIdx}`;
+        }
+
+    </script>
+</body>
+<%- include('footer'); -%>

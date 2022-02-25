@@ -1,0 +1,36 @@
+<%- include('header'); -%> <%- include('navbar'); -%>
+<body>
+  <div class="container">
+    <!-- headings span -->
+    <div class="row-md-6 mt-3">
+      <span id="headings-block">
+        <h1 class="display-4">UFO Shapes</h1>
+        <p class="fw-normal text-muted">View sightings by shape</p>
+        <hr class="border-2 border-top border-dark" />
+      </span>
+    </div>
+    <!-- List -->
+    <div class="row-md-6 mt-3">
+      <ul class="list-group" id="shape-list">
+        <% for (let i=0; i < shapes.length; i+=1 ){ %>
+        <li class="list-group-item text-center" id="shape-list-item-<%=i%>">
+          <%= shapes[i] %>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+  <!-- script -->
+  <script>
+    const ls = document.getElementById("shape-list").getElementsByTagName("li");
+    for (let i = 0; i < ls.length; i += 1) {
+      const element = document.getElementById(`shape-list-item-${i}`);
+      element.addEventListener("click", (e) => {
+        let value = e.target.innerText;
+        value = value.toLowerCase();
+        window.location.href = `/shapes/${value}`;
+      });
+    }
+  </script>
+</body>
+<%- include('footer'); -%>

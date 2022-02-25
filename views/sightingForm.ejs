@@ -1,0 +1,65 @@
+<%- include('header'); -%>
+<%- include('navbar'); -%>
+<body>
+  <div class="container">
+    <div class="row-12 mt-3">
+      <a href="/" class="link-primary">< Back to all sightings</a>
+    </div>
+    <div class="row-12 mt-3">
+      <span>
+        <% if (action == "Add"){ %>
+        <h1 class="display-4 text-left"> Add a new sighting</h1>
+        <p class="fw-normal text-muted" >Fill in all fields describing the ufo sighting</p>
+        <% } else { %>
+        <h1 class="display-4 text-left"> Edit sighting <%= index %></h1>
+        <p class="fw-normal text-muted" >Amend current ufo sighting</p>
+        <% } %>
+        <hr class="border-2 border-top border-dark">
+      </span>
+    </div>
+    <div class="row-12 mt-3">
+      <div class="col-md-8 p-1">
+        <% if (action == "Add"){ %>
+          <form action="/sighting" method="POST">
+          <% } else { %>
+          <form action="/sighting/<%= index %>/edit?_method=PUT" method="POST">
+          <% } %>
+          <!-- City -->
+          <label for="city" class="form-label">City</label>
+          <input type="text" class="form-control" id="city" name="city" value="<%= sighting ? sighting.city : '' %>" required>
+          <br>
+          <!-- State -->
+          <label for="state" class="form-label">State</label>
+          <input type="text" class="form-control" id="state" name="state" value="<%= sighting ? sighting.state : '' %>" required>
+          <br>
+          <!-- Shape -->
+          <label for="shape" class="form-label">Shape</label>
+          <input type="text" class="form-control" id="shape" name="shape" value="<%= sighting ? sighting.shape : '' %>" required>
+          <br>
+          <!-- Datetime-->
+          <label for="datetime" class="form-label">Datetime:</label>
+          <input type="datetime-local" class="form-control" id="datetime" name="datetime" value="<%= sighting ? sighting.datetime : '' %>" required>
+          <br>
+          <!-- Duration -->
+          <label for="duration" class="form-label">Duration:</label>
+          <input type="number" class="form-control" id="duration" name="duration" value="<%= sighting ? sighting.duration : '' %>" required>
+          <br>
+          <!-- Text (details) -->
+          <label for="text" class="form-label">Details</label>
+          <textarea class="form-control" id="text" rows="5" name="text" required><%= sighting ? sighting.text : '' %></textarea>
+          <br>
+          <!-- Summary -->
+          <label for="summary" class="form-label">Summary</label>
+          <textarea class="form-control" id="summary" rows="2" name="summary" required><%= sighting ? sighting.summary : '' %></textarea>
+          <br>
+          <!-- Submit-Button -->
+          <div class="row-md-8 text-right">
+            <a href="/" class="btn btn-secondary" tabindex="-1" role="button">Cancel</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div> 
+    </div>
+  </div>
+</body>
+<%- include('footer'); -%>

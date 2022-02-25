@@ -1,0 +1,39 @@
+body {
+  font-family: "Jura", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Jura", sans-serif;
+}
+
+p,
+a,
+li,
+span {
+  font-family: "Jura", sans-serif;
+}
+
+.form-label {
+  font-weight: bolder;
+  font-family: "Jura", sans-serif;
+}
+
+.table th {
+  font-weight: bolder;
+  font-family: "Jura", sans-serif;
+}
+
+.form-control,
+.table td,
+.sort-select-input {
+  font-family: "Jura", sans-serif;
+}
+
+#sort-select-input-group {
+  width: 700px;
+}

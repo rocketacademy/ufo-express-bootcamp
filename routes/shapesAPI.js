@@ -1,20 +1,28 @@
-import { read } from "../../utils/jsonFileStorage.js";
-import { databaseLog } from "../../utils/logger.js";
-import { FILENAME } from "../../app.js";
+import { read } from "../utils/jsonFileStorage.js";
+import { FILENAME } from "../app.js";
+import { handleFileError } from "../utils/error.js";
+import _ from "lodash";
 
 export const getSightingShapes = (req, resp) => {
   read(FILENAME, (err, data) => {
     if (err) {
-      const errorObj = { error: `read err - ${err}` };
-      databaseLog(`read err - ${err}`);
-      resp.status(500).send(errorObj);
+      handleFileError(err, "read");
     }
 
     const shapes = data.sightings.map((s) => s.shape);
-    const renderObj = { shapes: shapes };
+    const ushapes = _.uniq(shapes);
+    let shapesObj = {};
+    shapes.forEach((s) => {
+      if (!(s in shapesObj)) {
+        shapesObj[s] = 1;
+      } else {
+        shapesObj[s] += 1;
+      }
+    });
 
-    resp.status(200).send(renderObj);
-    // resp.render("shapes", renderObj);
+    const renderObj = { shapes: ushapes, shapeCount: shapesObj };
+
+    resp.render("shapes", renderObj);
   });
 };
 
@@ -23,9 +31,7 @@ export const getSightingByShape = (req, resp) => {
 
   read(FILENAME, (err, data) => {
     if (err) {
-      const errorObj = { error: `read err - ${err}` };
-      databaseLog(`read err - ${err}`);
-      resp.status(500).send(errorObj);
+      handleFileError(err, "read");
     }
 
     const shapes = data.sightings.map((s) => s.shape.toLowerCase());
@@ -35,15 +41,17 @@ export const getSightingByShape = (req, resp) => {
       let shapeSightings = [];
       data.sightings.forEach((s, idx) => {
         if (s.shape.toLowerCase() === shapeRequest) {
-          const ssObj = { sighting: s, index: idx };
+          const ssObj = { sighting: s, originalIndex: idx };
           shapeSightings.push(ssObj);
         }
       });
 
-      const renderObj = { sightings: shapeSightings };
+      const renderObj = {
+        shape: _.capitalize(shapeRequest),
+        sightings: shapeSightings,
+      };
 
-      resp.status(200).send(renderObj);
-      // resp.render("shapeSightings", renderObj)
+      resp.render("shapeSightings", renderObj);
     } else {
       const errorObj = {
         error: `invalid shape, shape ${shapeRequest} not found`,
