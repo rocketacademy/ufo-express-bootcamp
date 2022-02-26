@@ -18,9 +18,9 @@
       <br>
       
 <a href="/favourites/<%= index %>">
-      <input type="button" value=<%= (isFav==="yes") ? "Unlike" : "Like"
-      %> class="btn">
-      </input>
+      <i class="fa fa-heart <%= (isFav==="yes") ? "heartlike" : "heartunlike"
+      %>">
+      </i>
   </a>
 
       <a href="/sighting/<%= index %>/edit"><input type="button" value="Edit" class="btn" /></a>
