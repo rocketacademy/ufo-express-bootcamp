@@ -1,0 +1,25 @@
+<div class="container border border-dark rounded w-75">
+  <h3 class="mt-2 mb-3">Sighting #<%= element.index %></h3>
+  <p><b>Date:</b> <%= element.date_time %></p>
+  <p><b>Location:</b> <%= element.city %>, <%= element.state %></p>
+  <p><b>Shape:</b> <%= element.shape %></p>
+  <p><b>Duration:</b> <%= element.duration %></p>
+  <p><b>Details:</b><br /><%= element.text %></p>
+
+  <div>
+    <form action="/sighting/<%= element.index %>/edit">
+      <input type="submit" value="Edit" class="btn-success text-center" />
+    </form>
+    <form
+      action="/sighting/<%= element.index %>/delete?_method=DELETE"
+      method="POST"
+    >
+      <input type="submit" value="Delete" class="btn-danger my-2 text-center" />
+    </form>
+  </div>
+</div>
+<div class="d-flex align-items-center justify-content-center mx-auto mt-3 w-75">
+  <form action="/">
+    <input type="submit" value="Back to main page" />
+  </form>
+</div>
