@@ -20,7 +20,7 @@ export const daysFromNow = (data) => {
   const month = data.toString().slice(5, 7);
   const year = data.toString().slice(0, 4);
   console.log(year, month, day);
-  return moment().fromNow([year, month, day]);
+  return moment([year, month, day]).fromNow();
 };
 
 export const formatDate = (date) => {
@@ -38,7 +38,12 @@ export const uniqueVisitor = (request, response) => {
 
   response.cookie('UUID', uuidv4(), { maxAge: 24 * 60 * 60 * 1000 });
   /* increment unique by 1 if UUID does not exist */
-  let unique = 0;
+  if (!request.cookies.uniqueVisitor) {
+    const unique = 0;
+    response.cookie('uniqueVisitor', unique);
+    return unique;
+  }
+  let unique = Number(request.cookies.uniqueVisitor);
   unique += 1;
   response.cookie('uniqueVisitor', unique);
   return unique;
