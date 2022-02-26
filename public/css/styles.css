@@ -1,5 +1,7 @@
 body {
   padding-top: 3rem;
+  background-image: url("/images/grey-background.jpg");
+  background-repeat: repeat;
 }
 
 .img-logo {
@@ -9,8 +11,8 @@ body {
 }
 
 .img-main {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   object-fit: contain;
 }
 
