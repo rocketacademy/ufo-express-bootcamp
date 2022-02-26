@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('header'); -%>
+  <body>
+    <%- include('navigation', { page: 'shapes' }); -%>
+    <div class="container">
+      <h2 class="mt-3">Sightings Shapes</h2>
+      <div class="row row-cols-2">
+        <% shapes.forEach((item) => { %>
+        <div class="col">
+          <div class="card border-dark mb-3" style="max-width: 24rem">
+            <div class="card-header bg-transparent border-dark">
+              <a
+                href="/shapes/<%= item.shape.toLowerCase() %>"
+                class="stretched-link read-more text-secondary"
+                ><%= item.shape %>
+              </a>
+            </div>
+            <div
+              class="card-body text-secondary pt-1"
+              style="transform: rotate(0)"
+            >
+              <div class="card-text pb-3 row row-cols-1">
+                <div class="col-8">
+                  <small><%= item.definition.phonetic %></small>
+                </div>
+                <div class="col-4 text-end">
+                  <small><%= item.definition.partOfSpeech %></small>
+                </div>
+                <div class="col-12">
+                  <small><%= item.definition.definition %></small>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer bg-transparent border-dark">
+              <div class="row">
+                <div class="col">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-bar-chart-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M1 11a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3zm5-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1V2z"
+                    />
+                  </svg>
+                  <small><%= item.count %></small>
+                </div>
+                <div class="col text-end">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-heart-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                    />
+                  </svg>
+                  <small><%= item.favorites %></small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </body>
+</html>

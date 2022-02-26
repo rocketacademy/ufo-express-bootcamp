@@ -1,0 +1,37 @@
+body {
+  padding-top: 3rem;
+  background-image: url("/images/grey-background.jpg");
+  background-repeat: repeat;
+}
+
+.img-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.img-main {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+}
+
+a:link,
+a:visited,
+a:active,
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+.hidden-submit-button {
+  display: none;
+}
+
+.read-more {
+  text-decoration: none;
+}
+
+.icon-btn:hover {
+  cursor: pointer;
+}
