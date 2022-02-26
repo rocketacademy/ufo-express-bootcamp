@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/flowbite@1.3.4/dist/datepicker.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        body {
+          @apply text-sm
+        }
+        
+      }
+
+      @layer components {
+        form {
+          @apply w-full max-w-xl rounded px-8 pt-6 pb-8
+        }
+        .menu {
+          @apply block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4
+        }
+        .label {
+          @apply block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2
+        }
+        .input {
+          @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500
+        }
+        .errormsg {
+          @apply text-red-500 text-xs italic
+        }
+        .btn {
+          @apply py-2 px-4 mr-4 bg-teal-500 text-white font-semibold rounded-lg shadow-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-75
+        }
+        .heartlike {
+          @apply text-red-500 text-xl mr-4
+        }
+        .heartunlike {
+          @apply text-gray-200 text-xl mr-4
+        }
+        .field-values {
+          @apply text-gray-700 pb-3 leading-tight
+        }
+        div .datepicker-header {
+          @apply h-10 bg-gray-700
+        }
+        div .datepicker-footer {
+          @apply hidden
+        }
+        div .timepicker-head {
+          @apply bg-teal-500
+        }
+        div .timepicker-button {
+          @apply text-teal-700
+        }
+        .table-cell {
+          @apply text-sm text-gray-900 px-6 py-4 whitespace-nowrap
+        }
+        .table-header {
+          @apply text-sm font-medium text-gray-900 px-6 py-4 text-left
+        }
+      }
+    </style>
+    <title><%= title %></title>
+  </head>
+  <body>
+  <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+  <div class="flex items-center flex-shrink-0 text-white mr-6">
+    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<g>
+	<g>
+		<circle style="fill:#263A7A;" cx="256" cy="256" r="256"/>
+	</g>
+	<path style="fill:#121149;" d="M394.333,180.002c-63.743,18.67-154.631,0.964-169.363,81.17
+		c-10.14,58.589-37.96,108.33-80.56,140.1l110.716,110.716c0.291,0,0.581,0.01,0.872,0.01c128.212,0,234.406-94.253,253.083-217.248
+		L394.333,180.002z"/>
+	<g>
+		<polygon style="fill:#FFEDB5;" points="369.778,398.222 142.222,398.222 199.111,199.111 312.889,199.111 		"/>
+	</g>
+	<g>
+		<polygon style="fill:#FDE085;" points="312.889,199.111 256.288,199.111 256.288,398.222 369.778,398.222 		"/>
+	</g>
+	<g>
+		<path style="fill:#71E2EF;" d="M194.122,144.815c0-34.175,27.703-61.878,61.878-61.878s61.878,27.703,61.878,61.878H194.122z"/>
+	</g>
+	<g>
+		<path style="fill:#38C6D9;" d="M256.288,82.944v61.871h61.59C317.878,110.737,290.328,83.101,256.288,82.944z"/>
+	</g>
+	<g>
+		<path style="fill:#366695;" d="M119.953,177.449l73.88-36.94h123.756l74.452,37.226c3.543,1.77,3.674,6.79,0.217,8.723
+			c-29.529,16.513-139.217,67.362-272.301-0.169C116.324,184.446,116.31,179.271,119.953,177.449z"/>
+	</g>
+	<g>
+		<path style="fill:#2A597F;" d="M392.04,177.736l-74.452-37.226H256.29v79.858c67.486,0.264,117.465-23.561,135.97-33.909
+			C395.712,184.527,395.583,179.507,392.04,177.736z"/>
+	</g>
+	<g>
+		<ellipse style="fill:#FEE187;" cx="256" cy="399.084" rx="113.778" ry="14.222"/>
+	</g>
+	<g>
+		<path style="fill:#FFC61B;" d="M369.778,399.084c0-7.842-50.785-14.202-113.49-14.222v28.443
+			C318.993,413.286,369.778,406.926,369.778,399.084z"/>
+	</g>
+</g>
+
+</svg>
+    <span class="font-semibold text-xl tracking-tight ml-6 mr-6">UFO Sightings</span>
+  </div>
+  <div class="block">
+    <button onclick="toggle()" class="md:hidden flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+      <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/></svg>
+    </button>
+  </div>
+  <div id="menu" class="hidden w-full block flex-grow md:flex md:items-center md:w-auto">
+    <div class="text-sm md:flex-grow">
+      <a href="/" class="menu">
+        Home
+      </a>
+      <a href="/shapes" class="menu">
+        Browse by Shapes
+      </a>
+    </div>
+    <div>
+      <a href="/sighting" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Add New</a>
+    </div>
+  </div>
+</nav>
+    </div>
+    <script>
+    const menu = document.getElementById('menu');
+    const toggle = () => menu.classList.toggle("hidden");
+    </script>
+  </body>
+</html>
