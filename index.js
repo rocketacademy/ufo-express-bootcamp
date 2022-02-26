@@ -14,26 +14,16 @@ app.use(methodOverride('_method'));
 app.use(cookieParser());
 
 app.get('/', (req, res) => {
-  // res.send('Home Page')
-  // this should be a list of sightings
-  // aka read json
   read('./data.json', (err, data) => {
     if (err){
       console.log("Read Error:", err)
     }
-
     // to add sorting and cookie logic
-
-    // const sightingQuery = req.query.sighting;
-    // data.sightings.sort((a, b) => ((a.sightingQuery > b.sightingQuery) ? 1 : -1));
     res.render('index', data)
   })
 })
 
 app.get('/favourites', (req, res) => {
-  // res.send('Home Page')
-  // this should be a list of sightings
-  // aka read json
   read('./data.json', (err, data) => {
     if (err){
       console.log("Read Error:", err)
