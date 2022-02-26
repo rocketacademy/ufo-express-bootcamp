@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('./partials/head.ejs') %>
+  </head>
+  <body>
+    <div id="cover"></div>
+    <%- include('./partials/navbar.ejs') %>
+
+    <div class="container-fluid text-center" id="sighting-content">
+      <h1>List of Shapes</h1>
+
+      <!-- using Set automatically eliminates repeated values -->
+      <% const uniqueShapesSet = new Set() %> <% sightings.forEach((element) =>
+      { uniqueShapesSet.add(element.shape) }) %> <%
+      uniqueShapesSet.forEach((shape) => { %>
+      <a class="btn btn-primary" href="/shapes/<%= shape %> " role="button"
+        ><%= shape %>
+      </a>
+      <% }) %>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

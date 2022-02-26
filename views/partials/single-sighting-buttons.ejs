@@ -1,0 +1,24 @@
+<div class="d-grid gap-2">
+    <a
+      class="btn btn-primary"
+      href="/sighting/<%= singleSightingIndex %>/edit "
+      role="button"
+      >Edit ✏</a
+    >
+
+    <a
+      class="btn btn-primary"
+      href="/favourites/?index=<%= singleSightingIndex %>"
+      role="button"
+      >Favourite ⭐</a
+    >
+
+    <form
+      id="delete-button"
+      action="/sighting/<%= singleSightingIndex %>/delete?_method=DELETE"
+      method="POST"
+      class="mx-auto"
+    >
+      <button class="btn btn-secondary type="submit">Delete 🚫</button>
+      </form>
+  </div>

@@ -1,0 +1,31 @@
+<div class="table-responsive">
+          <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Index</th>
+              <th>Date and Time</th>
+              <!-- hides the following headers when table is partially collapsed -->
+              <th class="d-none d-sm-table-cell">Shape</th>
+              <th class="d-none d-sm-table-cell">City</th>
+              <th>State</th>
+              <th id="delete-heading">Delete</th>
+            </tr>
+          </thead>
+          
+          <tr>
+            <!-- to access a JS variable in EJS, simply call the properties of the JS object passed as the second argument of the res.render function -->
+            <% for (let i = 0; i < sightings.length; i += 1) { %> 
+            <th scope="row"><a href="/sighting/<%= i %>"><%= i %> </a></th>
+            <td><%= sightings[i].date_time %></td>
+            <!-- hides the following row entries when table is partially collapsed -->
+            <td class="d-none d-sm-table-cell"><%= sightings[i].shape %></td>
+            <td class="d-none d-sm-table-cell"><%= sightings[i].city %></td>
+            <td><%= sightings[i].state %></td>
+            <td><form id="delete-button" action="/sighting/<%= i %>/delete?_method=DELETE" method="POST">
+          <button class="btn btn-sm btn-secondary" type="submit"><i class="fa fa-trash-alt"></i></button>
+        </form></td>
+        </tr>
+              <% } %>
+          </tr>
+        </table>
+</div>
