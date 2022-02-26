@@ -1,6 +1,6 @@
 import express from "express";
 import {check, validationResult} from 'express-validator';
-import {add, read, write,edit} from "../jsonFileStorage.js";
+import {read, write} from "../jsonFileStorage.js";
 import methodOverride from "method-override";
 import dayjs from "dayjs";
 import relativeTime from 'dayjs/plugin/relativeTime.js';
@@ -169,7 +169,7 @@ router.get("/sighting", (req, res) => {
 
 
 
-router.post("/sighting", validationMessages ,(req, res, next) => {
+router.post("/sighting", validationMessages ,(req, res) => {
   const errors = validationResult(req)
   read('data.json', (err, data) => {
     let index = data.sightings.length;
