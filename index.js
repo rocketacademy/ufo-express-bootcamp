@@ -578,4 +578,5 @@ app.get('/favorites', getFavoriteSightings);
 app.post('/favorites', addToFavorites);
 app.get('/statistics', getStatistics);
 
-app.listen(3004);
+// start the server listening for requests
+app.listen(process.env.PORT || 3004, () => console.log('Server is running...'));
