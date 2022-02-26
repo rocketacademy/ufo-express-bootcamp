@@ -38,43 +38,15 @@
         >
         <a class="shapes" href="http://localhost:3004/fav"> Fav | </a>
       </div>
-      <!-- unique visitors / counts -->
-      <div class="visit-counts">
-        <p class="unique-visitor">
-          Unique Visitor: <%= visits[0].uniqueVisitors %>
-        </p>
-        <p class="total-visitor">
-          | Total Visit Count: <%= visits[0].totalVisitCount %>
-        </p>
-      </div>
     </nav>
     <!-- end of nav bar -->
 
     <!--sightings title -->
     <div class="d-flex justify-content-center mt-3 mb-3">
-      <H2>SIGHTINGS!</H2>
+      <H2>FAVOURITES!</H2>
     </div>
     <!-- end of-sightings title -->
 
-    <!-- Dropdown button -->
-    <div class="dropdown d-flex justify-content-center">
-      <a
-        class="btn btn-secondary dropdown-toggle"
-        href="#"
-        role="button"
-        id="dropdownMenuLink"
-        data-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Dropdown link
-      </a>
-
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="latest-date">Latest</a>
-        <a class="dropdown-item" href="earliest-date">Earliest</a>
-      </div>
-    </div>
-    <!-- end of dropdown sort button -->
     <div class="d-flex justify-content-center">
       <div class="container-list mt-5 mb-5">
         <!-- mini nav bar-->
@@ -96,33 +68,6 @@
           <a class="sightings-links" href="/sighting/<%= i %>">
             Date: <%= sightings[i].date_time %>
           </a>
-          <!-- Creating a delete button link for each row -->
-          <!-- what this does is that it will go into this link -->
-          <form action="/<%= i %>?_method=DELETE" method="POST">
-            <input
-              class="btn btn-delete btn-info active"
-              type="submit"
-              value="Delete"
-            />
-          </form>
-          <!-- Creating an edit button link for each row -->
-          <a
-            href="sighting/<%= i %>/edit"
-            class="btn btn-edit btn-info active"
-            role="button"
-            aria-pressed="true"
-            >Edit</a
-          >
-          <!-- Creating an fav button link for each row -->
-          <!-- setting a query for favourite buttons: note const X = request.query.index -->
-          <!-- This takes the index of the item in the sightings array of obhects -->
-          <a
-            href="fav/?index=<%= sightings[i].index %>"
-            class="btn btn-fav btn-info active"
-            role="button"
-            aria-pressed="true"
-            >Add Fav</a
-          >
         </div>
         <% } %>
       </div>
