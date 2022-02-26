@@ -22,8 +22,8 @@ This is a UFO sighting app using JSON database.
 
 ## Tech Used / Dependencies
 
-- Back-end of this app is done using Express and Node.js
-- Front-end of this app is done using Bootstrap 
+- Back-end of this app is done using [Express](https://www.npmjs.com/package/express) and [Node.js](https://www.npmjs.com/package/node)
+- Front-end of this app is done using [Bootstrap](https://getbootstrap.com/) 
 - Code is formatted using [Prettier](https://www.npmjs.com/package/prettier)
 - Code is linted using [ESLint](https://www.npmjs.com/package/eslint)
 - Dictionary definition provided by [Free Dictionary API](https://dictionaryapi.dev/)
