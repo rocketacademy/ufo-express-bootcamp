@@ -22,14 +22,17 @@
   <body>
     <% if (locals.singleSighting) { %>
     <div class="container border border-dark rounded mt-3 w-75">
-      <h3 class="mt-2 mb-3">Sighting #<%= index %></h3>
+      <h3 class="mt-2 mb-3">Sighting #<%= singleSighting.index %></h3>
       <p><b>Date:</b> <%= singleSighting.date_time %></p>
       <p><b>City:</b> <%= singleSighting.city %></p>
       <p><b>Summary:</b><br /><%= singleSighting.summary %></p>
     </div>
     <br />
     <div class="ml-3">
-      <form action="/sighting/<%= index %>/edit?_method=PUT" method="POST">
+      <form
+        action="/sighting/<%= singleSighting.index %>/edit?_method=PUT"
+        method="POST"
+      >
         <label for="description">Text: </label><br />
         <textarea id="description" name="text">
 <%= singleSighting.text %></textarea
@@ -73,12 +76,17 @@
           name="summary"
           value="<%= singleSighting.summary %>"
         /><br /><br />
-        <input type="hidden" id="index" name="index" value="<%= index  %> " />
+        <input
+          type="hidden"
+          id="index"
+          name="index"
+          value="<%= singleSighting.index  %> "
+        />
         <input type="submit" value="Submit" />
       </form>
     </div>
     <% } else { %>
-    <div class="ml-3">
+    <div class="ml-3 mt-3">
       <form action="/sighting" method="POST">
         <label for="description">Text: </label><br />
         <textarea id="description" name="text"></textarea><br />

@@ -23,8 +23,17 @@
     <h1 class="text-center">UFO Sighting Catalog</h1>
     <br />
     <% if (locals.singleSighting) {%> <%- include('sightingFormat', {element:
-    singleSighting}); %> <% } else if (locals.sightings) { for (let i = 0; i <
-    sightings.length; i++) { %>
+    singleSighting}); %> <% } else if (locals.sightings) { %>
+    <div class="d-flex align-items-center justify-content-center mx-auto w-75">
+      <form action="/sighting">
+        <input type="submit" value="Create new sighting" />
+      </form>
+    </div>
+    <div class="mb-2 mx-auto w-75">
+      <h5>Filter By:</h5>
+      <p><a href="/shapes" class="link">Shapes</a></p>
+    </div>
+    <% for (let i = 0; i < sightings.length; i++) { %>
     <div class="container border border-dark rounded mb-3 w-75">
       <h3 class="mt-2 mb-3">Sighting #<%= i %></h3>
       <p><b>Date:</b> <%= sightings[i].date_time %></p>

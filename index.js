@@ -15,15 +15,7 @@ app.use(cookieParser());
 const PORT = 3004;
 
 app.get('/sighting', (req, res) => {
-  // read('data.json', (err, jsonContentObj) => {
-  //   if (err) {
-  //     res.status(500).send('DB read error.');
-  //   }
-
-  //   // const {sightings} = jsonContentObj
-    
-  // })
-  res.render('sighting');
+  res.render('sightingForm');
 })
 
 app.post('/sighting', (req, res) => {
@@ -56,16 +48,15 @@ app.post('/sighting', (req, res) => {
 
 app.get('/sighting/:index', (req, res) => {
   // res.cookie('name', 'john');
-  const {index} = req.params
+  const index = Number(req.params.index);
   read('data.json', (err, jsonContentObj) => {
     if (err) {
       res.status(500).send('DB write error.');
     }
 
     const {sightings} = jsonContentObj;
-    const {index} = req.params;
     const singleSighting = sightings[index];
-    singleSighting.index = index
+    singleSighting.index = index;
     const ejsObject = {singleSighting};
     console.log(ejsObject);
     res.render('viewSighting', ejsObject);
@@ -86,17 +77,19 @@ app.get('/', (req,res) => {
 })
 
 app.get('/sighting/:index/edit', (req, res) => {
+  const index = Number(req.params.index);
+
   read('data.json', (err, jsonContentObj) => {
     if (err) {
       res.status(500).send('DB read error.');
     }
 
     const {sightings} = jsonContentObj;
-    const index = Number(req.params.index);
     const singleSighting = sightings[index];
-    const ejsObject = {singleSighting, index};
+    singleSighting.index = index
+    const ejsObject = {singleSighting};
 
-    res.render('sighting', ejsObject);
+    res.render('sightingForm', ejsObject);
   });
 })
 
@@ -133,25 +126,33 @@ app.put('/sighting/:index/edit', (req, res) => {
   });
 })
 
-// app.get('/sighting/:index/delete', (req, res) => {
+// app.delete('/sighting/:index/delete', (req, res) => {
+//   const index = Number(req.params.index);
+
+//   let ejsObject;
+
 //   read('data.json', (err, jsonContentObj) => {
-//     if (err) {
-//       res.status(500).send('DB read error.');
-//     }
+//     const original = jsonContentObj.sightings;
+//     original.splice(index, 1);
+//     jsonContentObj.sightings = original;
+//     // console.log(jsonContentObj.sightings)
 
 //     const {sightings} = jsonContentObj;
-//     const {index} = req.params;
-//     const mode = 'delete'
-//     const singleSighting = sightings[index];
-//     const ejsObject = {singleSighting, index, mode};
-
-//     res.render('sighting', ejsObject);
+//     ejsObject = {sightings};
+//     write('data.json', jsonContentObj, (writeErr) => {
+//       if (writeErr) {
+//       res.status(500).send('DB write error.');
+//       }
+//       console.log(ejsObject);
+//       console.log("Delete process done")
+//       // res.send("AAAAA")
+//       res.render('viewSighting', ejsObject);
+//     });
 //   });
-//   }
-// )
+// });
 
 app.delete('/sighting/:index/delete', (req, res) => {
-  const index = req.params.index;
+  const index = Number(req.params.index);
 
   let ejsObject;
 
@@ -163,16 +164,19 @@ app.delete('/sighting/:index/delete', (req, res) => {
     const original = jsonContentObj.sightings
     original.splice(index, 1)
     jsonContentObj.sightings = original
-    console.log(jsonContentObj.sightings)
+    // console.log(jsonContentObj.sightings)
 
     const {sightings} = jsonContentObj;
     ejsObject = {sightings};
+    
 
   }, (writeErr) => {
     if (writeErr) {
       res.status(500).send('DB write error.');
     }
-    
+    console.log(ejsObject);
+    console.log("Delete process done")
+    // res.send("AAAAA")
     res.render('viewSighting', ejsObject);
   });
 });
