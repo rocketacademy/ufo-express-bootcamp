@@ -13,52 +13,56 @@
       action="/sighting/<%= singleSightingIndex %>/edit?_method=PUT"
       method="POST"
     >
-      <div>
-        <label for="text" class="form-label">Full Description</label>
-        <input type="text" name="text" id="text" value="<%=
-        singleSightingData["text"] %>" />
+      <div class="mx-3">
+        <div class="mb-3">
+          <label for="text" class="form-label">Full Description</label>
+          <textarea name="text" id="text" class="form-control" rows="10" value="<%= singleSightingData["text"] %>"></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="date_time" class="form-label">Date and Time</label>
+          <input type="datetime-local" name="date_time" id="date_time"
+          class="form-control" value="<%= singleSightingData["date_time"] %>"/>
+        </div>
+
+        <div class="mb-3">
+          <label for="city" class="form-label">City</label>
+          <input type="text" name="city" id="city" class="form-control"
+          value="<%= singleSightingData["city"] %>" />
+        </div>
+
+        <div class="mb-3">
+          <label for="state" class="form-label">State</label>
+          <input type="text" name="state" id="state" class="form-control"
+          value="<%= singleSightingData["state"] %>"/>
+        </div>
+
+        <div class="mb-3">
+          <label for="shape" class="form-label">Shape</label>
+          <select name="shape" id="shape">
+            <option value="Fireball">Fireball</option>
+            <option value="Sphere">Sphere</option>
+            <option value="Pyramid">Pyramid</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="duration" class="form-label">Duration</label>
+          <input type="text" name="duration" id="duration" class="form-control"
+          value="<%= singleSightingData["duration"] %>" />
+        </div>
+
+        <div class="mb-3">
+          <label for="summary" class="form-label">Summary</label>
+          <input type="text" name="summary" id="summary" class="form-control"
+          value="<%= singleSightingData["summary"] %>"/>
+        </div>
       </div>
 
-      <div>
-        <label for="date_time" class="form-label">Date and Time</label>
-        <input type="datetime-local" name="date_time" id="date_time" value="<%=
-        singleSightingData["date_time"] %>"/>
+      <div class="mx-auto">
+        <button type="submit" class="btn btn-primary">Submit</button>
       </div>
-
-      <div>
-        <label for="city" class="form-label">City</label>
-        <input type="text" name="city" id="city" value="<%=
-        singleSightingData["city"] %>" />
-      </div>
-
-      <div>
-        <label for="state" class="form-label">State</label>
-        <input type="text" name="state" id="state" value="<%=
-        singleSightingData["state"] %>"/>
-      </div>
-
-      <div>
-        <label for="shape" class="form-label">Shape</label>
-        <select name="shape" id="shape">
-          <option value="Fireball">Fireball</option>
-          <option value="Sphere">Sphere</option>
-          <option value="Pyramid">Pyramid</option>
-        </select>
-      </div>
-
-      <div>
-        <label for="duration" class="form-label">Duration</label>
-        <input type="text" name="duration" id="duration" value="<%=
-        singleSightingData["duration"] %>" />
-      </div>
-
-      <div>
-        <label for="summary" class="form-label">Summary</label>
-        <input type="text" name="summary" id="summary" value="<%=
-        singleSightingData["summary"] %>"/>
-      </div>
-
-      <button type="submit" class="btn btn-primary">Submit</button>
+      
     </form>
 
     <!-- Optional JavaScript -->

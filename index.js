@@ -1,5 +1,6 @@
 import express, { json, request } from 'express';
 import methodOverride from 'method-override';
+import cookieParser from 'cookie-parser';
 import { read, write, add, edit } from './jsonFileStorage.js';
 
 
@@ -10,6 +11,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
 // Override POST requests with query param ?_method=PUT to be PUT requests
 app.use(methodOverride('_method'));
+app.use(cookieParser());
 
 app.get('/', (req, res) => {
   // res.send('Home Page')
@@ -19,9 +21,63 @@ app.get('/', (req, res) => {
     if (err){
       console.log("Read Error:", err)
     }
+
+    // to add sorting and cookie logic
+
     // const sightingQuery = req.query.sighting;
     // data.sightings.sort((a, b) => ((a.sightingQuery > b.sightingQuery) ? 1 : -1));
     res.render('index', data)
+  })
+})
+
+app.get('/favourites', (req, res) => {
+  // res.send('Home Page')
+  // this should be a list of sightings
+  // aka read json
+  read('./data.json', (err, data) => {
+    if (err){
+      console.log("Read Error:", err)
+    }
+
+    let cookieValues
+    if(!req.cookies.favourites){
+      cookieValues = [ parseInt(req.query.index) ]
+    } else {
+      cookieValues = req.cookies.favourites
+      cookieValues.push(parseInt(req.query.index))
+      function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+      cookieValues = cookieValues.filter(onlyUnique)
+      
+    }
+    res.cookie('favourites', cookieValues)
+
+    // compress original data object to one that only has favourited sightings
+    const originalDataObj = { ...data}
+    const originalSightingArr = originalDataObj.sightings
+    console.log('cookieValues', cookieValues)
+    const compressedSightingArr = []
+    for ( const element of cookieValues){
+      compressedSightingArr.push(originalSightingArr[element])
+    }
+    const compressedDataObj = {'sightings': compressedSightingArr}
+    res.render('faves', compressedDataObj)
+  })
+})
+
+app.get('/favourites/:index', (req, res) => {
+  // lmao i dont think this is even called
+  // this can probaly be turned into a helper function
+   read(jsonFilepath, (err, data) => {
+    if (err){
+      console.log("Error:", err)
+    }
+  // Respond with the information at the index specified in the URL  
+  const singleSightingIndex  = req.params.index
+  const singleSightingData = data.sightings[singleSightingIndex]
+  const singleSightingObject = {singleSightingIndex, singleSightingData}
+  res.render('single-sighting', singleSightingObject)
   })
 })
 
@@ -45,12 +101,10 @@ app.get('/sighting/:index', (req, res) => {
     if (err){
       console.log("Error:", err)
     }
-
   // Respond with the information at the index specified in the URL  
   const singleSightingIndex  = req.params.index
   const singleSightingData = data.sightings[singleSightingIndex]
   const singleSightingObject = {singleSightingIndex, singleSightingData}
-  // console.log("sent object:", singleSightingObject)
   res.render('single-sighting', singleSightingObject)
   })
 })

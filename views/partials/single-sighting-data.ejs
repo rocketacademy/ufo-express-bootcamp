@@ -1,0 +1,40 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>Full Description</h3>
+      <p><%= singleSightingData['text'] %></p>
+    </div>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-md-3">
+      <h3>Date and Time</h3>
+      <p><%= singleSightingData["date_time"] %></p>
+    </div>
+    <div class="col-md-3">
+      <h3>City</h3>
+      <p><%= singleSightingData["city"] %></p>
+    </div>
+    <div class="col-md-3">
+      <h3>State</h3>
+      <p><%= singleSightingData["state"] %></p>
+    </div>
+    <div class="col-md-3">
+      <h3>Duration</h3>
+      <p><%= singleSightingData["duration"] %></p>
+    </div>
+  </div>
+
+  <div class="row text-center">
+    <div class="col-md-6">
+      <h3>Shape</h3>
+      <p><%= singleSightingData["shape"] %></p>
+    </div>
+    <div class="col-md-6">
+      <h3>Summary</h3>
+      <p><%= singleSightingData["summary"] %></p>
+    </div>
+  </div>
+
+  <div class="row mx-auto"><%- include('./single-sighting-buttons.ejs') %></div>
+</div>
