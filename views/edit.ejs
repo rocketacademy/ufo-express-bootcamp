@@ -1,0 +1,107 @@
+<%- include('header'); -%>
+
+<body class="bg-dark">
+  <div class="container">
+    <div
+      class="col-12 my-5 d-flex align-items-center justify-content-center flex-column text-white"
+    >
+      <h1>Edit Sighting</h1>
+      <br />
+
+      <div class="bg-secondary p-3 rounded">
+        <form action="/sighting/<%= index %>/edit?_method=PUT" method="POST">
+          <label for="date_time">Date & Time :</label><br />
+          <input
+            type="text"
+            id="date_time"
+            name="date_time"
+            class="form-control"
+            size="50"
+            value="<%= sightings.date_time %>"
+          /><br />
+          <div class="row">
+            <div class="col">
+              <label for="city">City:</label><br />
+              <input
+                type="text"
+                id="city"
+                name="city"
+                size="50"
+                class="form-control"
+                value="<%=sightings.city%>"
+              />
+            </div>
+            <div class="col">
+              <label for="state">State:</label><br />
+              <input
+                type="text"
+                id="state"
+                name="state"
+                size="50"
+                class="form-control"
+                value="<%= sightings.state %>"
+              />
+            </div>
+          </div>
+          <br />
+          <label for="shape">Shape:</label><br />
+          <input
+            type="text"
+            id="shape"
+            name="shape"
+            size="50"
+            class="form-control"
+            value="<%= sightings.shape %>"
+          /><br />
+          <label for="duration">Duration:</label><br />
+          <input
+            type="text"
+            id="duration"
+            name="duration"
+            class="form-control"
+            size="50"
+            value="<%= sightings.duration %>"
+          /><br />
+          <label for="description">Description:</label><br />
+          <textarea
+            type="text"
+            id="description"
+            name="description"
+            rows="5"
+            cols="50"
+            class="form-control"
+          >
+<%= sightings.description %>
+          </textarea>
+          <br />
+          <label for="summary">Summary:</label><br />
+          <input
+            type="text"
+            id="summary"
+            name="summary"
+            cols="50"
+            rows="2"
+            class="form-control"
+            value="<%= sightings.summary %>"
+          />
+          <label for="createTime">Create Time:</label><br />
+          <input
+            type="text"
+            id="createTime"
+            name="createTime"
+            size="50"
+            value="<%= sightings.createTime %>"
+            class="form-control"
+            required
+          /><br />
+          <input
+            type="submit"
+            value="Update Sighting"
+            class="btn btn-primary submit-btn"
+          />
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+<!-- <%- include('footer'); -%> -->

@@ -1,0 +1,50 @@
+<%- include('header'); -%>
+<body class="bg-dark"></body>
+<!-- <div class="container ml-1">
+<% for( let i = 0; i < selectedShapeSightings.length; i++ ) { %>
+<a 
+class="text-white"
+href="/sighting/<%= i %>"
+>Sighting <%= i + 1 %> </a >
+<br />
+<% } %>
+</a> -->
+<div class="container text-center">
+  <br />
+  <h1>List of <%= shapes %> Sightings</h1>
+  <br />
+
+  <table class="table table-hover table-dark table-bordered">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Date</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Shape</th>
+        <th>Duration</th>
+        <th>Created</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for( let i = 0; i < selectedShapeSightings.length; i++ ) { %>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= selectedShapeSightings[i].date_time %></td>
+        <td><%= selectedShapeSightings[i].city %></td>
+        <td><%= selectedShapeSightings[i].state %></td>
+        <td><%= selectedShapeSightings[i].shape %></td>
+        <td><%= selectedShapeSightings[i].duration %></td>
+        <td><%= daysFromNow(selectedShapeSightings[i].createTime) %></td>
+        <td>
+          <a href="/sighting/<%= i %>" class="btn btn-info">Details</a>
+        </td>
+        <% } %>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<br />
+
+<%- include('footer'); -%>
