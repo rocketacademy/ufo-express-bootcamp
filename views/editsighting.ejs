@@ -10,9 +10,9 @@
       name="text"
       value="<%= sighting.text %>"
     /><br />
-    <label for="date_time">Date and Time (DD/MM/YY HH:MM)</label><br />
+    <label for="date_time">Date and Time</label><br />
     <input
-      type="text"
+      type="datetime-local"
       id="date_time"
       name="date_time"
       value="<%= sighting.date_time %>"
@@ -28,11 +28,9 @@
     <input
       type="text"
       id="state"
-      name="state2
-      value="
-      <%="sighting.state"
-      %
-    />" /><br />
+      name="state"
+      value="<%=sighting.state%>"
+    /><br />
     <label for="shape">Shape</label><br />
     <input
       type="text"

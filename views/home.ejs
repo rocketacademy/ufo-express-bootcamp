@@ -26,7 +26,10 @@ include('navbar'); -%>
       <% for (let i = 0; i < sightingObj.length; i += 1) { %>
       <tr>
         <th scope="row"><%= i + 1 %></th>
-        <td><%= sightingObj[i].date_time %></td>
+        <td>
+          <% const regex = /T/gm %> <%= sightingObj[i].date_time.replace(regex,
+          ' ') %>
+        </td>
         <td><%= sightingObj[i].shape %></td>
         <td><%= sightingObj[i].city %></td>
         <td>
@@ -51,5 +54,10 @@ include('navbar'); -%>
       <% } %>
     </tbody>
   </table>
+</div>
+
+<div class="container-lg text-left" id="main-body">
+  <h6>No. of Visits:<br /></h6>
+  <h7><%= visits %></h7>
 </div>
 <%- include('footer'); -%>
