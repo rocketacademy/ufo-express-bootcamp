@@ -1,0 +1,31 @@
+<%- include('header', {title: `List of UFO Shapes`}); -%> <%- include('navbar');
+-%>
+<div class="container-lg text-center">
+  <h2>Number of UFO Sightings by Shape</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Shape</th>
+        <th scope="col">No. of sightings</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i < Object.keys(shapeTally).length; i += 1) { %>
+      <tr>
+        <th scope="row"><%= Object.keys(shapeTally)[i] %></th>
+        <td><%= shapeTally[Object.keys(shapeTally)[i]] %></td>
+        <td>
+          <a
+            class="btn btn-primary"
+            href="/shapes/<%= Object.keys(shapeTally)[i].toLowerCase() %>"
+            role="button"
+            >View List</a
+          >
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+<%- include('footer'); -%>

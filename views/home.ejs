@@ -1,0 +1,63 @@
+<%- include('header', {title: `Sightings Home Page`}); -%> <%-
+include('navbar'); -%>
+
+<div class="container-lg text-center" id="main-header">
+  <div class="row">
+    <div class="col-12">
+      <h2>List of UFO Sightings</h2>
+    </div>
+  </div>
+</div>
+
+<div class="container-lg text-center" id="main-body">
+  <table class="table">
+    <thread>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Date</th>
+        <th scope="col">Shape</th>
+        <th scope="col">City</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+        <th scope="col"></th>
+      </tr>
+    </thread>
+    <tbody>
+      <% for (let i = 0; i < sightingObj.length; i += 1) { %>
+      <tr>
+        <th scope="row"><%= i + 1 %></th>
+        <td>
+          <% const regex = /T/gm %> <%= sightingObj[i].date_time.replace(regex,
+          ' ') %>
+        </td>
+        <td><%= sightingObj[i].shape %></td>
+        <td><%= sightingObj[i].city %></td>
+        <td>
+          <a class="btn btn-primary" href="/sighting/<%= i %>" role="button"
+            >View</a
+          >
+        </td>
+        <td>
+          <a
+            class="btn btn-primary"
+            href="/sighting/<%= i %>/edit"
+            role="button"
+            >Edit</a
+          >
+        </td>
+        <td>
+          <form action="/sighting/<%= i %>?_method=DELETE" method="POST">
+            <input class="btn btn-primary" type="submit" value="Delete" />
+          </form>
+        </td>
+      </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<div class="container-lg text-left" id="main-body">
+  <h6>No. of Visits:<br /></h6>
+  <h7><%= visits %></h7>
+</div>
+<%- include('footer'); -%>

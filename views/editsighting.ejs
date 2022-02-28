@@ -1,0 +1,58 @@
+<%- include('header', {title: `Edit UFO Sighting`}); -%> <%- include('navbar');
+-%>
+<div class="container-lg text-center">
+  <h2>Edit UFO Sighting <%= parseInt(sighting.index) + 1 %></h2>
+  <form action="/sighting/<%= sighting.index %>/?_method=PUT" method="POST">
+    <label for="text">Account of sighting</label><br />
+    <input
+      type="text"
+      id="text"
+      name="text"
+      value="<%= sighting.text %>"
+    /><br />
+    <label for="date_time">Date and Time</label><br />
+    <input
+      type="datetime-local"
+      id="date_time"
+      name="date_time"
+      value="<%= sighting.date_time %>"
+    /><br />
+    <label for="city">City</label><br />
+    <input
+      type="text"
+      id="city"
+      name="city"
+      value="<%= sighting.city %>"
+    /><br />
+    <label for="state">State</label><br />
+    <input
+      type="text"
+      id="state"
+      name="state"
+      value="<%=sighting.state%>"
+    /><br />
+    <label for="shape">Shape</label><br />
+    <input
+      type="text"
+      id="shape"
+      name="shape"
+      value="<%= sighting.shape %>"
+    /><br />
+    <label for="duration">Duration</label><br />
+    <input
+      type="text"
+      id="duration"
+      name="duration"
+      value="<%= sighting.duration %>"
+    /><br />
+    <label for="summary">Summary</label><br />
+    <input
+      type="text"
+      id="summary"
+      name="summary"
+      value="<%= sighting.summary %>"
+    /><br />
+    <input type="submit" value="Submit" />
+  </form>
+</div>
+<%- include('footer'); -%>

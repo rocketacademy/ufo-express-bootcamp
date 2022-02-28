@@ -1,0 +1,13 @@
+<%- include('header', {title: `View Sighting`}); -%> <%- include('navbar');
+-%>
+<div class="container-lg text-center">
+    <h2>UFO Sighting <%= parseInt(sightingInfo.index) + 1 %></h2>
+    <p><h3>Text:</h3> <%= sightingInfo.text %></p>
+    <p><h3>Date and Time:</h3> <%= sightingInfo.date_time %></p>
+    <p><h3>City:</h3> <%= sightingInfo.city %></p>
+    <p><h3>State:</h3> <%= sightingInfo.state %></p>
+    <p><h3>Shape:</h3> <%= sightingInfo.shape %></p>
+    <p><h3>Duration:</h3> <%= sightingInfo.duration %></p>
+    <p><h3>Summary:</h3> <%= sightingInfo.summary %></p>
+  </div>
+<%- include('footer'); -%> 
