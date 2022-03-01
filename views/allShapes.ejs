@@ -1,0 +1,19 @@
+<%- include('headerAndNav') %>
+
+  <body>
+    <div class="container navTopMargin">
+      <div class="pageTitle">Sighting List of Shapes</div>
+      <ol>
+        <% sightings.forEach((sighting,index)=>{ %> 
+          <%Object.entries(sighting).forEach(([key,value])=>{ %> 
+            <%if(key==='shape'){ %>
+            <li><a href="/shapes/<%=value%>"><%=value%></a></li>
+            <% } %> 
+          <% }) %>
+        <br />
+        <% }) %>
+      </ol>
+    </div>
+  </body>
+
+<%-include('footer') %>

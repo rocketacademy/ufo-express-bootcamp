@@ -1,0 +1,76 @@
+/** @format */
+
+.navTopMargin {
+  margin-top: 60px;
+}
+.pageTitle {
+  text-align: center;
+  font-weight: bold;
+  font-size: 35px;
+}
+.selectFormTitle {
+  font-size: 30px;
+  font-weight: bold;
+}
+.selectForm {
+  font-size: 15px;
+}
+
+.submitSighting {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.sightingContainer {
+  background-color: lightyellow;
+  border-radius: 5px;
+}
+
+.btnHeight {
+  height: 40px;
+  margin: 5px;
+}
+
+.navBarBg {
+  background-color: #e3f2fd;
+}
+
+.shapeBgColor {
+  background-color: silver;
+}
+
+.form-group.required .control-label:after {
+  content: "*";
+  color: red;
+}
+
+.visitCount {
+  font-size: 30px;
+}
+
+.hideWords {
+  white-space: nowrap;
+  width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* // Extra small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap */
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+  .hideOnResizeSmall {
+    display: none;
+  }
+  .hideOnResizeMedium {
+    display: none;
+  }
+}
+
+/* // Medium devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+  .hideOnResizeMedium {
+    display: none;
+  }
+}

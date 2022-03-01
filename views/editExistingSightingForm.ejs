@@ -1,0 +1,131 @@
+<%- include('headerAndNav') %>
+
+  <!-- Body-->
+  <body>
+    <div class="container navTopMargin">
+      <div class="row">
+        <div class="col d-flex justify-content-center submitSighting">
+          Edit this sighting
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <form action="/sighting/<%=id%>/edit?_method=PUT" method="POST">
+            <div class="form-group required">
+              <label class= "control-label" for="description">Description:</label>
+               <!-- Request.body object will reflect a singular sighting object, with the keys that will be transformed into local 
+                variables e.g (description, date_time,shape etc) -->
+              <!--Feedback is a new local variable (obj) which reflects the server-side feedback if the form is valid or not -->
+              <!-- Hence, to check if fields are valid, we check if "feedback" local variable (obj) exists in the request.body object i.e "locals"-->
+              <!-- If present, if description value is not "ok" select is-invalid state -->
+              <input
+                type="text"
+                class="form-control
+              <%if(locals.feedback){%>
+              <%if(feedback.description!=="ok"){ %>
+                is-invalid 
+              <% } else { %>
+                is-valid 
+              <% } %>
+              <% } %>                                            
+                "
+                id="text"
+                placeholder="Enter Description"
+                name="description"
+                value="<%=description%>"
+              />
+               <%if(locals.feedback){%>
+                <% if(feedback.description){ %>
+                <div class="invalid-feedback"><%= feedback.description%></div>
+                <% } %>
+              <% } %>
+              <small id="vividDescription" class="form-text text-muted"
+                >Please enter your sighting as vividly as possible!</small
+              >
+            </div>
+            <div class="form-group">
+              <label for="date_time">Date & Time:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="date_time"
+                placeholder="Date in DD/MM/YYYY HH:MM"
+                name="date_time"
+                value="<%=date_time%>"
+              />
+            </div>
+            <div class="form-group required">
+              <label class= "control-label" for="city">City:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="city"
+                placeholder="E.g New York"
+                name="city"
+                value="<%=city%>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="state">State:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="state"
+                placeholder="E.g Nevada"
+                name="state"
+                value="<%=state%>"
+              />
+            </div>
+            <div class="form-group required">
+              <label class="control-label" for="shape">Shape:</label>
+              <input
+                type="text"
+                class="form-control
+                <%if(locals.feedback){%>
+                <% if(feedback.shape !=="ok"){ %>
+                 is-invalid 
+                <% } else { %> 
+                  is-valid 
+                <% } %>    
+                <% } %>"
+                id="shape"
+                placeholder="E.g Spherical"
+                name="shape"
+                value="<%=shape%>"
+              />
+              <%if(locals.feedback){%>
+                      <%if(feedback.shape){ %>
+                        <div class="invalid-feedback"><%= feedback.shape%></div>
+                      <% } %>
+                  <% } %>
+            </div>
+            <div class="form-group">
+              <label for="duration">Duration:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="duration"
+                placeholder="E.g 3 minutes"
+                name="duration"
+                value="<%=duration%>"
+              />
+            </div>
+            <div class="form-group">
+              <label for="summary">Summary:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="summary"
+                placeholder="Short overview of what you saw."
+                name="summary"
+                value="<%=summary%>"
+              />
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+<%-include('footer') %>

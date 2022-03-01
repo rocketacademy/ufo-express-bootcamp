@@ -1,0 +1,111 @@
+<%- include('headerAndNav') %>
+  <body>
+    <div class="container navTopMargin">
+      <div class="row">
+        <div class="col d-flex justify-content-center selectFormTitle">
+          Sightings
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <form>
+            <select name="sortOrder" label="sort" class="selectForm">
+              <option value="ascending">Ascending</option>
+              <option value="descending">Descending</option>
+            </select>
+            <input type="submit" value="Submit" role="button" />
+          </form>
+        </div>
+      </div>
+    </div>
+<div class="container-sm">
+  <div class="row">
+    <div class="col text-center visitCount">
+      <button class="btn btn-success">Visitor Count:  <span class="badge badge-light"><%=visits%></span></button>
+    </div>
+  </div>
+</div>    
+    
+<div class="container-sm">
+    <div class="pageTitle table-responsive">List of all Sightings</div>
+      <table class = "table table-hover">
+        <thead class="thead-dark">
+          <tr >
+            <th scope="col" class="align-middle">ID</th>
+            <th scope="col" class="align-middle">Description</th>
+            <th scope="col" class="align-middle hideOnResizeSmall">Date & Time</th>
+            <th scope="col" class="align-middle">City</th>
+            <th scope="col" class="align-middle">State</th>
+            <th scope="col" class="align-middle">Shape</th>
+            <th scope="col" class="align-middle hideOnResizeSmall">Duration</th>
+            <th scope="col" class="align-middle hideOnResizeMedium">Summary</th>
+            <th scope="col" class="align-middle hideOnResizeMedium">Timestamp</th>
+            <th scope="col" class="align-middle">Actions</th>
+            <th scope="col" class="align-middle"><i class="fa fa-heart "></i></th>
+          </tr>
+        </thead>
+  
+      <tbody>
+        <!--For each sighting in sightings array...-->
+      <% sightings.forEach((sighting,index)=>{ %>
+      <tr>
+        <!--For each key-value pair in each sighting object, print their relevant values-->
+        <%Object.entries(sighting).forEach(([key,value])=>{ %> 
+        <% if(key === "favorite") { %>
+        <% return %>
+        <% } else if(key ==="date_time" || key ==="duration"){ %>
+        <td scope="col" class="align-middle hideOnResizeSmall"><%=value%></td>
+         <% } else if(key ==="summary"){ %>
+        <td scope="col" class="align-middle hideOnResizeMedium"><div class="hideWords"><%=value%></div></td>
+          <% } else if(key ==="timeSubmitted"){ %>
+        <td scope="col" class="align-middle hideOnResizeMedium"><%=value%></td>
+        <% } else if(key ==="description"){ %>
+        <td scope="col" class="align-middle "><div class="hideWords"><%=value%></div></td>
+        <% } else { %>
+        <td scope="col" class="align-middle"><%=value%></td>
+        <% } %> 
+        <% }) %>
+        <td>
+
+        <a
+          href="/sighting/<%=sighting.id%>"
+          class="btn btn-info btn-md btnHeight"
+          role="button"
+        >
+          View</a
+        >
+        <a
+          href="/sighting/<%=sighting.id%>/edit"
+          class="btn btn-warning btn-md btnHeight"
+          role="button"
+        >
+          Edit</a
+        >
+        <form action="/sighting/<%=sighting.id%>?_method=DELETE" method="POST">
+          <input
+            type="submit"
+            class="btn btn-danger btn-md btnHeight"
+            name="_method"
+            value="Delete"
+          />
+        </form>
+        </td>
+        <td class="align-middle">
+          <a type='submit' href="/?heart=<%=index+1%>">
+          <% if(sighting.favorite === 'yes'){ %>
+          <i class="fa fa-heart"></i>
+          <% } else {%>
+          <i class="fa fa-heart-o"></i>
+          <% } %>
+          </a>
+        </td>
+        
+      </tr>
+      <% }) %>
+      </tbody>
+          </table>
+      </div>
+    </div>
+  </body>
+
+<%-include('footer') %>

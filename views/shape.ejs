@@ -1,0 +1,34 @@
+<%- include('headerAndNav') %>
+
+  <body>
+    <div class="container navTopMargin">
+      <div class="pageTitle">Sightings with the same <%=shape%> shape</div>
+      <% sightings.forEach((sighting)=>{ %>
+      <ul class="shapeBgColor">
+        <div class="row pt-3 pl-3"><b>Description:</b></div>
+        <div class="row pl-3 pr-5"><%=sighting.description%></div>
+
+        <div class="row pt-3 pl-3"><b>Date & Time:</b></div>
+        <div class="row pl-3 pr-5"><%=sighting.date_time%></div>
+
+        <div class="row pt-3 pl-3"><b>City:</b></div>
+        <div class="row pl-3 pr-5"><%=sighting.city%></div>
+
+        <div class="row pt-3 pl-3"><b>State:</b></div>
+        <div class="row pl-3 pr-5"><%=sighting.state%></div>
+
+        <div class="row pt-3 pl-3"><b>Shape:</b></div>
+        <div class="row pl-3 pr-5"><%=sighting.shape%></div>
+
+        <div class="row pt-3 pl-3"><b>Duration:</b></div>
+        <div class="row pl-3 pr-5"><%=sighting.duration%></div>
+
+        <div class="row pt-3 pl-3 pr-3"><b>Summary:</b></div>
+        <div class="row pl-3 pr-5"><%=sighting.summary%></div>
+        <br />
+      </ul>
+      <% }) %>
+    </div>
+  </body>
+ 
+<%-include('footer') %>

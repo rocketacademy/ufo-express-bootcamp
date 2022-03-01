@@ -1,0 +1,51 @@
+<%- include('headerAndNav') %>
+
+  <body>
+    <div class="pageTitle navTopMargin">Sighting in <%=city%></div>
+    <div class="container mt-3 sightingContainer">
+      <div class="row pt-3 pl-3"><b>Description:</b></div>
+      <div class="row pl-3"><%=description%></div>
+
+      <div class="row pt-3 pl-3"><b>Date & Time:</b></div>
+      <div class="row pl-3"><%=date_time%></div>
+
+      <div class="row pt-3 pl-3"><b>City:</b></div>
+      <div class="row pl-3"><%=city%></div>
+
+      <div class="row pt-3 pl-3"><b>State:</b></div>
+      <div class="row pl-3"><%=state%></div>
+
+      <div class="row pt-3 pl-3"><b>Shape:</b></div>
+      <div class="row pl-3"><%=shape%></div>
+
+      <div class="row pt-3 pl-3"><b>Duration:</b></div>
+      <div class="row pl-3"><%=duration%></div>
+
+      <div class="row pt-3 pl-3"><b>Summary:</b></div>
+      <div class="row pl-3"><%=summary%></div>
+
+      <div class="row mt-3 pb-4 d-flex justify-content-center">
+        <div class="col-sm-1">
+          <a href="/sighting/<%=id%>/edit" class="btn btn-warning" role="button">
+            Edit</a
+          >
+        </div>
+        <div class="col-sm-1">
+          <a href="/" class="btn btn-primary" role="button">
+            Done</a
+          >
+        </div>
+        <div class="col-sm-1">
+          <form action="/sighting/<%=id%>?_method=DELETE" method="POST">
+            <input
+              type="submit"
+              class="btn btn-danger"
+              name="_method"
+              value="Delete"
+            />
+          </form>
+      </div>
+    </div>
+  </body>
+  
+<%-include('footer') %>
